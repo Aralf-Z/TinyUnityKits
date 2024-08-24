@@ -1,0 +1,15 @@
+/*
+
+*/
+
+using QFramework;
+
+namespace TheaterOfKismet
+{   
+    #ROOTNAMESPACEBEGIN#
+    public interface #SCRIPTNAME#
+    {
+        #NOTRIM#
+    }
+    #ROOTNAMESPACEEND#
+} 

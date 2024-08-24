@@ -1,0 +1,16 @@
+/*
+
+*/
+
+using QFramework;
+
+namespace TheaterOfKismet
+{
+   public class #SCRIPTNAME# : AbstractCommand
+   {
+       protected override void OnExecute()
+       {
+            #NOTRIM#
+       }
+   }
+}

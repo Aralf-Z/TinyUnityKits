@@ -1,0 +1,26 @@
+/*
+
+*/
+
+using QFramework;
+using UnityEngine;
+
+namespace TheaterOfKismet
+{
+    #ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME#: MonoBehaviour
+    , IController
+    {
+         private void Start()
+         {
+             #NOTRIM# 
+         }
+         #NOTRIM# 
+         public IArchitecture GetArchitecture()
+         {
+             return GameCore.Interface;
+         }
+    } 
+    #ROOTNAMESPACEEND#
+} 
+

@@ -1,0 +1,18 @@
+{
+    "name": "ZToolKit.Editor",
+    "rootNamespace": "ZToolKit.Editor",
+    "references": [
+        "GUID:3bbe3b9e0837e064182777634efa009c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

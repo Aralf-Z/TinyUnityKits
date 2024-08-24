@@ -1,0 +1,13 @@
+/*
+
+*/
+
+using QFramework;
+
+namespace TheaterOfKismet
+{
+   public class #SCRIPTNAME# : IUtility
+   {
+        #NOTRIM#
+   }
+}
