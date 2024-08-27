@@ -18,7 +18,6 @@ namespace ZToolKit
         public void Open(object data)
         {
             gameObject.SetActive(true);
-            transform.GetComponent<RectTransform>().sizeDelta=Vector2.zero;
             OnOpen(data);
         }
 

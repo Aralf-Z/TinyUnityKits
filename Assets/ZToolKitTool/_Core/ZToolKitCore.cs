@@ -21,19 +21,19 @@ namespace ZToolKit
 
         protected override void OnStart()
         {
-            // Debug.Log("游戏开始初始化");
-            // StartCoroutine(GameInit());
+            Debug.Log("游戏开始初始化");
+            StartCoroutine(GameInit());
         }
 
-        // private IEnumerator GameInit()
-        // {
-        //     //资源包加载
-        //     yield return StartCoroutine(ResTool.LoadJson());
-        //     Debug.Log("游戏资源目录加载完成");
-        //     
-        //     Debug.Log("游戏初始化完成");
-        //     
-        //     Initialized = true;
-        // }
+        private IEnumerator GameInit()
+        {
+            //资源包加载
+            yield return StartCoroutine(ResTool.LoadJson());
+            Debug.Log("游戏资源目录加载完成");
+            
+            Debug.Log("游戏初始化完成");
+            
+            Initialized = true;
+        }
     }
 }

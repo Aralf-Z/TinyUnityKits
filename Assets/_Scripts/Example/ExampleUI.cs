@@ -7,7 +7,7 @@ using ZToolKit;
 public class ExampleUI : UIScreen
 {
     public Text testText;
-    
+
     protected override void OnInit()
     {
         Debug.Log("Init ExampleUI");

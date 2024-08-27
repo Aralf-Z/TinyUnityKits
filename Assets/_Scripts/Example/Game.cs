@@ -31,8 +31,10 @@ public class Game : MonoBehaviour
 
         if (ZToolKitCore.Instance.Initialized && !open)
         {
+            Debug.Log("Open ExampleUI");
             open = true;
-            UIManager.OpenUIScreen<ExampleUI>(UIManager.UIPanel.Normal, "测试成功");
+            var ui = UIManager.OpenUIScreen<ExampleUI>(UIManager.UIPanel.Normal, "Test Success\n 测试成功");
+            Debug.Log("===" + ui.gameObject.activeSelf);
         }
     }
 }
