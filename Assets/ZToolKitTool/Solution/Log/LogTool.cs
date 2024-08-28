@@ -35,14 +35,14 @@ namespace ZToolKit
         public static void ZToolKitLog(string headStr, string messageStr)
         {
 #if UNITY_EDITOR
-            Debug.Log($"<color=#bd868dff><ZTool>[{headStr}]: {messageStr}</color>");
+            Debug.Log($"<color=#bd868dff>[ZTool-{headStr}]: {messageStr}</color>");
 #endif
         }
         
         public static void ZToolKitLogError(string headStr, string messageStr)
         {
 #if UNITY_EDITOR
-            Debug.Log($"<color=#ff0000ff><ZTool>[{headStr}]: {messageStr}</color>");
+            Debug.Log($"<color=#ff0000ff>[ZTool-{headStr}]: {messageStr}</color>");
 #endif
         }
     }

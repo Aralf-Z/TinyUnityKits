@@ -14,6 +14,8 @@ namespace ZToolKit
 {
     public static class ResTool
     {
+        public static string ResConfig = "ResourcesCatalog.json";
+        
         private static Dictionary<string, string> sNamePathDic;
 
         static ResTool()
@@ -23,8 +25,8 @@ namespace ZToolKit
 
         public static void Init()
         {
-            // var jsonString = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, "AllResPathData.json"));
-            // sNamePathDic = JsonConvert.DeserializeObject<AllResourcesNamePathPairs>(jsonString)?.namePathDic;
+            // var jsonString = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig));
+            // sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(jsonString)?.namePathDic;
             ZToolKitCore.Instance.StartCoroutine(LoadJson());
         }
         
@@ -42,7 +44,7 @@ namespace ZToolKit
         public static IEnumerator LoadJson()
         {
             // StreamingAssets目录下的文件路径
-            string filePath = Path.Combine(Application.streamingAssetsPath, "AllResPathData.json");
+            string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
         
             // 使用UnityWebRequest加载文件
             UnityWebRequest request = UnityWebRequest.Get(filePath);
@@ -57,7 +59,7 @@ namespace ZToolKit
             {
                 // 获取文本内容
                 string fileContent = request.downloadHandler.text;
-                sNamePathDic = JsonConvert.DeserializeObject<AllResourcesNamePathPairs>(fileContent)?.namePathDic;
+                sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(fileContent)?.namePathDic;
             
                 // 如果是二进制文件，可以使用以下代码：
                 // byte[] fileBytes = request.downloadHandler.data;

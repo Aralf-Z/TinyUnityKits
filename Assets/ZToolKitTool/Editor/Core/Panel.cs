@@ -15,7 +15,7 @@ namespace ZToolKit.Editor
         private PanelBase[] mPanels;
         private Vector2 mScrollBtn;
 
-        [MenuItem("ZToolKit/ToolPanel #Z", false, 1)]
+        [MenuItem("Tools/ZToolKit #Z", false, 1)]
         private static void OpenSelf()
         {
             var w = GetWindow<PanelWindow>("ConfigPanel");
