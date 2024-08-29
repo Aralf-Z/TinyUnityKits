@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ZToolKit;
+using cfg;
 
 public class Game : MonoBehaviour
 {
@@ -17,18 +18,6 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log("Input A");
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            Debug.Log("Input W");
-            var da = Instantiate(Resources.Load<GameObject>("dagger"));
-            da.transform.localScale = Vector3.one * 5;
-        }
-
         if (ZToolKitCore.Instance.Initialized && !open)
         {
             Debug.Log("Open ExampleUI");

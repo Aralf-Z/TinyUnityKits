@@ -36,7 +36,7 @@ namespace ZToolKit.Editor
             if (mLubanDataPath == string.Empty)
             {
                 //默认位置
-                mLubanDataPath = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Config", "Datas");
+                mLubanDataPath = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Config");
             }
         }
 
@@ -44,11 +44,15 @@ namespace ZToolKit.Editor
         {
             using (var h = new GUILayout.HorizontalScope())
             {
+                
+            }
+            
+            GUILayout.Space(5);
+            using (var h = new GUILayout.HorizontalScope())
+            {
                 GUILayout.TextField(mLubanPath, GUILayout.Width(windowRect.width * 5 / 9));
                 
                 GUILayout.Space(5);
-                
-                
                 
                 if (GUILayout.Button("选择Luban位置", EditorStyles.miniButton, GUILayout.Width(100)))
                 {
@@ -76,46 +80,62 @@ namespace ZToolKit.Editor
                 
                 GUI.backgroundColor = Color.white;
             }
+            //
+            // using (var h = new GUILayout.HorizontalScope())
+            // {
+            //     GUILayout.TextField(mLubanDataPath, GUILayout.Width(windowRect.width * 5 / 9));
+            //     
+            //     GUILayout.Space(5);
+            //
+            //     if (GUILayout.Button("选择数据表位置", EditorStyles.miniButton, GUILayout.Width(100)))
+            //     {
+            //         var path = EditorUtility.OpenFolderPanel("路径", mLubanDataPath, "");
+            //         mLubanDataPath = path == string.Empty ? mLubanDataPath : path;
+            //         EditorPrefs.SetString(EditorPrefsKeys.LubanDataPath, mLubanDataPath);
+            //     }
+            //     
+            //     GUILayout.Space(5);
+            //     GUILayout.FlexibleSpace();
+            //     GUI.backgroundColor = Color.green;
+            //     
+            //     if (GUILayout.Button("打开数据表位置", EditorStyles.miniButton, GUILayout.Width(100)))
+            //     {
+            //         try
+            //         {
+            //             Process.Start(mLubanDataPath);
+            //         }
+            //         catch (Exception e)
+            //         {
+            //             LogTool.EditorLogError(e);
+            //             throw;
+            //         }
+            //     } 
+            //     GUI.backgroundColor = Color.white;
+            //}
 
+            GUILayout.Space(5);
+            
             using (var h = new GUILayout.HorizontalScope())
             {
-                GUILayout.TextField(mLubanDataPath, GUILayout.Width(windowRect.width * 5 / 9));
-                
-                GUILayout.Space(5);
-
-                if (GUILayout.Button("选择数据表位置", EditorStyles.miniButton, GUILayout.Width(100)))
+                if (GUILayout.Button("打开Luban文档", GUILayout.Width(120)))
                 {
-                    var path = EditorUtility.OpenFolderPanel("路径", mLubanDataPath, "");
-                    mLubanDataPath = path == string.Empty ? mLubanDataPath : path;
-                    EditorPrefs.SetString(EditorPrefsKeys.LubanDataPath, mLubanDataPath);
+                    Application.OpenURL("https://luban.doc.code-philosophy.com/docs/manual/excel");
                 }
                 
                 GUILayout.Space(5);
-                GUILayout.FlexibleSpace();
-                GUI.backgroundColor = Color.green;
                 
-                if (GUILayout.Button("打开数据表位置", EditorStyles.miniButton, GUILayout.Width(100)))
+                if (GUILayout.Button(new GUIContent("下载安装.Net8(?)", "Luban需要安装.Net8才能运行") , GUILayout.Width(120)))
                 {
-                    try
-                    {
-                        Process.Start(mLubanDataPath);
-                    }
-                    catch (Exception e)
-                    {
-                        LogTool.EditorLogError(e);
-                        throw;
-                    }
-                } 
-                GUI.backgroundColor = Color.white;
-            }
-
-            using (var h = new GUILayout.HorizontalScope())
-            {
+                    Application.OpenURL("https://dotnet.microsoft.com/zh-cn/download/dotnet/8.0");
+                }
+                
+                GUILayout.Space(5);
+                
                 GUILayout.FlexibleSpace();
                 GUI.backgroundColor = Color.green;
 
                 //if (GUILayout.Button("执行Luban", EditorStyles.miniButton, GUILayout.Width(100)))
-                if (GUILayout.Button(new GUIContent("执行Luban", "当前不可用,请点击\"打开Luban位置\",双击\"gen.bat\""),
+                if (GUILayout.Button(new GUIContent("执行Luban(?)", "当前不可用,请点击\"打开Luban位置\",双击\"gen.bat\""),
                     EditorStyles.miniButton, GUILayout.Width(100)))
                 {
                     //ExecuteBatFile(Path.Combine(mLubanPath, "gen.bat"));

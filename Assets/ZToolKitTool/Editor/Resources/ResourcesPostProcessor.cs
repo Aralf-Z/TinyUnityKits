@@ -14,8 +14,11 @@ namespace ZToolKit.Editor
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig);
             ResourcesCatalog allAssetDatas;
-            
-            if (File.Exists(filePath)) allAssetDatas = JsonConvert.DeserializeObject<ResourcesCatalog>(File.ReadAllText(filePath));
+
+            if (File.Exists(filePath))
+            {
+                allAssetDatas = JsonConvert.DeserializeObject<ResourcesCatalog>(File.ReadAllText(filePath));
+            }
             else allAssetDatas = new ResourcesCatalog();
 
             if (importedAssets.Length > 0)

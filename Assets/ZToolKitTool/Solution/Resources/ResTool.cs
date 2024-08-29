@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -23,11 +24,9 @@ namespace ZToolKit
             
         }
 
-        public static void Init()
+        public static async UniTask Init()
         {
-            // var jsonString = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig));
-            // sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(jsonString)?.namePathDic;
-            ZToolKitCore.Instance.StartCoroutine(LoadJson());
+            await LoadJson();
         }
         
         public static T Load<T>(string prefabName) where T : Object
@@ -41,29 +40,33 @@ namespace ZToolKit
             return null;
         }
         
-        public static IEnumerator LoadJson()
+        public static async UniTask LoadJson()
         {
-            // StreamingAssets目录下的文件路径
             string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
-        
-            // 使用UnityWebRequest加载文件
-            UnityWebRequest request = UnityWebRequest.Get(filePath);
-            
-            yield return request.SendWebRequest();
 
-            if (request.result != UnityWebRequest.Result.Success)
+#if UNITY_WEBGL
+            using var request = UnityWebRequest.Get(filePath);
+            await request.SendWebRequest().ToUniTask();
+
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.LogError(request.error);
+                string fileContent = request.downloadHandler.text;
+                sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(fileContent)?.namePathDic;
             }
             else
             {
-                // 获取文本内容
-                string fileContent = request.downloadHandler.text;
-                sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(fileContent)?.namePathDic;
-            
-                // 如果是二进制文件，可以使用以下代码：
-                // byte[] fileBytes = request.downloadHandler.data;
+                Debug.LogError(request.error);
             }
+#else
+            if (File.Exists(filePath))
+            {
+                sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(File.ReadAllText(filePath))?.namePathDic;
+            }
+            else
+            {
+                Debug.LogError(request.error);
+            }
+#endif
         }
     }
 }

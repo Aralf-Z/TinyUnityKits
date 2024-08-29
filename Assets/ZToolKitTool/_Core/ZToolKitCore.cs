@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace ZToolKit
@@ -19,20 +20,15 @@ namespace ZToolKit
             
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            Debug.Log("游戏开始初始化");
-            StartCoroutine(GameInit());
-        }
+            LogTool.ZToolKitLog("初始化", "初始化开始");
+            await ResTool.Init();
+            LogTool.ZToolKitLog("初始化", "ResTool资源目录加载完成");
+            await Config.Init();
+            LogTool.ZToolKitLog("初始化", "Config表格配置加载完成");
+            LogTool.ZToolKitLog("初始化", "初始化完成");
 
-        private IEnumerator GameInit()
-        {
-            //资源包加载
-            yield return StartCoroutine(ResTool.LoadJson());
-            Debug.Log("游戏资源目录加载完成");
-            
-            Debug.Log("游戏初始化完成");
-            
             Initialized = true;
         }
     }

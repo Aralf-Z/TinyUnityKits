@@ -8,6 +8,6 @@ dotnet %LUBAN_DLL% ^
     -d bin  ^
     --conf %CONF_ROOT%\luban.conf ^
     -x outputDataDir=%WORKSPACE%\Assets\StreamingAssets\TableConfig^
-    -x outputCodeDir=%WORKSPACE%\Assets\_Scripts\TableConfig
+    -x outputCodeDir=%WORKSPACE%\Assets\TableConfig\Scripts
 
 pause
