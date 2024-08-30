@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Path = System.IO.Path;
 
 namespace ZToolKit.Editor
@@ -48,6 +49,7 @@ namespace ZToolKit.Editor
             }
             
             GUILayout.Space(5);
+            
             using (var h = new GUILayout.HorizontalScope())
             {
                 GUILayout.TextField(mLubanPath, GUILayout.Width(windowRect.width * 5 / 9));
@@ -57,8 +59,11 @@ namespace ZToolKit.Editor
                 if (GUILayout.Button("选择Luban位置", EditorStyles.miniButton, GUILayout.Width(100)))
                 {
                     var path = EditorUtility.OpenFolderPanel("路径", mLubanPath, "");
-                    mLubanPath = path == string.Empty ? mLubanPath : path;
-                    EditorPrefs.SetString(EditorPrefsKeys.LubanPath, mLubanPath);
+                    if (path != string.Empty)
+                    {
+                        mLubanPath = Path.Combine(path);
+                        EditorPrefs.SetString(EditorPrefsKeys.LubanPath, mLubanPath);
+                    }
                 }
                 
                 GUILayout.FlexibleSpace();
@@ -80,38 +85,47 @@ namespace ZToolKit.Editor
                 
                 GUI.backgroundColor = Color.white;
             }
-            //
-            // using (var h = new GUILayout.HorizontalScope())
-            // {
-            //     GUILayout.TextField(mLubanDataPath, GUILayout.Width(windowRect.width * 5 / 9));
-            //     
-            //     GUILayout.Space(5);
-            //
-            //     if (GUILayout.Button("选择数据表位置", EditorStyles.miniButton, GUILayout.Width(100)))
-            //     {
-            //         var path = EditorUtility.OpenFolderPanel("路径", mLubanDataPath, "");
-            //         mLubanDataPath = path == string.Empty ? mLubanDataPath : path;
-            //         EditorPrefs.SetString(EditorPrefsKeys.LubanDataPath, mLubanDataPath);
-            //     }
-            //     
-            //     GUILayout.Space(5);
-            //     GUILayout.FlexibleSpace();
-            //     GUI.backgroundColor = Color.green;
-            //     
-            //     if (GUILayout.Button("打开数据表位置", EditorStyles.miniButton, GUILayout.Width(100)))
-            //     {
-            //         try
-            //         {
-            //             Process.Start(mLubanDataPath);
-            //         }
-            //         catch (Exception e)
-            //         {
-            //             LogTool.EditorLogError(e);
-            //             throw;
-            //         }
-            //     } 
-            //     GUI.backgroundColor = Color.white;
-            //}
+
+            GUILayout.Space(5);
+            
+            using (var h = new GUILayout.HorizontalScope())
+            {
+                GUILayout.TextField(mLubanDataPath, GUILayout.Width(windowRect.width * 5 / 9));
+
+                GUILayout.Space(5);
+
+                if (GUILayout.Button("选择本地数据表", EditorStyles.miniButton, GUILayout.Width(100)))
+                {
+                    var path = EditorUtility.OpenFilePanel("路径", mLubanDataPath, "xlsx");
+
+                    if (path != string.Empty)
+                    {
+                        mLubanDataPath = Path.Combine(path);
+                        EditorPrefs.SetString(EditorPrefsKeys.LubanDataPath, mLubanDataPath);
+                        
+                        //todo 生成schema
+                    }
+                }
+
+                GUILayout.Space(5);
+                GUILayout.FlexibleSpace();
+                GUI.backgroundColor = Color.green;
+
+                if (GUILayout.Button("打开本地数据表", EditorStyles.miniButton, GUILayout.Width(100)))
+                {
+                    try
+                    {
+                        Process.Start(mLubanDataPath);
+                    }
+                    catch (Exception e)
+                    {
+                        LogTool.EditorLogError(e);
+                        throw;
+                    }
+                }
+
+                GUI.backgroundColor = Color.white;
+            }
 
             GUILayout.Space(5);
             
@@ -131,54 +145,128 @@ namespace ZToolKit.Editor
                 
                 GUILayout.Space(5);
                 
+                if (GUILayout.Button("使用命令行", GUILayout.Width(120)))
+                {
+                    ProcessStartInfo processInfo = new ProcessStartInfo
+                    {
+                        FileName = "cmd.exe",
+                        Arguments = "/k",
+                        UseShellExecute = true
+                    };
+
+                    Process.Start(processInfo);
+                }
+                
+                GUILayout.Space(5);
+                
                 GUILayout.FlexibleSpace();
                 GUI.backgroundColor = Color.green;
-
-                //if (GUILayout.Button("执行Luban", EditorStyles.miniButton, GUILayout.Width(100)))
-                if (GUILayout.Button(new GUIContent("执行Luban(?)", "当前不可用,请点击\"打开Luban位置\",双击\"gen.bat\""),
-                    EditorStyles.miniButton, GUILayout.Width(100)))
+                
+                if (GUILayout.Button("执行Luban", EditorStyles.miniButton, GUILayout.Width(100)))
                 {
-                    //ExecuteBatFile(Path.Combine(mLubanPath, "gen.bat"));
-                    LogTool.EditorLogError("当前不可用");
+                    ExecuteBatFile();
                 }
 
                 GUI.backgroundColor = Color.white;
             }
         }
         
-        private void ExecuteBatFile(string filePath)
+        private void ExecuteBatFile()
         {
+            var workspace = "..";
+            var lubanDll = @".\Luban\Luban.dll";
+            var confRoot = Path.GetDirectoryName(mLubanDataPath);
+            
+            var arguments = $"{lubanDll} -t all -c cs-bin -d bin --conf {confRoot}\\luban.conf " +
+                                  $"-x outputDataDir={workspace}\\Assets\\StreamingAssets\\TableConfig " +
+                                  $"-x outputCodeDir={workspace}\\Assets\\TableConfig\\Scripts";
+            
+            // 创建一个新的进程信息对象
+            var processInfo = new ProcessStartInfo
+            {
+                FileName = "dotnet",
+                Arguments = arguments,
+                WorkingDirectory = mLubanPath,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = false 
+            };
+            
+            string fileContent = @"
+            {
+                ""groups"": [
+                {""names"":[""c""], ""default"":true},
+                {""names"":[""s""], ""default"":true},
+                {""names"":[""e""], ""default"":true}
+                ],
+                ""schemaFiles"": [
+                {""fileName"":""Defines"", ""type"":""""},
+                {""fileName"":""tables@TableConfig.xlsx"", ""type"":""table""},
+                {""fileName"":""beans@TableConfig.xlsx"", ""type"":""bean""},
+                {""fileName"":""enums@TableConfig.xlsx"", ""type"":""enum""}
+                ],
+                ""dataDir"": """",
+                ""targets"": [
+                {""name"":""server"", ""manager"":""Tables"", ""groups"":[""s""], ""topModule"":""cfg""},
+                {""name"":""client"", ""manager"":""Tables"", ""groups"":[""c""], ""topModule"":""cfg""},
+                {""name"":""all"", ""manager"":""Tables"", ""groups"":[""c"",""s"",""e""], ""topModule"":""cfg""}
+                ]
+            }";
+            
+            var tempFilePath = Path.Combine(confRoot, "luban.conf");
+            
             try
             {
-                var process = new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = filePath, 
-                        // RedirectStandardOutput = true,
-                        // RedirectStandardError = true,
-                        UseShellExecute = true, 
-                        CreateNoWindow = false,
-                    }
-                };
+                // 将内容写入临时文件
+                File.WriteAllText(tempFilePath, fileContent);
 
-                // var outputStr = new StringBuilder();
-                // process.OutputDataReceived += (sender, args) => outputStr.Append(args.Data + "\n");
-                // process.ErrorDataReceived += (sender, args) => outputStr.Append(args.Data + "\n");
+                EditorUtility.DisplayProgressBar("创建依赖", "luban.conf", .5f);
+
+                try
+                {
+                    using var process = Process.Start(processInfo);
+
+                    if (process is null)
+                    {
+                        LogTool.ZToolKitLogError("Luban",$"Error: process Failed");
+                    }
+                    else
+                    {
+                        string output = process.StandardOutput.ReadToEnd();
                 
-                process.Start();
-                // process.BeginOutputReadLine();
-                // process.BeginErrorReadLine();
-                process.WaitForExit();
+                        EditorUtility.DisplayProgressBar("luban", "解析中", .8f);
+                        process.WaitForExit();
                 
-                // LogTool.ZToolKitLog("Luban", outputStr.ToString());
-                //LogTool.ZToolKitLog("Luban","Batch file executed successfully.");
+                        AssetDatabase.Refresh();
+                    
+                        if (output.Contains("bye~"))
+                        {
+                            LogTool.ZToolKitLog("Luban", "Analysis Succeed");
+                        }
+                        else
+                        {
+                            LogTool.ZToolKitLogError("Luban", "Analysis Failed");
+                        }
+                    
+                        Debug.Log(output);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogTool.ZToolKitLogError("Luban",$"Error: {ex.Message}");
+                }
             }
-            catch (Exception e)
+            finally
             {
-                LogTool.EditorLogError( "Failed to execute batch file: " + e.Message);
-                throw;
+                if (File.Exists(tempFilePath))
+                {
+                    File.Delete(tempFilePath);
+                }
+                
+                EditorUtility.ClearProgressBar();
             }
+            
+            
         }
     }
 } 

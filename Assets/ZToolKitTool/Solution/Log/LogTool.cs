@@ -42,7 +42,7 @@ namespace ZToolKit
         public static void ZToolKitLogError(string headStr, string messageStr)
         {
 #if UNITY_EDITOR
-            Debug.Log($"<color=#ff0000ff>[ZTool-{headStr}]: {messageStr}</color>");
+            Debug.Log($"<color=#CA463Dff>[ZTool-{headStr}]: {messageStr}</color>");
 #endif
         }
     }
