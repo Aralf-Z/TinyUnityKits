@@ -8,19 +8,20 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using SimpleJSON;
 
 
 namespace cfg
 {
 public sealed partial class Audio : Luban.BeanBase
 {
-    public Audio(ByteBuf _buf) 
+    public Audio(JSONNode _buf) 
     {
-        EnterBtn = _buf.ReadString();
-        ClickBtn = _buf.ReadString();
+        { if(!_buf["enter_btn"].IsString) { throw new SerializationException(); }  EnterBtn = _buf["enter_btn"]; }
+        { if(!_buf["click_btn"].IsString) { throw new SerializationException(); }  ClickBtn = _buf["click_btn"]; }
     }
 
-    public static Audio DeserializeAudio(ByteBuf _buf)
+    public static Audio DeserializeAudio(JSONNode _buf)
     {
         return new Audio(_buf);
     }
