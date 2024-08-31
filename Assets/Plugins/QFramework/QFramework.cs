@@ -491,8 +491,7 @@ namespace QFramework
             mOnUnRegister = null;
         }
     }
-
-#if UNITY_5_6_OR_NEWER
+    
     public abstract class UnRegisterTrigger : UnityEngine.MonoBehaviour
     {
         private readonly HashSet<IUnRegister> mUnRegisters = new HashSet<IUnRegister>();
@@ -560,7 +559,6 @@ namespace QFramework
         private void OnDestroy() => SceneManager.sceneUnloaded -= OnSceneUnloaded;
         void OnSceneUnloaded(Scene scene) => UnRegister();
     }
-#endif
 
     public static class UnRegisterExtension
     {
@@ -920,12 +918,4 @@ namespace QFramework
     }
 
     #endregion
-
-// #if UNITY_EDITOR
-//     internal class EditorMenus
-//     {
-//         [UnityEditor.MenuItem("QFramework/Install QFrameworkWithToolKits")]
-//         public static void InstallPackageKit() => UnityEngine.Application.OpenURL("https://qframework.cn/qf");
-//     }
-// #endif
 }

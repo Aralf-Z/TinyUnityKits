@@ -1,6 +1,8 @@
 [
   {
     "enter_btn": "按钮悬停",
-    "click_btn": "按钮点击"
+    "click_btn": "按钮点击",
+    "main_menu_bgm": "主页面bgm",
+    "game_bgm": "游戏bgm"
   }
 ]

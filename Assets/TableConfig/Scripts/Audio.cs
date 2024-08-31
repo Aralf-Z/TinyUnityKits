@@ -19,6 +19,8 @@ public sealed partial class Audio : Luban.BeanBase
     {
         { if(!_buf["enter_btn"].IsString) { throw new SerializationException(); }  EnterBtn = _buf["enter_btn"]; }
         { if(!_buf["click_btn"].IsString) { throw new SerializationException(); }  ClickBtn = _buf["click_btn"]; }
+        { if(!_buf["main_menu_bgm"].IsString) { throw new SerializationException(); }  MainMenuBgm = _buf["main_menu_bgm"]; }
+        { if(!_buf["game_bgm"].IsString) { throw new SerializationException(); }  GameBgm = _buf["game_bgm"]; }
     }
 
     public static Audio DeserializeAudio(JSONNode _buf)
@@ -34,12 +36,22 @@ public sealed partial class Audio : Luban.BeanBase
     /// 按钮点击
     /// </summary>
     public readonly string ClickBtn;
+    /// <summary>
+    /// 主菜单背景乐
+    /// </summary>
+    public readonly string MainMenuBgm;
+    /// <summary>
+    /// 游戏背景乐
+    /// </summary>
+    public readonly string GameBgm;
    
     public const int __ID__ = 63613878;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
+        
+        
         
         
     }
@@ -49,6 +61,8 @@ public sealed partial class Audio : Luban.BeanBase
         return "{ "
         + "enterBtn:" + EnterBtn + ","
         + "clickBtn:" + ClickBtn + ","
+        + "mainMenuBgm:" + MainMenuBgm + ","
+        + "gameBgm:" + GameBgm + ","
         + "}";
     }
 }

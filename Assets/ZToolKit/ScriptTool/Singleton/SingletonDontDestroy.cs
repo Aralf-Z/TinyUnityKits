@@ -15,15 +15,17 @@ namespace ZToolKit
                 {
                     return sInstance;
                 }
-                
-                var prefab = ResTool.Load<GameObject>(typeof(T).Name);
-                if (prefab)
+
+                var resName = typeof(T).Name;
+                if (ResTool.IsExist(resName))
                 {
+                    var prefab = ResTool.Load<GameObject>(resName);
                     sInstance = Instantiate(prefab).GetComponent<T>();
                 }
                 else
                 {
-                    Debug.LogError($"There is no {typeof(T).Name} in the scene, or any prefab in Resources folder.");
+                    var go = new GameObject(resName);
+                    sInstance = go.AddComponent<T>();
                 }
                 
                 return sInstance;
@@ -34,16 +36,10 @@ namespace ZToolKit
         {
             if (sInstance)
             {
+                Debug.LogError($"There are two or more {typeof(T).Name}s in scene");
                 return;
             }
-            
-            var instance = FindObjectsOfType<T>();
 
-            if (instance.Length > 1)
-            {
-                Debug.LogError($"More than one {typeof(T).Name} in this scene");
-            }
-            
             sInstance = transform.GetComponent<T>();
             DontDestroyOnLoad(gameObject);
             OnAwake();

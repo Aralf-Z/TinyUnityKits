@@ -5,6 +5,10 @@ namespace ZToolKit
 {
     public abstract class UIScreen : MonoBehaviour
     {
+        protected virtual string SfxOnOpen => string.Empty;
+        
+        protected virtual string SfxOnHide => string.Empty;
+        
         private void Awake()
         {
             Init();
@@ -29,7 +33,7 @@ namespace ZToolKit
         
         protected void HideSelf()
         {
-            UIManager.HideUIScreen(this);
+            UIMgr.HideUIScreen(this);
         }
         
         protected abstract void OnInit();

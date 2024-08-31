@@ -13,7 +13,7 @@ namespace ZToolKit
         /// <para> 又依赖于ZToolKit的脚本调用,</para>
         /// <para> 游戏运行中该脚本只初始化1次,且只能存在1个 </para>
         /// </remarks>
-        public bool Initialized { get; private set; }
+        public bool Inited { get; private set; }
         
         protected override void OnAwake()
         {
@@ -25,11 +25,11 @@ namespace ZToolKit
             LogTool.ZToolKitLog("初始化", "初始化开始");
             await ResTool.Init();
             LogTool.ZToolKitLog("初始化", "ResTool资源目录加载完成");
-            await Config.Init();
+            await CfgTool.Init();
             LogTool.ZToolKitLog("初始化", "Config表格配置加载完成");
             LogTool.ZToolKitLog("初始化", "初始化完成");
 
-            Initialized = true;
+            Inited = true;
         }
     }
 }
