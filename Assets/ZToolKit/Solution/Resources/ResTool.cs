@@ -2,6 +2,7 @@
 
 */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
@@ -49,8 +50,16 @@ namespace ZToolKit
         {
             if (!mInited)
             {
-                Init().GetAwaiter().GetResult();
-                LogTool.ZToolKitLog("ResTool", "Lazy Load");
+                try
+                {
+                    Init().GetAwaiter().GetResult();
+                    LogTool.ZToolKitLog("ResTool", "Lazy Load");
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    LogTool.ZToolKitLogError("ResTool", "Lazy Load Error");
+                }
             }
         }
         
@@ -59,26 +68,36 @@ namespace ZToolKit
             string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
 
 #if UNITY_WEBGL
-            using var request = UnityWebRequest.Get(filePath);
-            await request.SendWebRequest().ToUniTask();
+            try
+            {
+                using var request = UnityWebRequest.Get(filePath);
+                await request.SendWebRequest().ToUniTask();
 
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                string fileContent = request.downloadHandler.text;
-                sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(fileContent)?.namePathDic;
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    string fileContent = request.downloadHandler.text;
+                    sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(fileContent)?.namePathDic;
+                }
+                else
+                {
+                    Debug.LogError(request.error);
+                }
             }
-            else
+            catch (Exception e)
             {
-                Debug.LogError(request.error);
+                Debug.LogError(e);
+                throw;
             }
+            
 #else
-            if (File.Exists(filePath))
+            try
             {
                 sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(File.ReadAllText(filePath))?.namePathDic;
             }
-            else
+            catch (Exception e)
             {
-                Debug.LogError(request.error);
+                Debug.LogError(e);
+                throw;
             }
 #endif
         }

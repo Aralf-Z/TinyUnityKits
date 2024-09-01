@@ -6,6 +6,7 @@ using ZToolKit;
 
 public class MainMenuUI : UIScreen
 {
+    [Header("MainMenu")]
     public Button startBtn;
     public Button settingBtn;
     public Button exitBtn;

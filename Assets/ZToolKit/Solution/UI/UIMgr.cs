@@ -74,9 +74,11 @@ namespace ZToolKit
         {
             if (!Instance.mUIScreens.ContainsKey(uiName))
             {
-                var ui = ResTool.Load<GameObject>(uiName);
-                var uiGo = Instantiate(ui);
-                Instance.mUIScreens.Add(uiName,uiGo.GetComponent<UIScreen>());
+                var uiPrefab = ResTool.Load<GameObject>(uiName);
+                var uiGo = Instantiate(uiPrefab);
+                var ui = uiGo.GetComponent<UIScreen>().Init();
+                
+                Instance.mUIScreens.Add(uiName, ui);
             }
             var screen = Instance.mUIScreens[uiName];
             screen.transform.SetParent(Instance.mUIPanels[uiPanel], false);

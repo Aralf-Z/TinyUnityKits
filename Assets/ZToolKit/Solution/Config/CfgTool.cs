@@ -54,10 +54,11 @@ namespace ZToolKit
                 ? new Func<string, ByteBuf>(LoadByteBuf)
                 : (Delegate)new Func<string, JSONNode>(LoadJson);
             
-            mTables = (Tables)tablesCtor.Invoke(new object[] {loader});
+            sTables = (Tables)tablesCtor.Invoke(new object[] {loader});
 #endif
             sInited = true;
         }
+        
 
         private static ByteBuf LoadByteBuf(string file)
         {
@@ -87,16 +88,28 @@ namespace ZToolKit
         
         private static JSONNode LoadJson_Web(string file)
         {
-            using var request = UnityWebRequest.Get(Path.Combine(rFoldPath, $"{file}.json"));
-            request.SendWebRequest().GetAwaiter().GetResult();
-            
-            if (request.result == UnityWebRequest.Result.Success)
+            try
             {
-                var text = request.downloadHandler.text;
-                return JSON.Parse(text);
-            }
+                using var request = UnityWebRequest.Get(Path.Combine(rFoldPath, $"{file}.json"));
+                request.SendWebRequest().GetAwaiter().GetResult();
+            
+                Debug.LogError(request.result);
+                Debug.LogError(request.result == UnityWebRequest.Result.Success);
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError(request.downloadHandler.text);
+                    var text = request.downloadHandler.text;
+                    return JSON.Parse(text);
+                }
 
-            Debug.LogError(request.error);
+                Debug.LogError(request.error);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
+            }
+            
             return null;
         }
     }

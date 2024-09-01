@@ -8,19 +8,15 @@ namespace ZToolKit
 {
     public static class AudioTool
     {
+        public static bool IsActive => AudioMgr.Instance.IsActive;
+        public static float MusicVol => AudioMgr.Instance.musicSource.volume; 
+        public static float SfxVol =>AudioMgr.Instance.sfxSource.volume;
+
         public static void PlayMusic(string clipName)
         {
             if (CheckClip(clipName))
             {
                 AudioMgr.PlayMusic(clipName);
-            }
-        }
-        
-        public static void PlayOneShot(string clipName)
-        {
-            if (CheckClip(clipName))
-            {
-                AudioMgr.PlayOneShot(clipName);
             }
         }
         
@@ -32,6 +28,11 @@ namespace ZToolKit
             }
         }
 
+        public static void SetActive(bool active)
+        {
+            AudioMgr.Instance.IsActive = active;
+        }
+        
         public static void SetMusicVol(float value)
         {
             AudioMgr.SetMusicVol(value);
@@ -50,7 +51,11 @@ namespace ZToolKit
                 return true;
             }
             
-            LogTool.ZToolKitLogError("AudioTool",$"资源：{clipName} 不存在");
+            if (clipName != string.Empty)
+            {
+                LogTool.ZToolKitLogError("AudioTool",$"资源：{clipName} 不存在");
+            }
+            
             return false;
 #else
             return true;

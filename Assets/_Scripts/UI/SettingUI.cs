@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using ZToolKit;
@@ -5,31 +6,31 @@ using ZToolKit;
 
 public class SettingUI : UIScreen
 {
-    public Button exitBtn;
+    protected override string SfxOnOpen => CfgTool.Audio.PopOut;
 
-    public Button fullScreenBtn;
-    public Button windowedBtn;
+    protected override string SfxOnHide => CfgTool.Audio.PopHide;
 
-    public Image fullScreenTick;
-    public Image windowedTick;
+    [Header("SettingUI")] 
+    public Toggle fullScreenTgl;
+    public Toggle windowedTgl;
+    
+    public Toggle englishTgl;
+    public Toggle chineseTgl;
 
+    public Toggle audioTgl;
     public Scrollbar musicScroll;
     public Scrollbar sfxScroll;
     
     protected override void OnInit()
     {
-        // exitBtn.onClick.AddListener(HideSelf);
-        //
-        // fullScreenBtn.onClick.AddListener(() => SetFullScreen(true));
-        // windowedBtn.onClick.AddListener(() => SetFullScreen(false));
-        //
-        // musicScroll.onValueChanged.AddListener(AudioTool.SetMusicVol);
-        // sfxScroll.onValueChanged.AddListener(AudioTool.SetSfxVol);
+        DisplayInit();
+        LanguageInit();
+        AudioInit();
     }
 
     protected override void OnOpen(object data)
     {
-        SetFullScreen(Screen.fullScreen);
+        
     }
 
     protected override void OnHide()
@@ -37,10 +38,65 @@ public class SettingUI : UIScreen
         
     }
 
-    private void SetFullScreen(bool active)
+    private void DisplayInit()
     {
-        // Screen.fullScreen = active;
-        // fullScreenTick.enabled = active;
-        // windowedTick.enabled = !active;
+        fullScreenTgl.isOn = Screen.fullScreen;
+        
+        fullScreenTgl.onValueChanged.AddListener(isOn =>
+        {
+            if (Screen.fullScreen != isOn)
+            {
+                Screen.fullScreen = isOn;
+            }
+        });
+    }
+
+    private void LanguageInit()
+    {
+        englishTgl.isOn = L10nTool.Language == Language.English;
+        
+        englishTgl.onValueChanged.AddListener(isOn =>
+        {
+            if (L10nTool.Language == Language.English)
+            {
+                return;
+            }
+
+            if (isOn)
+            {
+                L10nTool.Language = Language.English;
+            }
+        });
+        
+        chineseTgl.onValueChanged.AddListener(isOn =>
+        {
+            if (L10nTool.Language == Language.Chinese)
+            {
+                return;
+            }
+
+            if (isOn)
+            {
+                L10nTool.Language = Language.Chinese;
+            }
+        });
+    }
+
+    private void AudioInit()
+    {
+        audioTgl.isOn = AudioTool.IsActive;
+        musicScroll.value = AudioTool.MusicVol;
+        sfxScroll.value = AudioTool.SfxVol;
+            
+        audioTgl.onValueChanged.AddListener(isOn =>
+        {
+            if (isOn != AudioTool.IsActive)
+            {
+                AudioTool.SetActive(isOn);
+            }
+        });
+        
+        musicScroll.onValueChanged.AddListener(AudioTool.SetMusicVol);
+        sfxScroll.onValueChanged.AddListener(AudioTool.SetSfxVol);
     }
 }

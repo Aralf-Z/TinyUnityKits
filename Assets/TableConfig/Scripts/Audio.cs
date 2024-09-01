@@ -19,8 +19,14 @@ public sealed partial class Audio : Luban.BeanBase
     {
         { if(!_buf["enter_btn"].IsString) { throw new SerializationException(); }  EnterBtn = _buf["enter_btn"]; }
         { if(!_buf["click_btn"].IsString) { throw new SerializationException(); }  ClickBtn = _buf["click_btn"]; }
+        { if(!_buf["click_tgl"].IsString) { throw new SerializationException(); }  ClickTgl = _buf["click_tgl"]; }
+        { if(!_buf["drag_bar_music"].IsString) { throw new SerializationException(); }  DragBarMusic = _buf["drag_bar_music"]; }
+        { if(!_buf["drag_bar_sfx"].IsString) { throw new SerializationException(); }  DragBarSfx = _buf["drag_bar_sfx"]; }
         { if(!_buf["main_menu_bgm"].IsString) { throw new SerializationException(); }  MainMenuBgm = _buf["main_menu_bgm"]; }
         { if(!_buf["game_bgm"].IsString) { throw new SerializationException(); }  GameBgm = _buf["game_bgm"]; }
+        { if(!_buf["pop_out"].IsString) { throw new SerializationException(); }  PopOut = _buf["pop_out"]; }
+        { if(!_buf["pop_move"].IsString) { throw new SerializationException(); }  PopMove = _buf["pop_move"]; }
+        { if(!_buf["pop_hide"].IsString) { throw new SerializationException(); }  PopHide = _buf["pop_hide"]; }
     }
 
     public static Audio DeserializeAudio(JSONNode _buf)
@@ -29,27 +35,57 @@ public sealed partial class Audio : Luban.BeanBase
     }
 
     /// <summary>
-    /// 按钮悬停
+    /// 按钮_悬停
     /// </summary>
     public readonly string EnterBtn;
     /// <summary>
-    /// 按钮点击
+    /// 按钮_点击
     /// </summary>
     public readonly string ClickBtn;
     /// <summary>
-    /// 主菜单背景乐
+    /// 切换_点击
+    /// </summary>
+    public readonly string ClickTgl;
+    /// <summary>
+    /// 进度条_拖拽_测试音乐
+    /// </summary>
+    public readonly string DragBarMusic;
+    /// <summary>
+    /// 进度条_拖拽_测试音效
+    /// </summary>
+    public readonly string DragBarSfx;
+    /// <summary>
+    /// 主菜单_背景乐
     /// </summary>
     public readonly string MainMenuBgm;
     /// <summary>
-    /// 游戏背景乐
+    /// 游戏_背景乐
     /// </summary>
     public readonly string GameBgm;
+    /// <summary>
+    /// 弹窗_弹出
+    /// </summary>
+    public readonly string PopOut;
+    /// <summary>
+    /// 弹窗_移动
+    /// </summary>
+    public readonly string PopMove;
+    /// <summary>
+    /// 弹窗_隐藏
+    /// </summary>
+    public readonly string PopHide;
    
     public const int __ID__ = 63613878;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
+        
+        
+        
+        
+        
+        
         
         
         
@@ -61,8 +97,14 @@ public sealed partial class Audio : Luban.BeanBase
         return "{ "
         + "enterBtn:" + EnterBtn + ","
         + "clickBtn:" + ClickBtn + ","
+        + "clickTgl:" + ClickTgl + ","
+        + "dragBarMusic:" + DragBarMusic + ","
+        + "dragBarSfx:" + DragBarSfx + ","
         + "mainMenuBgm:" + MainMenuBgm + ","
         + "gameBgm:" + GameBgm + ","
+        + "popOut:" + PopOut + ","
+        + "popMove:" + PopMove + ","
+        + "popHide:" + PopHide + ","
         + "}";
     }
 }

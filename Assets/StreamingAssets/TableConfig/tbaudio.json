@@ -2,7 +2,13 @@
   {
     "enter_btn": "按钮悬停",
     "click_btn": "按钮点击",
+    "click_tgl": "按钮点击",
+    "drag_bar_music": "主页面bgm",
+    "drag_bar_sfx": "按钮点击",
     "main_menu_bgm": "主页面bgm",
-    "game_bgm": "游戏bgm"
+    "game_bgm": "游戏bgm",
+    "pop_out": "SFX_UI_Click_Designed_Pop_Open_2",
+    "pop_move": "SFX_UI_Click_Designed_Pop_Movement_Open_1",
+    "pop_hide": "SFX_UI_Click_Designed_Pop_Thick_Generic_1"
   }
 ]
