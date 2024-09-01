@@ -3,22 +3,6 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    public enum UIAnim
-    {
-        [Tooltip("无")]
-        None,
-        [Tooltip("弹窗,弹出形式为从中间弹出放大, 隐藏形式为往中间缩小")]
-        PopOut,
-        [Tooltip("弹窗,弹出形式为从左向右, 隐藏形式为从右向左")]
-        PopMoveLeft,
-        [Tooltip("弹窗,弹出形式为从右向左, 隐藏表现为从左向右")]
-        PopMoveRight,
-        [Tooltip("弹窗,弹出形式为从下向上, 隐藏表现为从上向下")]
-        PopMoveUp,
-        [Tooltip("弹窗,弹出形式为从上向下, 隐藏表现为从下向上")]
-        PopMoveDown,
-    }
-
     public abstract class UIScreen : MonoBehaviour
     {
         [Header("UIScreen")]
@@ -26,7 +10,7 @@ namespace ZToolKit
         public CanClick[] hideCpts;
 
         [Tooltip("UI的打开关闭动画形式")]
-        public UIAnim uiAnim;
+        public UIAnimType uiAnimType;
 
         [Tooltip(@"弹窗一般有一个蒙版背景，所以动画并非整个UI, 需要一个根对象，如果为空，那么管理器会在UI中自动搜寻""Frame""作为根对象")]
         public Transform animRoot;
@@ -35,21 +19,31 @@ namespace ZToolKit
         
         protected virtual string SfxOnHide => string.Empty;
 
+        private UIAnimation mUIAnim;
+        
         public UIScreen Init()
         {
             OnInit();
 
+            if (!animRoot)
+            {
+                animRoot = transform.Find("Frame");
+            }
+            
             foreach (var cpt in hideCpts)
             {
                 cpt.onClickAct += HideSelf;
             }
 
+            mUIAnim = new UIAnimation(animRoot);
+            
             return this;
         }
 
         public void Open(object data)
         {
             AudioTool.PlaySfx(SfxOnOpen);
+            mUIAnim.AnimOnOpen(uiAnimType);
             gameObject.SetActive(true);
             OnOpen(data);
         }
@@ -57,8 +51,8 @@ namespace ZToolKit
         public void Hide()
         {
             AudioTool.PlaySfx(SfxOnHide);
+            mUIAnim.AnimOnHide(uiAnimType, () =>gameObject.SetActive(false));
             OnHide();
-            gameObject.SetActive(false);
         }
         
         protected void HideSelf()

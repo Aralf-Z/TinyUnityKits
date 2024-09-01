@@ -945,7 +945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5176471, g: 0.76470596, b: 0.41960788, a: 0.44705883}
+  m_Color: {r: 0.7973602, g: 0.93207544, b: 0.74390167, a: 0.1882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1794,7 +1794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hideCpts:
   - {fileID: 1777365280615084666}
-  uiAnim: 0
+  uiAnimType: 1
   animRoot: {fileID: 7808691380975995122}
   fullScreenTgl: {fileID: 1358678197617568674}
   windowedTgl: {fileID: 1986858343811831601}
