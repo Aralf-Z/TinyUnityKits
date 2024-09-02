@@ -24,46 +24,128 @@ namespace ZToolKit
     
     public class UIAnimation
     {
-        private Transform mRoot;
+        private UIScreen mUI;
+        private RectTransform mRoot;
         private CanvasGroup mCg;
 
-        public UIAnimation(Transform root)
+        private const float kPopOutTime = .3f;
+
+        private const float kPopMoveTime = .3f;
+        
+        public UIAnimation(UIScreen ui)
         {
-            mRoot = root;
-            mCg = root.TryGetComponent<CanvasGroup>(out var cg) ? cg : root.gameObject.AddComponent<CanvasGroup>();
+            mUI = ui;
+            mRoot = mUI.animRoot;
+            mCg = mUI.TryGetComponent<CanvasGroup>(out var cg) ? cg : ui.gameObject.AddComponent<CanvasGroup>();
         }
 
         public void AnimOnOpen(UIAnimType type)
         {
-            if(type == UIAnimType.None)
-                return;
-            
+            switch (type)
+            {
+                case UIAnimType.PopOut : 
+                    PopOutOnOpen(); 
+                    break;
+                case UIAnimType.PopMoveLeft:
+                case UIAnimType.PopMoveRight:
+                case UIAnimType.PopMoveUp:
+                case UIAnimType.PopMoveDown:
+                    PopMoveOnOpen(GetDir(type));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void AnimOnHide(UIAnimType type)
+        {
+            switch (type)
+            {
+                case UIAnimType.PopOut: 
+                    PopOutOnHide(); 
+                    break;
+                case UIAnimType.PopMoveLeft:
+                case UIAnimType.PopMoveRight:
+                case UIAnimType.PopMoveUp:
+                case UIAnimType.PopMoveDown:
+                    PopMoveOnHide(GetDir(type));
+                    break;
+                default:
+                    mUI.gameObject.SetActive(false);
+                    break;
+            }
+        }
+
+        private void PopOutOnOpen()
+        {
             mRoot.DOKill();
-            mCg.DOKill();
 
             mRoot.localScale = Vector3.one * .5f;
-            mCg.alpha = 0;
-
-            mRoot.DOScale(Vector3.one, .3f);
-            DOTween.To(() => mCg.alpha, x => mCg.alpha = x, 1, .3f);
+            mRoot.anchoredPosition = Vector2.zero;
+            
+            mRoot.DOScale(Vector3.one, kPopOutTime);
+            
+            CgOnOpen(kPopOutTime);
         }
 
-        public void AnimOnHide(UIAnimType type, Action onCompleteAct)
+        private void PopOutOnHide()
         {
-            if(type == UIAnimType.None)
-                return;
+            mRoot.DOKill();
+            mRoot.DOScale(Vector3.one * .5f, kPopOutTime)
+                .OnComplete(() => mUI.gameObject.SetActive(false));
+            
+            CgOnHide(kPopOutTime);
+        }
+        
+        private void PopMoveOnOpen(Vector2 dir)
+        {
+            var oriPos = -dir * new Vector2(960, 540);
+            var tarPos = Vector2.zero;
             
             mRoot.DOKill();
-            mCg.DOKill();
+            mRoot.anchoredPosition = oriPos;
+            mRoot.localScale = Vector3.one;
             
-            mRoot.DOScale(Vector3.one * .5f, .3f);
-            DOTween.To(() => mCg.alpha, x => mCg.alpha = x, 0, .3f)
-                .OnComplete(() => onCompleteAct?.Invoke());
+            DOTween.To(() => mRoot.anchoredPosition, x => mRoot.anchoredPosition = x, tarPos, kPopMoveTime);
+            
+            CgOnOpen(kPopMoveTime);
         }
 
-        private void PopMove(Vector2 direction)
+        private void PopMoveOnHide(Vector2 dir)
         {
+            var oriPos = Vector2.zero;
+            var tarPos = dir * new Vector2(960, 540);
             
+            mRoot.DOKill();
+            mRoot.anchoredPosition = oriPos;
+            
+            DOTween.To(() => mRoot.anchoredPosition, x => mRoot.anchoredPosition = x, tarPos, kPopMoveTime)
+                .OnComplete(() =>mUI.gameObject.SetActive(false));
+            
+            CgOnHide(kPopMoveTime);
+        }
+        
+        private void CgOnOpen(float animTime)
+        {
+            mCg.DOKill();
+            mCg.alpha = 0;
+            DOTween.To(() => mCg.alpha, x => mCg.alpha = x, 1, animTime);
+        }
+        
+        private void CgOnHide(float animTime)
+        {
+            mCg.DOKill();
+            DOTween.To(() => mCg.alpha, x => mCg.alpha = x, 0, animTime);
+        }
+
+        private Vector2 GetDir(UIAnimType type)
+        {
+            var dirX = type == UIAnimType.PopMoveLeft ? -1 : 0
+                + type == UIAnimType.PopMoveRight ? 1 : 0;
+            var dirY = type == UIAnimType.PopMoveDown ? -1 : 0
+                + type == UIAnimType.PopMoveUp ? 1 : 0;
+
+            return new Vector2(dirX, dirY);
         }
     }
 }

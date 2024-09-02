@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace ZToolKit
 {
-    public class ResourcesCatalog
+    public class ResCatalog
     {
         public readonly Dictionary<string, string> namePathDic;
 
-        public ResourcesCatalog()
+        public ResCatalog()
         {
             namePathDic = new();
         }

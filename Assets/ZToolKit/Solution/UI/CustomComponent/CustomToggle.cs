@@ -10,7 +10,7 @@ namespace ZToolKit
         {
             base.OnPointerClick(eventData);
             
-            AudioTool.PlaySfx(CfgTool.Audio.ClickTgl);
+            AudTool.PlaySfx(CfgTool.Audio.ClickTgl);
         }
     }
 }

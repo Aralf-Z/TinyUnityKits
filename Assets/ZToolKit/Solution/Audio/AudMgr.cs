@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    internal class AudioMgr : SingletonDontDestroy<AudioMgr>
+    internal class AudMgr : SingletonDontDestroy<AudMgr>
     {
         public AudioSource musicSource;
         public AudioSource sfxSource;

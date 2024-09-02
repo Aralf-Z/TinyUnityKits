@@ -6,17 +6,17 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    public static class AudioTool
+    public static class AudTool
     {
-        public static bool IsActive => AudioMgr.Instance.IsActive;
-        public static float MusicVol => AudioMgr.Instance.musicSource.volume; 
-        public static float SfxVol =>AudioMgr.Instance.sfxSource.volume;
+        public static bool IsActive => AudMgr.Instance.IsActive;
+        public static float MusicVol => AudMgr.Instance.musicSource.volume; 
+        public static float SfxVol =>AudMgr.Instance.sfxSource.volume;
 
         public static void PlayMusic(string clipName)
         {
             if (CheckClip(clipName))
             {
-                AudioMgr.PlayMusic(clipName);
+                AudMgr.PlayMusic(clipName);
             }
         }
         
@@ -24,23 +24,23 @@ namespace ZToolKit
         {
             if (CheckClip(clipName))
             {
-                AudioMgr.PlaySfx(clipName);
+                AudMgr.PlaySfx(clipName);
             }
         }
 
         public static void SetActive(bool active)
         {
-            AudioMgr.Instance.IsActive = active;
+            AudMgr.Instance.IsActive = active;
         }
         
         public static void SetMusicVol(float value)
         {
-            AudioMgr.SetMusicVol(value);
+            AudMgr.SetMusicVol(value);
         }
 
         public static void SetSfxVol(float value)
         {
-            AudioMgr.SetSfxVol(value);
+            AudMgr.SetSfxVol(value);
         }
 
         private static bool CheckClip(string clipName)

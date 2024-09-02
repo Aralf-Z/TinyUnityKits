@@ -27,7 +27,7 @@ namespace ZToolKit.Editor
                 
                 if (GUILayout.Button("DOTween Doc", GUILayout.Width(100)))
                 {
-                    Application.OpenURL("http://dotween.demigiant.com/documentation.php#nomenclature");
+                    Application.OpenURL("http://dotween.demigiant.com/documentation.php#creatingTweener");
                 }
                 
                 GUILayout.Space(5);

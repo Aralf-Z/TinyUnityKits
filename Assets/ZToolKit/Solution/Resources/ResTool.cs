@@ -17,8 +17,8 @@ namespace ZToolKit
     {
         private static bool mInited;
         
-        public static string ResConfig = "ResourcesCatalog.json";
-        
+        public static string ResConfig = "ResCatalog.json";
+
         private static Dictionary<string, string> sNamePathDic;
 
         public static async UniTask Init()
@@ -40,7 +40,7 @@ namespace ZToolKit
             return null;
         }
         
-        public static bool IsExist(string prefabName)
+        internal static bool IsExist(string prefabName)
         {
             CheckInit();
             return sNamePathDic.ContainsKey(prefabName);
@@ -67,7 +67,7 @@ namespace ZToolKit
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL && !UNITY_EDITOR
             try
             {
                 using var request = UnityWebRequest.Get(filePath);
@@ -91,8 +91,8 @@ namespace ZToolKit
             
 #else
             try
-            {
-                sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(File.ReadAllText(filePath))?.namePathDic;
+            { 
+                sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(File.ReadAllText(filePath))?.namePathDic;
             }
             catch (Exception e)
             {

@@ -11,13 +11,13 @@ public class CustomButton : Button
     {
         base.OnPointerEnter(eventData);
         
-        AudioTool.PlaySfx(CfgTool.Audio.EnterBtn);
+        AudTool.PlaySfx(CfgTool.Audio.EnterBtn);
     }
 
     public override void OnPointerClick(PointerEventData eventData)
     {
         base.OnPointerClick(eventData);
         
-        AudioTool.PlaySfx(CfgTool.Audio.ClickBtn);
+        AudTool.PlaySfx(CfgTool.Audio.ClickBtn);
     }
 }

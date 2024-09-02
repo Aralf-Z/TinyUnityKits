@@ -13,13 +13,13 @@ namespace ZToolKit.Editor
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig);
-            ResourcesCatalog allAssetDatas;
+            ResCatalog allAssetDatas;
 
             if (File.Exists(filePath))
             {
-                allAssetDatas = JsonConvert.DeserializeObject<ResourcesCatalog>(File.ReadAllText(filePath));
+                allAssetDatas = JsonConvert.DeserializeObject<ResCatalog>(File.ReadAllText(filePath));
             }
-            else allAssetDatas = new ResourcesCatalog();
+            else allAssetDatas = new ResCatalog();
 
             if (importedAssets.Length > 0)
                 ProcessNewResourcesAssetsImport(importedAssets, allAssetDatas);
@@ -38,7 +38,7 @@ namespace ZToolKit.Editor
             AssetDatabase.Refresh();
         }
 
-        private static void ProcessNewResourcesAssetsImport(string[] importedAssets, ResourcesCatalog allAssetDatas)
+        private static void ProcessNewResourcesAssetsImport(string[] importedAssets, ResCatalog allAssetDatas)
         {
             foreach (var t in importedAssets)
             {
@@ -52,7 +52,7 @@ namespace ZToolKit.Editor
             }
         }
 
-        private static void ProcessResourcesAssetsDelete(string[] deletedAssets, ResourcesCatalog allAssetDatas)
+        private static void ProcessResourcesAssetsDelete(string[] deletedAssets, ResCatalog allAssetDatas)
         {
             foreach (var t in deletedAssets)
             {

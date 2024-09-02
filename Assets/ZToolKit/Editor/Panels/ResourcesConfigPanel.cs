@@ -37,27 +37,28 @@ namespace ZToolKit.Editor
         
         private static void ConfigBuild()
         {
-            var GUIDs = AssetDatabase.FindAssets("",new string[]{"Assets/Resources"});
-            var resConfig = new ResourcesCatalog();
+            var guids = AssetDatabase.FindAssets("",new string[]{"Assets/Resources"});
+            var resConfig = new ResCatalog();
             int prePathLength = "Assets/Resources/".Length;
-            for(int i = 0; i< GUIDs.Length;++i)
+            for(int i = 0; i< guids.Length;++i)
             {
-                var originalPath = AssetDatabase.GUIDToAssetPath(GUIDs[i]);
+                var originalPath = AssetDatabase.GUIDToAssetPath(guids[i]);
                 var resPath = originalPath.Substring(prePathLength);
                 var path = resPath.Split('.');
                 if(path.Length == 1) 
                 {
                     continue;//文件夹名跳过
                 }
-                EditorUtility.DisplayProgressBar("ResourcesConfigBuilding",originalPath,(float)i/GUIDs.Length);
+                EditorUtility.DisplayProgressBar("ResourcesConfigBuilding",originalPath,(float)i/guids.Length);
                 resConfig.AddPair(AssetDatabase.LoadAssetAtPath<Object>(originalPath).name, path[0]);
             }
+            
             EditorUtility.ClearProgressBar();
             CreateResConfig(resConfig);
             LogTool.ZToolKitLog("Resources","资源路径配置完成");
         }
 
-        private static void CreateResConfig(ResourcesCatalog data)
+        private static void CreateResConfig(ResCatalog data)
         {
             var dataPath = Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig);
             if (!Directory.Exists(Application.streamingAssetsPath))

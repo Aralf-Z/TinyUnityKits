@@ -84,19 +84,19 @@ public class SettingUI : UIScreen
 
     private void AudioInit()
     {
-        audioTgl.isOn = AudioTool.IsActive;
-        musicScroll.value = AudioTool.MusicVol;
-        sfxScroll.value = AudioTool.SfxVol;
+        audioTgl.isOn = AudTool.IsActive;
+        musicScroll.value = AudTool.MusicVol;
+        sfxScroll.value = AudTool.SfxVol;
             
         audioTgl.onValueChanged.AddListener(isOn =>
         {
-            if (isOn != AudioTool.IsActive)
+            if (isOn != AudTool.IsActive)
             {
-                AudioTool.SetActive(isOn);
+                AudTool.SetActive(isOn);
             }
         });
         
-        musicScroll.onValueChanged.AddListener(AudioTool.SetMusicVol);
-        sfxScroll.onValueChanged.AddListener(AudioTool.SetSfxVol);
+        musicScroll.onValueChanged.AddListener(AudTool.SetMusicVol);
+        sfxScroll.onValueChanged.AddListener(AudTool.SetSfxVol);
     }
 }

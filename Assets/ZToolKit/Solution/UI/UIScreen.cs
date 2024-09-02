@@ -8,13 +8,14 @@ namespace ZToolKit
         [Header("UIScreen")]
         [Tooltip("弹窗一般会点击空白处会关闭，所以空白背景可以添加canClick组件。但管理器并不会自动搜寻该组件，需要手动拖拽")]
         public CanClick[] hideCpts;
-
-        [Tooltip("UI的打开关闭动画形式")]
-        public UIAnimType uiAnimType;
+        [Tooltip("UI的打开动画形式")]
+        public UIAnimType animOnOpen;
+        [Tooltip("UI的关闭动画形式")]
+        public UIAnimType animOnHide;
 
         [Tooltip(@"弹窗一般有一个蒙版背景，所以动画并非整个UI, 需要一个根对象，如果为空，那么管理器会在UI中自动搜寻""Frame""作为根对象")]
-        public Transform animRoot;
-        
+        public RectTransform animRoot;
+
         protected virtual string SfxOnOpen => string.Empty;
         
         protected virtual string SfxOnHide => string.Empty;
@@ -27,7 +28,7 @@ namespace ZToolKit
 
             if (!animRoot)
             {
-                animRoot = transform.Find("Frame");
+                animRoot = transform.Find("Frame").GetComponent<RectTransform>();
             }
             
             foreach (var cpt in hideCpts)
@@ -35,23 +36,23 @@ namespace ZToolKit
                 cpt.onClickAct += HideSelf;
             }
 
-            mUIAnim = new UIAnimation(animRoot);
+            mUIAnim = new UIAnimation(this);
             
             return this;
         }
 
         public void Open(object data)
         {
-            AudioTool.PlaySfx(SfxOnOpen);
-            mUIAnim.AnimOnOpen(uiAnimType);
+            AudTool.PlaySfx(SfxOnOpen);
+            mUIAnim.AnimOnOpen(animOnOpen);
             gameObject.SetActive(true);
             OnOpen(data);
         }
 
         public void Hide()
         {
-            AudioTool.PlaySfx(SfxOnHide);
-            mUIAnim.AnimOnHide(uiAnimType, () =>gameObject.SetActive(false));
+            AudTool.PlaySfx(SfxOnHide);
+            mUIAnim.AnimOnHide(animOnHide);
             OnHide();
         }
         
