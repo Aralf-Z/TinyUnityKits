@@ -90,12 +90,6 @@ namespace ZToolKit
                     mUI.gameObject.SetActive(false);
                     break;
             }
-            
-            Debug.Log(type);
-            Debug.Log((int)type);
-            Debug.Log(GetDir(type));
-            Debug.Log((UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp));
-            Debug.Log((int)(UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp));
         }
 
         private void PopOutOnOpen()

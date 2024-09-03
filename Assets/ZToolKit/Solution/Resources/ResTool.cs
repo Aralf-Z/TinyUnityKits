@@ -67,16 +67,16 @@ namespace ZToolKit
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if UNITY_WEBGL || UNITY_ANDROID && !UNITY_EDITOR
             try
             {
                 using var request = UnityWebRequest.Get(filePath);
-                await request.SendWebRequest().ToUniTask();
+                await request.SendWebRequest();
 
                 if (request.result == UnityWebRequest.Result.Success)
                 {
                     string fileContent = request.downloadHandler.text;
-                    sNamePathDic = JsonConvert.DeserializeObject<ResourcesCatalog>(fileContent)?.namePathDic;
+                    sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(fileContent)?.namePathDic;
                 }
                 else
                 {
@@ -88,7 +88,6 @@ namespace ZToolKit
                 Debug.LogError(e);
                 throw;
             }
-            
 #else
             try
             { 

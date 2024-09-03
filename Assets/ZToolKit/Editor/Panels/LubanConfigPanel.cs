@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -313,13 +314,13 @@ namespace ZToolKit.Editor
             try
             {
                 File.WriteAllText(schemaFilePath, kSchema);
-                EditorUtility.DisplayProgressBar("创建依赖", "luban.conf", .3f);
+                EditorUtility.DisplayProgressBar("创建依赖", "luban.conf", .2f);
                 if (!Directory.Exists(definesPath))
                 {
                     Directory.CreateDirectory(definesPath);
                 }
                 File.WriteAllText(definesFilePath, kBuiltinXml);
-                EditorUtility.DisplayProgressBar("创建依赖", "Defines/builtin.xml", .6f);
+                EditorUtility.DisplayProgressBar("创建依赖", "Defines/builtin.xml", .4f);
                 
                 try
                 {
@@ -333,13 +334,14 @@ namespace ZToolKit.Editor
                     {
                         string outputStr = process.StandardOutput.ReadToEnd();
                 
-                        EditorUtility.DisplayProgressBar("luban", "解析中", .8f);
+                        EditorUtility.DisplayProgressBar("luban", "解析中", .6f);
+                        
                         process.WaitForExit();
-                
                         AssetDatabase.Refresh();
-                    
+                        
                         if (outputStr.Contains("bye~"))
                         {
+                            AnalysisConfigFile();
                             LogTool.ZToolKitLog("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
                         }
                         else
@@ -382,6 +384,33 @@ namespace ZToolKit.Editor
                 {
                     EditorUtility.ClearProgressBar();
                 }
+            }
+        }
+
+        private void AnalysisConfigFile()
+        {
+            try
+            {
+                var cfgFiles = new List<string>();
+                var path = Path.Combine(Application.streamingAssetsPath, "TableConfig");
+                var files = Directory.GetFiles(path);
+
+                foreach (var file in files)
+                {
+                    if (file.EndsWith(".json") || file.EndsWith(".byte"))
+                    {
+                        var fileName = Path.GetFileNameWithoutExtension(file);
+                        cfgFiles.Add(fileName);
+                    }
+                }
+                
+                File.WriteAllText(CfgTool.fileListPath, JsonConvert.SerializeObject(cfgFiles));
+                AssetDatabase.Refresh();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                throw;
             }
         }
     }
