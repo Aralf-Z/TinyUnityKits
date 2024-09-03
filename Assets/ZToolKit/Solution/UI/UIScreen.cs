@@ -44,15 +44,14 @@ namespace ZToolKit
         public void Open(object data)
         {
             AudTool.PlaySfx(SfxOnOpen);
-            mUIAnim.AnimOnOpen(animOnOpen);
-            gameObject.SetActive(true);
+            mUIAnim.AnimOnOpen();
             OnOpen(data);
         }
 
         public void Hide()
         {
             AudTool.PlaySfx(SfxOnHide);
-            mUIAnim.AnimOnHide(animOnHide);
+            mUIAnim.AnimOnHide();
             OnHide();
         }
         
