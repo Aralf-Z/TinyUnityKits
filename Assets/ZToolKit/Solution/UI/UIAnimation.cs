@@ -6,21 +6,21 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    [Flags]
+    //[Flags]
     public enum UIAnimType
     {
         [Tooltip("无")]
-        None          = 0b1,//1
+        None          = 0b0,//0
         [Tooltip("弹窗,弹出形式为从中间弹出放大, 隐藏形式为往中间缩小")]
-        PopOut        = 0b10,//2
+        PopOut        = 0b1,//1
         [Tooltip("弹窗,弹出形式为从左向右, 隐藏形式为从右向左")]
-        PopMoveLeft   = 0b1000,//4
+        PopMoveLeft   = 0b10,//2
         [Tooltip("弹窗,弹出形式为从右向左, 隐藏表现为从左向右")]
-        PopMoveRight  = 0b10000,//8
+        PopMoveRight  = 0b100,//4
         [Tooltip("弹窗,弹出形式为从下向上, 隐藏表现为从上向下")]
-        PopMoveUp     = 0b100000,//16
+        PopMoveUp     = 0b1000,//8
         [Tooltip("弹窗,弹出形式为从上向下, 隐藏表现为从下向上")]
-        PopMoveDown   = 0b1000000,//32
+        PopMoveDown   = 0b10000,//16
     }
     
     public class UIAnimation
@@ -53,13 +53,13 @@ namespace ZToolKit
                     PopOutOnOpen(); 
                     break;
                 case UIAnimType.PopMoveLeft:
-                case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
-                case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
                 case UIAnimType.PopMoveRight:
-                case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
-                case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
                 case UIAnimType.PopMoveUp:
                 case UIAnimType.PopMoveDown:
+                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
+                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
+                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
+                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
                     PopMoveOnOpen(GetDir(type));
                     break;
                 default:
@@ -77,14 +77,14 @@ namespace ZToolKit
                     PopOutOnHide(); 
                     break;
                 case UIAnimType.PopMoveLeft:
-                case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
-                case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
                 case UIAnimType.PopMoveRight:
-                case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
-                case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
                 case UIAnimType.PopMoveUp:
                 case UIAnimType.PopMoveDown:
-                    PopMoveOnHide(GetDir(type));
+                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
+                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
+                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
+                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
+                PopMoveOnHide(GetDir(type));
                     break;
                 default:
                     mUI.gameObject.SetActive(false);
@@ -154,12 +154,22 @@ namespace ZToolKit
 
         private Vector2 GetDir(UIAnimType type)
         {
-            var dirX = (type & UIAnimType.PopMoveLeft) == UIAnimType.PopMoveLeft? -1 : 0
-                + (type & UIAnimType.PopMoveRight) == UIAnimType.PopMoveRight ? 1 : 0;
-            var dirY = (type & UIAnimType.PopMoveDown) == UIAnimType.PopMoveDown ? -1 : 0
-                + (type & UIAnimType.PopMoveUp) == UIAnimType.PopMoveUp ? 1 : 0;
-
+            var dirX = type == UIAnimType.PopMoveLeft? -1 : 0
+                + type  == UIAnimType.PopMoveRight ? 1 : 0;
+            var dirY = type == UIAnimType.PopMoveDown ? -1 : 0
+                + type  == UIAnimType.PopMoveUp ? 1 : 0;
+        
             return new Vector2(dirX, dirY);
         }
+        
+        // private Vector2 GetDir(UIAnimType type)
+        // {
+        //     var dirX = (type & UIAnimType.PopMoveLeft) == UIAnimType.PopMoveLeft? -1 : 0
+        //         + (type & UIAnimType.PopMoveRight) == UIAnimType.PopMoveRight ? 1 : 0;
+        //     var dirY = (type & UIAnimType.PopMoveDown) == UIAnimType.PopMoveDown ? -1 : 0
+        //         + (type & UIAnimType.PopMoveUp) == UIAnimType.PopMoveUp ? 1 : 0;
+        //
+        //     return new Vector2(dirX, dirY);
+        // }
     }
 }

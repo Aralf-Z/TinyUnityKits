@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using ZToolKit;
 
-
 public class SettingUI : UIScreen
 {
     protected override string SfxOnOpen => CfgTool.Audio.PopOut;
@@ -20,12 +19,16 @@ public class SettingUI : UIScreen
     public Toggle audioTgl;
     public Scrollbar musicScroll;
     public Scrollbar sfxScroll;
+
+    public Button exitBtn;
     
     protected override void OnInit()
     {
         DisplayInit();
         LanguageInit();
         AudioInit();
+        
+        exitBtn.onClick.AddListener(HideSelf);
     }
 
     protected override void OnOpen(object data)

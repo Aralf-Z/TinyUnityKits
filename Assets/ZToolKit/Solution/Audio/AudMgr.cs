@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ZToolKit
 {
@@ -36,8 +38,13 @@ namespace ZToolKit
         {
             if (Instance.mIsActive)
             {
+                var vol = Instance.musicSource.volume;
+                Instance.musicSource.volume = 0;
+
                 Instance.musicSource.clip = ResTool.Load<AudioClip>(clipName);
                 Instance.musicSource.Play();
+
+                DOTween.To(() => Instance.musicSource.volume, x => Instance.musicSource.volume = x, vol, vol * 2);
             }
         }
 

@@ -46,7 +46,7 @@ namespace ZToolKit
             var tablesCtor = typeof(Tables).GetConstructors()[0];
             var loaderReturnType = tablesCtor.GetParameters()[0].ParameterType.GetGenericArguments()[1];
             
-#if UNITY_WEBGL || UNITY_ANDROID  && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
             //只有这里采取异步的方式，因为UniTask不能使用.GetAwaiter().GetResult();故懒加载是不支持web和安卓的
             try
             {

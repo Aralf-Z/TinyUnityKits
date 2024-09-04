@@ -67,7 +67,7 @@ namespace ZToolKit
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
 
-#if UNITY_WEBGL || UNITY_ANDROID && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
             try
             {
                 using var request = UnityWebRequest.Get(filePath);

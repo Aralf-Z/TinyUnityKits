@@ -20,7 +20,7 @@ public class MainMenuUI : UIScreen
 
     protected override void OnOpen(object data)
     {
-
+        AudTool.PlayMusic(CfgTool.Audio.MainMenuBgm);
     }
 
     protected override void OnHide()
@@ -30,7 +30,8 @@ public class MainMenuUI : UIScreen
     
     private void OnClickStartBtn()
     {
-        Debug.Log("开始游戏");
+        HideSelf();
+        UITool.OpenUI<GameHudUI>(UIPanel.Normal);
     }
 
     private void OnClickSettingBtn()
