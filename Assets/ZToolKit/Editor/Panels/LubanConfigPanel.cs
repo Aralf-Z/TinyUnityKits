@@ -20,26 +20,36 @@ namespace ZToolKit.Editor
     {
         private const string kJson = "json";
         private const string kByte = "bin";
-        private const string kSchema = @"
+
+        private string Schema 
+        {
+            get
             {
+                var fileName = TableFile;
+
+                return   $@"
+                {{
                 ""groups"": [
-                {""names"":[""c""], ""default"":true},
-                {""names"":[""s""], ""default"":true},
-                {""names"":[""e""], ""default"":true}
-                ],
+                    {{""names"":[""c""], ""default"":true}},
+                    {{""names"":[""s""], ""default"":true}},
+                    {{""names"":[""e""], ""default"":true}}
+                    ],
                 ""schemaFiles"": [
-                {""fileName"":""Defines"", ""type"":""""},
-                {""fileName"":""tables@TableConfig.xlsx"", ""type"":""table""},
-                {""fileName"":""beans@TableConfig.xlsx"", ""type"":""bean""},
-                {""fileName"":""enums@TableConfig.xlsx"", ""type"":""enum""}
-                ],
+                    {{""fileName"":""Defines"", ""type"":""""}},
+                    {{""fileName"":""tables@{fileName}"", ""type"":""table""}},
+                    {{""fileName"":""beans@{fileName}"", ""type"":""bean""}},
+                    {{""fileName"":""enums@{fileName}"", ""type"":""enum""}}
+                    ],
                 ""dataDir"": """",
                 ""targets"": [
-                {""name"":""server"", ""manager"":""Tables"", ""groups"":[""s""], ""topModule"":""cfg""},
-                {""name"":""client"", ""manager"":""Tables"", ""groups"":[""c""], ""topModule"":""cfg""},
-                {""name"":""all"", ""manager"":""Tables"", ""groups"":[""c"",""s"",""e""], ""topModule"":""cfg""}
-                ]
-            }";
+                    {{""name"":""server"", ""manager"":""Tables"", ""groups"":[""s""], ""topModule"":""cfg""}},
+                    {{""name"":""client"", ""manager"":""Tables"", ""groups"":[""c""], ""topModule"":""cfg""}},
+                    {{""name"":""all"", ""manager"":""Tables"", ""groups"":[""c"",""s"",""e""], ""topModule"":""cfg""}}
+                    ]
+                 }}";
+            }
+        }
+        
         private const string kBuiltinXml = @"
             <module name="""">
                 <bean name=""vector2"" valueType=""1"" sep="","">
@@ -58,6 +68,10 @@ namespace ZToolKit.Editor
                     <var name=""w"" type=""float""/>
                 </bean>
             </module>";
+        //     <mapper target=""client"" codeTarget=""cs-bin"">
+        // <option name=""type"" value=""UnityEngine.Vector2""/>
+        // <option name=""constructor"" value=""ExternalTypeUtil.NewVector2""/>
+        // </mapper> //类型映射
         
         
         public override int Priority => 101;
@@ -67,8 +81,9 @@ namespace ZToolKit.Editor
         private string mLubanConfigPath;
         private string mLubanConfigUrl;
 
-        private readonly string[] mOutputTypes =  {kJson, kByte};
+        private readonly string[] mOutputTypes = {kJson, kByte};
         private int mOutputTypeIndex;
+        private string TableFile => Path.GetFileName(mLubanConfigPath);
 
         public override void Init()
         {
@@ -313,7 +328,7 @@ namespace ZToolKit.Editor
             
             try
             {
-                File.WriteAllText(schemaFilePath, kSchema);
+                File.WriteAllText(schemaFilePath, Schema);
                 EditorUtility.DisplayProgressBar("创建依赖", "luban.conf", .2f);
                 if (!Directory.Exists(definesPath))
                 {
