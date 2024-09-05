@@ -1,0 +1,11 @@
+using QFramework;
+
+namespace Game.Core
+{   
+    #ROOTNAMESPACEBEGIN#
+    public abstract class #SCRIPTNAME#
+    {
+        #NOTRIM#
+    }
+    #ROOTNAMESPACEEND#
+} 

@@ -1,0 +1,12 @@
+using QFramework;
+
+namespace Game.Core
+{
+   public class #SCRIPTNAME# : AbstractCommand
+   {
+       protected override void OnExecute()
+       {
+            #NOTRIM#
+       }
+   }
+}

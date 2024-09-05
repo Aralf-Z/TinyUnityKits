@@ -1,0 +1,9 @@
+using QFramework;
+
+namespace Game.Core
+{
+   public class #SCRIPTNAME# : IUtility
+   {
+        #NOTRIM#
+   }
+}

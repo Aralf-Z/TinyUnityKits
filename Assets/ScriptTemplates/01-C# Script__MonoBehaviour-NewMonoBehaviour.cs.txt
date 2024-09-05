@@ -1,0 +1,23 @@
+using Game.Core;
+using QFramework;
+using UnityEngine;
+
+namespace Game
+{
+    #ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME#: MonoBehaviour
+    , IController
+    {
+         private void Start()
+         {
+             #NOTRIM# 
+         }
+         #NOTRIM# 
+         public IArchitecture GetArchitecture()
+         {
+             return GameCore.Interface;
+         }
+    } 
+    #ROOTNAMESPACEEND#
+} 
+

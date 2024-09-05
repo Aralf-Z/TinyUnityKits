@@ -1,0 +1,11 @@
+using QFramework;
+
+namespace Game.Core
+{   
+    #ROOTNAMESPACEBEGIN#
+    public interface #SCRIPTNAME#
+    {
+        #NOTRIM#
+    }
+    #ROOTNAMESPACEEND#
+} 
