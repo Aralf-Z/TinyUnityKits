@@ -47,6 +47,17 @@ namespace ZToolKit
             return $"#{r:X2}{g:X2}{b:X2}{a:X2}";
         }
 
+        public static string GetPath(this Transform transform)
+        {
+            string path = transform.name;
+            while (transform.parent != null)
+            {
+                transform = transform.parent;
+                path = transform.name + "/" + path;
+            }
+            return path;
+        }
+        
         /// <summary>
         /// 十六进制转换成Color，格式#A6B422FF或者A6B422FF
         /// </summary>

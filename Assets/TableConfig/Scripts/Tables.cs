@@ -15,16 +15,19 @@ namespace cfg
 public partial class Tables
 {
     public TbAudio TbAudio {get; }
+    public TblL10nUI TblL10nUI {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
         TbAudio = new TbAudio(loader("tbaudio"));
+        TblL10nUI = new TblL10nUI(loader("tbll10nui"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
         TbAudio.ResolveRef(this);
+        TblL10nUI.ResolveRef(this);
     }
 }
 
