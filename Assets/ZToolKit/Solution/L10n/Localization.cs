@@ -41,7 +41,7 @@ namespace ZToolKit
         {
             try
             {
-                text.text = L10nTool.GetStr(key);
+                text.text = L10nTool.GetUIStr(key);
             }
             catch (Exception e)
             {

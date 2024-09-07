@@ -13,14 +13,14 @@ using SimpleJSON;
 
 namespace cfg
 {
-public partial class TblL10nUI
+public partial class TbL10nUI
 {
     private readonly System.Collections.Generic.List<L10nUI> _dataList;
 
     private System.Collections.Generic.Dictionary<int, L10nUI> _dataMap_id;
     private System.Collections.Generic.Dictionary<string, L10nUI> _dataMap_l10n_key;
 
-    public TblL10nUI(JSONNode _buf)
+    public TbL10nUI(JSONNode _buf)
     {
         _dataList = new System.Collections.Generic.List<L10nUI>();
         

@@ -20,56 +20,34 @@ namespace ZToolKit
             set => Set(value);
         }
         
-        public static TblL10nUI UiL10n => CfgTool.Tables.TblL10nUI;
+        public static TbL10nUI UiL10n => CfgTool.Tables.TbL10nUI;
+        public static TbL10nGame GameL10n => CfgTool.Tables.TbL10nGame;
         
         public static event Action Event_OnChangeLanguage;
         
         private static Language sLanguage;
 
-        private static LanguageHandlerBase sLanguageHandler;
-        
-        private static Dictionary<Language, LanguageHandlerBase> sLanguageHandlers = new Dictionary<Language, LanguageHandlerBase>()
-        {
-            [Language.English] = new EnglishHandler(),
-            [Language.Chinese] = new ChineseHandler(),
-        };
-
         static L10nTool()
         {
-            sLanguageHandler = sLanguageHandlers[sLanguage];
+            Language = Language.Chinese;
         }
 
         private static void Set(Language language)
         {
             sLanguage = language;
-            sLanguageHandler = sLanguageHandlers[sLanguage];
             Event_OnChangeLanguage?.Invoke();
         }
+        
+        public static string GetUIStr(string key) => sLanguage switch
+        {
+            Language.Chinese => UiL10n.GetByL10nKey(key).Cn,
+            Language.English => UiL10n.GetByL10nKey(key).En,
+        };
 
-        public static string GetStr(string key)
+        public static string GetGameStr(string key) => sLanguage switch
         {
-            return sLanguageHandler.GetStr(key);
-        }
-        
-        private class ChineseHandler:LanguageHandlerBase
-        {
-            public override string GetStr(string key)
-            {
-                return UiL10n.GetByL10nKey(key).Cn;
-            }
-        }
-        
-        private class EnglishHandler:LanguageHandlerBase
-        {
-            public override string GetStr(string key)
-            {
-                return UiL10n.GetByL10nKey(key).En;
-            }
-        }
-        
-        private abstract class LanguageHandlerBase
-        {
-            public abstract string GetStr(string key);
-        }
+            Language.Chinese => GameL10n.GetByL10nKey(key).Cn,
+            Language.English => GameL10n.GetByL10nKey(key).En,
+        };
     }
 }

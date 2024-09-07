@@ -1,91 +1,91 @@
 [
   {
     "id": 1,
-    "l10n_key": "Common_Yes",
+    "l10n_key": "common_yes",
     "cn": "是",
     "en": "Yes"
   },
   {
     "id": 2,
-    "l10n_key": "Common_No",
+    "l10n_key": "common_no",
     "cn": "否",
     "en": "No"
   },
   {
     "id": 3,
-    "l10n_key": "Common_Help",
+    "l10n_key": "common_help",
     "cn": "帮助",
     "en": "Help"
   },
   {
     "id": 4,
-    "l10n_key": "Main_Play",
+    "l10n_key": "main_play",
     "cn": "开始游戏",
     "en": "Play"
   },
   {
     "id": 5,
-    "l10n_key": "Main_Settings",
+    "l10n_key": "main_settings",
     "cn": "设置",
     "en": "Settings"
   },
   {
     "id": 6,
-    "l10n_key": "Main_Exit",
+    "l10n_key": "main_exit",
     "cn": "退出游戏",
     "en": "Exit"
   },
   {
     "id": 7,
-    "l10n_key": "Settings_Display",
+    "l10n_key": "settings_display",
     "cn": "显示",
     "en": "Display"
   },
   {
     "id": 8,
-    "l10n_key": "Settings_Windowed",
+    "l10n_key": "settings_windowed",
     "cn": "窗口化",
     "en": "Windowed"
   },
   {
     "id": 9,
-    "l10n_key": "Settings_Full_Screen",
+    "l10n_key": "settings_full_screen",
     "cn": "全屏",
     "en": "Full Screen"
   },
   {
     "id": 10,
-    "l10n_key": "Settings_Language",
+    "l10n_key": "settings_language",
     "cn": "语言",
     "en": "Language"
   },
   {
     "id": 11,
-    "l10n_key": "Settings_Chinese",
+    "l10n_key": "settings_Chinese",
     "cn": "中文",
     "en": "中文"
   },
   {
     "id": 12,
-    "l10n_key": "Settings_English",
+    "l10n_key": "settings_English",
     "cn": "English",
     "en": "English"
   },
   {
     "id": 13,
-    "l10n_key": "Settings_Sound",
+    "l10n_key": "settings_sound",
     "cn": "声音",
     "en": "Sound"
   },
   {
     "id": 14,
-    "l10n_key": "Settings_Music_Vol",
+    "l10n_key": "settings_music_vol",
     "cn": "音乐",
     "en": "Music"
   },
   {
     "id": 15,
-    "l10n_key": "Settings_Sfx_Vol",
+    "l10n_key": "settings_sfx_vol",
     "cn": "音效",
     "en": "Sfx"
   }
