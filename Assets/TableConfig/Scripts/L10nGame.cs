@@ -17,7 +17,6 @@ public sealed partial class L10nGame : Luban.BeanBase
 {
     public L10nGame(JSONNode _buf) 
     {
-        { if(!_buf["id"].IsNumber) { throw new SerializationException(); }  Id = _buf["id"]; }
         { if(!_buf["l10n_key"].IsString) { throw new SerializationException(); }  L10nKey = _buf["l10n_key"]; }
         { if(!_buf["cn"].IsString) { throw new SerializationException(); }  Cn = _buf["cn"]; }
         { if(!_buf["en"].IsString) { throw new SerializationException(); }  En = _buf["en"]; }
@@ -28,10 +27,6 @@ public sealed partial class L10nGame : Luban.BeanBase
         return new L10nGame(_buf);
     }
 
-    /// <summary>
-    /// 序列号
-    /// </summary>
-    public readonly int Id;
     /// <summary>
     /// 语言key
     /// </summary>
@@ -53,13 +48,11 @@ public sealed partial class L10nGame : Luban.BeanBase
         
         
         
-        
     }
 
     public override string ToString()
     {
         return "{ "
-        + "id:" + Id + ","
         + "l10nKey:" + L10nKey + ","
         + "cn:" + Cn + ","
         + "en:" + En + ","

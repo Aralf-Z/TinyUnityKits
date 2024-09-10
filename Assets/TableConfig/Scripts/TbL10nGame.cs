@@ -15,13 +15,12 @@ namespace cfg
 {
 public partial class TbL10nGame
 {
+    private readonly System.Collections.Generic.Dictionary<string, L10nGame> _dataMap;
     private readonly System.Collections.Generic.List<L10nGame> _dataList;
-
-    private System.Collections.Generic.Dictionary<int, L10nGame> _dataMap_id;
-    private System.Collections.Generic.Dictionary<string, L10nGame> _dataMap_l10n_key;
-
+    
     public TbL10nGame(JSONNode _buf)
     {
+        _dataMap = new System.Collections.Generic.Dictionary<string, L10nGame>();
         _dataList = new System.Collections.Generic.List<L10nGame>();
         
         foreach(JSONNode _ele in _buf.Children)
@@ -29,21 +28,17 @@ public partial class TbL10nGame
             L10nGame _v;
             { if(!_ele.IsObject) { throw new SerializationException(); }  _v = L10nGame.DeserializeL10nGame(_ele);  }
             _dataList.Add(_v);
+            _dataMap.Add(_v.L10nKey, _v);
         }
-        _dataMap_id = new System.Collections.Generic.Dictionary<int, L10nGame>();
-        _dataMap_l10n_key = new System.Collections.Generic.Dictionary<string, L10nGame>();
-    foreach(var _v in _dataList)
-    {
-        _dataMap_id.Add(_v.Id, _v);
-        _dataMap_l10n_key.Add(_v.L10nKey, _v);
-    }
     }
 
+    public System.Collections.Generic.Dictionary<string, L10nGame> DataMap => _dataMap;
     public System.Collections.Generic.List<L10nGame> DataList => _dataList;
 
-    public L10nGame GetById(int key) => _dataMap_id.TryGetValue(key, out L10nGame __v) ? __v : null;
-    public L10nGame GetByL10nKey(string key) => _dataMap_l10n_key.TryGetValue(key, out L10nGame __v) ? __v : null;
-    
+    public L10nGame GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public L10nGame Get(string key) => _dataMap[key];
+    public L10nGame this[string key] => _dataMap[key];
+
     public void ResolveRef(Tables tables)
     {
         foreach(var _v in _dataList)
@@ -51,6 +46,7 @@ public partial class TbL10nGame
             _v.ResolveRef(tables);
         }
     }
+
 }
 
 }

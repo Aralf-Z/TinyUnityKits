@@ -17,12 +17,14 @@ public partial class Tables
     public TbAudio TbAudio {get; }
     public TbL10nUI TbL10nUI {get; }
     public TbL10nGame TbL10nGame {get; }
+    public Tbl10nTest Tbl10nTest {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
         TbAudio = new TbAudio(loader("tbaudio"));
         TbL10nUI = new TbL10nUI(loader("tbl10nui"));
         TbL10nGame = new TbL10nGame(loader("tbl10ngame"));
+        Tbl10nTest = new Tbl10nTest(loader("tbl10ntest"));
         ResolveRef();
     }
     
@@ -31,6 +33,7 @@ public partial class Tables
         TbAudio.ResolveRef(this);
         TbL10nUI.ResolveRef(this);
         TbL10nGame.ResolveRef(this);
+        Tbl10nTest.ResolveRef(this);
     }
 }
 

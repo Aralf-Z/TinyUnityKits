@@ -40,14 +40,14 @@ namespace ZToolKit
         
         public static string GetUIStr(string key) => sLanguage switch
         {
-            Language.Chinese => UiL10n.GetByL10nKey(key).Cn,
-            Language.English => UiL10n.GetByL10nKey(key).En,
+            Language.Chinese => UiL10n[key].Cn,
+            Language.English => UiL10n[key].En,
         };
 
         public static string GetGameStr(string key) => sLanguage switch
         {
-            Language.Chinese => GameL10n.GetByL10nKey(key).Cn,
-            Language.English => GameL10n.GetByL10nKey(key).En,
+            Language.Chinese => GameL10n[key].Cn,
+            Language.English => GameL10n[key].En,
         };
     }
 }

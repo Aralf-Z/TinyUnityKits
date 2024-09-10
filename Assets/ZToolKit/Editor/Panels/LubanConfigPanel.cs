@@ -354,14 +354,15 @@ namespace ZToolKit.Editor
                         process.WaitForExit();
                         AssetDatabase.Refresh();
                         
-                        if (outputStr.Contains("bye~"))
+                        if (outputStr.Contains("|ERROR|"))
                         {
-                            AnalysisConfigFile();
-                            LogTool.ZToolKitLog("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
+                            LogTool.ZToolKitLogError("Luban", "Analysis Failed");
+                            
                         }
                         else
                         {
-                            LogTool.ZToolKitLogError("Luban", "Analysis Failed");
+                            AnalysisConfigFile();
+                            LogTool.ZToolKitLog("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
                         }
                     
                         Debug.Log(outputStr);

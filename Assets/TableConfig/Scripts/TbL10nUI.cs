@@ -15,13 +15,12 @@ namespace cfg
 {
 public partial class TbL10nUI
 {
+    private readonly System.Collections.Generic.Dictionary<string, L10nUI> _dataMap;
     private readonly System.Collections.Generic.List<L10nUI> _dataList;
-
-    private System.Collections.Generic.Dictionary<int, L10nUI> _dataMap_id;
-    private System.Collections.Generic.Dictionary<string, L10nUI> _dataMap_l10n_key;
-
+    
     public TbL10nUI(JSONNode _buf)
     {
+        _dataMap = new System.Collections.Generic.Dictionary<string, L10nUI>();
         _dataList = new System.Collections.Generic.List<L10nUI>();
         
         foreach(JSONNode _ele in _buf.Children)
@@ -29,21 +28,17 @@ public partial class TbL10nUI
             L10nUI _v;
             { if(!_ele.IsObject) { throw new SerializationException(); }  _v = L10nUI.DeserializeL10nUI(_ele);  }
             _dataList.Add(_v);
+            _dataMap.Add(_v.L10nKey, _v);
         }
-        _dataMap_id = new System.Collections.Generic.Dictionary<int, L10nUI>();
-        _dataMap_l10n_key = new System.Collections.Generic.Dictionary<string, L10nUI>();
-    foreach(var _v in _dataList)
-    {
-        _dataMap_id.Add(_v.Id, _v);
-        _dataMap_l10n_key.Add(_v.L10nKey, _v);
-    }
     }
 
+    public System.Collections.Generic.Dictionary<string, L10nUI> DataMap => _dataMap;
     public System.Collections.Generic.List<L10nUI> DataList => _dataList;
 
-    public L10nUI GetById(int key) => _dataMap_id.TryGetValue(key, out L10nUI __v) ? __v : null;
-    public L10nUI GetByL10nKey(string key) => _dataMap_l10n_key.TryGetValue(key, out L10nUI __v) ? __v : null;
-    
+    public L10nUI GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+    public L10nUI Get(string key) => _dataMap[key];
+    public L10nUI this[string key] => _dataMap[key];
+
     public void ResolveRef(Tables tables)
     {
         foreach(var _v in _dataList)
@@ -51,6 +46,7 @@ public partial class TbL10nUI
             _v.ResolveRef(tables);
         }
     }
+
 }
 
 }
