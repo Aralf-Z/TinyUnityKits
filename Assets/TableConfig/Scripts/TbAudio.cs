@@ -15,38 +15,64 @@ namespace cfg
 {
 public partial class TbAudio
 {
-    private readonly System.Collections.Generic.Dictionary<string, Audio> _dataMap;
-    private readonly System.Collections.Generic.List<Audio> _dataList;
-    
+
+     private readonly Audio _data;
+
+     public Audio Data => _data;
+
     public TbAudio(JSONNode _buf)
     {
-        _dataMap = new System.Collections.Generic.Dictionary<string, Audio>();
-        _dataList = new System.Collections.Generic.List<Audio>();
-        
-        foreach(JSONNode _ele in _buf.Children)
-        {
-            Audio _v;
-            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = Audio.DeserializeAudio(_ele);  }
-            _dataList.Add(_v);
-            _dataMap.Add(_v.EnterBtn, _v);
-        }
+        int n = _buf.Count;
+        if (n != 1) throw new SerializationException("table mode=one, but size != 1");
+        { if(!_buf[0].IsObject) { throw new SerializationException(); }  _data = Audio.DeserializeAudio(_buf[0]);  }
     }
 
-    public System.Collections.Generic.Dictionary<string, Audio> DataMap => _dataMap;
-    public System.Collections.Generic.List<Audio> DataList => _dataList;
 
-    public Audio GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-    public Audio Get(string key) => _dataMap[key];
-    public Audio this[string key] => _dataMap[key];
-
+    /// <summary>
+    /// 按钮_悬停
+    /// </summary>
+     public string EnterBtn => _data.EnterBtn;
+    /// <summary>
+    /// 按钮_点击
+    /// </summary>
+     public string ClickBtn => _data.ClickBtn;
+    /// <summary>
+    /// 切换_点击
+    /// </summary>
+     public string ClickTgl => _data.ClickTgl;
+    /// <summary>
+    /// 进度条_拖拽_测试音乐
+    /// </summary>
+     public string DragBarMusic => _data.DragBarMusic;
+    /// <summary>
+    /// 进度条_拖拽_测试音效
+    /// </summary>
+     public string DragBarSfx => _data.DragBarSfx;
+    /// <summary>
+    /// 主菜单_背景乐
+    /// </summary>
+     public string MainMenuBgm => _data.MainMenuBgm;
+    /// <summary>
+    /// 游戏_背景乐
+    /// </summary>
+     public string GameBgm => _data.GameBgm;
+    /// <summary>
+    /// 弹窗_弹出
+    /// </summary>
+     public string PopOut => _data.PopOut;
+    /// <summary>
+    /// 弹窗_移动
+    /// </summary>
+     public string PopMove => _data.PopMove;
+    /// <summary>
+    /// 弹窗_隐藏
+    /// </summary>
+     public string PopHide => _data.PopHide;
+    
     public void ResolveRef(Tables tables)
     {
-        foreach(var _v in _dataList)
-        {
-            _v.ResolveRef(tables);
-        }
+        _data.ResolveRef(tables);
     }
-
 }
 
 }
