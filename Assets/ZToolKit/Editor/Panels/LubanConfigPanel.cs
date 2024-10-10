@@ -237,7 +237,7 @@ namespace ZToolKit.Editor
             using (var h = new GUILayout.HorizontalScope())
             {
                 mLubanConfigUrl = GUILayout.TextField(mLubanConfigUrl, GUILayout.Width(windowRect.width * 5 / 9));
-                
+
                 GUILayout.Space(5);
                 GUILayout.FlexibleSpace();
                 GUI.backgroundColor = Color.green;
@@ -245,6 +245,7 @@ namespace ZToolKit.Editor
                 if (GUILayout.Button("打开云端配置表", EditorStyles.miniButton, GUILayout.Width(100)))
                 {
                     Application.OpenURL(mLubanConfigUrl);
+                    EditorPrefs.SetString(EditorPrefsKeys.LubanConfigUrl, mLubanConfigUrl);
                 }
 
                 GUI.backgroundColor = Color.white;
