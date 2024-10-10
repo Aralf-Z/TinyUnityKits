@@ -28,6 +28,11 @@ namespace ZToolKit
             }
         }
 
+        public static void PlayTest(string clipName, float value)
+        {
+            AudMgr.PlayTestAudio(clipName, value);
+        }
+
         public static void SetActive(bool active)
         {
             AudMgr.Instance.IsActive = active;

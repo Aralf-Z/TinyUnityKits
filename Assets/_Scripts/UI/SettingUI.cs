@@ -9,7 +9,7 @@ public class SettingUI : UIScreen
 
     protected override string SfxOnHide => CfgTool.Audio.PopHide;
 
-    [Header("SettingUI")] 
+    [Header("SettingUI")]
     public Toggle fullScreenTgl;
     public Toggle windowedTgl;
     
@@ -21,6 +21,9 @@ public class SettingUI : UIScreen
     public Scrollbar sfxScroll;
 
     public Button exitBtn;
+
+    private Toggles mDisplayTgls;
+    private Toggles mLanguageTgls;
     
     protected override void OnInit()
     {
@@ -43,28 +46,25 @@ public class SettingUI : UIScreen
 
     private void DisplayInit()
     {
-        fullScreenTgl.isOn = Screen.fullScreen;
-        
+        mDisplayTgls = new Toggles(Screen.fullScreen ? fullScreenTgl : windowedTgl, windowedTgl, fullScreenTgl);
+
         fullScreenTgl.onValueChanged.AddListener(isOn =>
         {
-            if (Screen.fullScreen != isOn)
-            {
-                Screen.fullScreen = isOn;
-            }
+            Screen.fullScreen = isOn;
         });
     }
 
     private void LanguageInit()
     {
-        englishTgl.isOn = L10nTool.Language == Language.English;
-        
+        mLanguageTgls = new Toggles(L10nTool.Language switch
+        {
+            Language.English => englishTgl,
+            Language.Chinese => chineseTgl,
+            _ => throw new ArgumentOutOfRangeException()
+        }, englishTgl, chineseTgl);
+
         englishTgl.onValueChanged.AddListener(isOn =>
         {
-            if (L10nTool.Language == Language.English)
-            {
-                return;
-            }
-
             if (isOn)
             {
                 L10nTool.Language = Language.English;
@@ -73,11 +73,6 @@ public class SettingUI : UIScreen
         
         chineseTgl.onValueChanged.AddListener(isOn =>
         {
-            if (L10nTool.Language == Language.Chinese)
-            {
-                return;
-            }
-
             if (isOn)
             {
                 L10nTool.Language = Language.Chinese;
@@ -99,7 +94,15 @@ public class SettingUI : UIScreen
             }
         });
         
-        musicScroll.onValueChanged.AddListener(AudTool.SetMusicVol);
-        sfxScroll.onValueChanged.AddListener(AudTool.SetSfxVol);
+        musicScroll.onValueChanged.AddListener(value =>
+        {
+            AudTool.SetMusicVol(value);
+            //AudTool.PlayTest(CfgTool.Audio.DragBarMusic, value);
+        });
+        sfxScroll.onValueChanged.AddListener(value =>
+        {
+            AudTool.SetSfxVol(value);
+            //AudTool.PlayTest(CfgTool.Audio.DragBarSfx, value);
+        });
     }
 }

@@ -37,6 +37,10 @@ public partial class TbAudio
     /// </summary>
      public string ClickBtn => _data.ClickBtn;
     /// <summary>
+    /// 切换_悬停
+    /// </summary>
+     public string EnterTgl => _data.EnterTgl;
+    /// <summary>
     /// 切换_点击
     /// </summary>
      public string ClickTgl => _data.ClickTgl;

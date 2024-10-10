@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ZToolKit;
 
-public class GameHudUI :UIScreen
+public class GameHudUI: UIScreen
 {
     [Header("GameHudUI")] 
     public Button settingBtn;

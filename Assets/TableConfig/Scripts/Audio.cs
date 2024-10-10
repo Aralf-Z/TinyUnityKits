@@ -19,6 +19,7 @@ public sealed partial class Audio : Luban.BeanBase
     {
         { if(!_buf["enter_btn"].IsString) { throw new SerializationException(); }  EnterBtn = _buf["enter_btn"]; }
         { if(!_buf["click_btn"].IsString) { throw new SerializationException(); }  ClickBtn = _buf["click_btn"]; }
+        { if(!_buf["enter_tgl"].IsString) { throw new SerializationException(); }  EnterTgl = _buf["enter_tgl"]; }
         { if(!_buf["click_tgl"].IsString) { throw new SerializationException(); }  ClickTgl = _buf["click_tgl"]; }
         { if(!_buf["drag_bar_music"].IsString) { throw new SerializationException(); }  DragBarMusic = _buf["drag_bar_music"]; }
         { if(!_buf["drag_bar_sfx"].IsString) { throw new SerializationException(); }  DragBarSfx = _buf["drag_bar_sfx"]; }
@@ -42,6 +43,10 @@ public sealed partial class Audio : Luban.BeanBase
     /// 按钮_点击
     /// </summary>
     public readonly string ClickBtn;
+    /// <summary>
+    /// 切换_悬停
+    /// </summary>
+    public readonly string EnterTgl;
     /// <summary>
     /// 切换_点击
     /// </summary>
@@ -90,6 +95,7 @@ public sealed partial class Audio : Luban.BeanBase
         
         
         
+        
     }
 
     public override string ToString()
@@ -97,6 +103,7 @@ public sealed partial class Audio : Luban.BeanBase
         return "{ "
         + "enterBtn:" + EnterBtn + ","
         + "clickBtn:" + ClickBtn + ","
+        + "enterTgl:" + EnterTgl + ","
         + "clickTgl:" + ClickTgl + ","
         + "dragBarMusic:" + DragBarMusic + ","
         + "dragBarSfx:" + DragBarSfx + ","

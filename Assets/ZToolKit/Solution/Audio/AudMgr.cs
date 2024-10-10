@@ -10,30 +10,32 @@ namespace ZToolKit
     {
         public AudioSource musicSource;
         public AudioSource sfxSource;
+        public AudioSource testSource;
 
-        public float MusicVol => musicSource.volume; 
-        public float SfxVol => sfxSource.volume; 
-        
+        public float MusicVol => musicSource.volume;
+        public float SfxVol => sfxSource.volume;
+
         public bool IsActive
         {
             get => mIsActive;
 
             set => mIsActive = value;
         }
-        
+
         private bool mIsActive = true;
-        
+
         protected override void OnAwake()
         {
             musicSource.loop = true;
             sfxSource.loop = false;
+            testSource.loop = false;
         }
 
         protected override void OnStart()
         {
-            
+
         }
-        
+
         public static void PlayMusic(string clipName)
         {
             if (Instance.mIsActive)
@@ -53,6 +55,17 @@ namespace ZToolKit
             if (Instance.mIsActive)
             {
                 Instance.sfxSource.PlayOneShot(ResTool.Load<AudioClip>(clipName));
+            }
+        }
+
+        public static void PlayTestAudio(string clipName, float value)
+        {
+            if (Instance.mIsActive)
+            {
+                Instance.testSource.Stop();
+                Instance.testSource.volume = value;
+                Instance.testSource.clip =ResTool.Load<AudioClip>(clipName);
+                Instance.testSource.Play();
             }
         }
 

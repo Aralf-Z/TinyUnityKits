@@ -1,10 +1,11 @@
 [
   {
-    "enter_btn": "按钮悬停",
-    "click_btn": "按钮点击",
-    "click_tgl": "按钮点击",
+    "enter_btn": "SFX_UI_Button_Keyboard_Space_Thick_1",
+    "click_btn": "SFX_UI_Button_Keyboard_Enter_Thick_1",
+    "enter_tgl": "SFX_UI_Button_Keyboard_Space_Thick_1",
+    "click_tgl": "SFX_UI_Button_Keyboard_Enter_Thick_1",
     "drag_bar_music": "主页面bgm",
-    "drag_bar_sfx": "按钮点击",
+    "drag_bar_sfx": "SFX_UI_Button_Keyboard_Enter_Thick_1",
     "main_menu_bgm": "主页面bgm",
     "game_bgm": "游戏bgm",
     "pop_out": "SFX_UI_Click_Designed_Pop_Open_2",
