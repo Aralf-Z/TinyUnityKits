@@ -350,7 +350,7 @@ namespace ZToolKit.Editor
                     {
                         string outputStr = process.StandardOutput.ReadToEnd();
                 
-                        EditorUtility.DisplayProgressBar("luban", "解析中", .6f);
+                        EditorUtility.DisplayProgressBar("Luban", "解析中", .6f);
                         
                         process.WaitForExit();
                         AssetDatabase.Refresh();

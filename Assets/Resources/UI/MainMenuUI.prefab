@@ -992,5 +992,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 7735412704113742558}
-  key: Main_Exit
-  onChangeEvent: 0
+  key: main_exit

@@ -36,7 +36,7 @@ namespace ZToolKit
                 return Resources.Load<T>(sNamePathDic[prefabName]);
             }
             
-            LogTool.EditorLogError($"ResLoad---Failed To Load {prefabName}");
+            LogTool.EditorLogError(@$"ResLoad---Failed To Load ""{prefabName}""");
             return null;
         }
         
@@ -63,7 +63,7 @@ namespace ZToolKit
             }
         }
         
-        public static async UniTask LoadJson()
+        private static async UniTask LoadJson()
         {
             string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
 

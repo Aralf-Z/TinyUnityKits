@@ -39,16 +39,7 @@ namespace ZToolKit
 
         private void OnLanguageChange()
         {
-            try
-            {
-                text.text = L10nTool.GetUIStr(key);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                LogTool.EditorLogError($"Invalid Key:{key}, path:{transform.GetPath()}");
-                throw;
-            }
+            text.text = L10nTool.GetUIStr(transform, key);
         }
 
 #if UNITY_EDITOR

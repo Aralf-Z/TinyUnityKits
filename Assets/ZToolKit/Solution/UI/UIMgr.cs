@@ -65,7 +65,7 @@ namespace ZToolKit
             }
             else
             {
-                Debug.LogError("UI Is Not Open");
+                LogTool.ZToolKitLog("ZToolKit", @$"TryGetUI""{uiName}"", but it is not on open");
                 return null;
             }
         }

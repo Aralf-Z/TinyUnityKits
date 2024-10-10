@@ -61,11 +61,11 @@ namespace ZToolKit.Editor
                 }
                 
                 CreateResConfig(resConfig);
-                LogTool.ZToolKitLog("Resources", "资源路径配置完成");
+                LogTool.ZToolKitLog("ResTool", "资源路径配置完成");
             }
             catch (Exception e)
             {
-                LogTool.ZToolKitLog("Resources", "资源路径配置失败");
+                LogTool.ZToolKitLogError("ResTool", $"资源路径配置失败:{e.Message}");
                 throw;
             }
             finally

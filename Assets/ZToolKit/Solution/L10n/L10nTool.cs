@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using cfg;
 using UnityEngine;
 
@@ -38,16 +39,36 @@ namespace ZToolKit
             Event_OnChangeLanguage?.Invoke();
         }
         
-        public static string GetUIStr(string key) => sLanguage switch
+        public static string GetUIStr(Transform refTransform, string key)
         {
-            Language.Chinese => UiL10n[key].Cn,
-            Language.English => UiL10n[key].En,
-        };
+            if(UiL10n.DataMap.TryGetValue(key, out var l10N))
+            {
+                return sLanguage switch
+                {
+                    Language.Chinese => l10N.Cn,
+                    Language.English => l10N.En,
+                    _ => default,
+                };
+            }
+            
+            LogTool.ZToolKitLogError("L10nTool",$"Invalid Key:{key}, path:{refTransform.GetPath()}");
+            return default;
+        }
 
-        public static string GetGameStr(string key) => sLanguage switch
+        public static string GetGameStr(string key)
         {
-            Language.Chinese => GameL10n[key].Cn,
-            Language.English => GameL10n[key].En,
-        };
+            if(GameL10n.DataMap.TryGetValue(key, out var l10N))
+            {
+                return sLanguage switch
+                {
+                    Language.Chinese => l10N.Cn,
+                    Language.English => l10N.En,
+                    _ => default,
+                };
+            }
+            
+            LogTool.ZToolKitLogError("L10nTool",$"Invalid Key:{key}");
+            return default;
+        }
     }
 }
