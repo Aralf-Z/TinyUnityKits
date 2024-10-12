@@ -40,55 +40,61 @@ namespace ZToolKit
 
         public void AnimOnOpen()
         {
-            var type = mUI.animOnOpen;
-            
-            mUI.gameObject.SetActive(true);
-            mUI.animRoot.localScale = Vector3.one;
-            mUI.animRoot.anchoredPosition = Vector2.zero;
-            mCg.alpha = 1;
-
-            switch (type)
+            if (mUI.animRoot)
             {
-                case UIAnimType.PopOut : 
-                    PopOutOnOpen(); 
-                    break;
-                case UIAnimType.PopMoveLeft:
-                case UIAnimType.PopMoveRight:
-                case UIAnimType.PopMoveUp:
-                case UIAnimType.PopMoveDown:
-                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
-                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
-                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
-                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
-                    PopMoveOnOpen(GetDir(type));
-                    break;
-                default:
-                    break;
+                var type = mUI.animOnOpen;
+            
+                mUI.gameObject.SetActive(true);
+                mUI.animRoot.localScale = Vector3.one;
+                mUI.animRoot.anchoredPosition = Vector2.zero;
+                mCg.alpha = 1;
+
+                switch (type)
+                {
+                    case UIAnimType.PopOut : 
+                        PopOutOnOpen(); 
+                        break;
+                    case UIAnimType.PopMoveLeft:
+                    case UIAnimType.PopMoveRight:
+                    case UIAnimType.PopMoveUp:
+                    case UIAnimType.PopMoveDown:
+                        // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
+                        // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
+                        // case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
+                        // case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
+                        PopMoveOnOpen(GetDir(type));
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
         public void AnimOnHide()
         {
-            var type = mUI.animOnHide;
-            
-            switch (type)
+            if (mUI.animRoot)
             {
-                case UIAnimType.PopOut: 
-                    PopOutOnHide(); 
-                    break;
-                case UIAnimType.PopMoveLeft:
-                case UIAnimType.PopMoveRight:
-                case UIAnimType.PopMoveUp:
-                case UIAnimType.PopMoveDown:
-                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
-                // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
-                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
-                // case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
-                PopMoveOnHide(GetDir(type));
-                    break;
-                default:
-                    mUI.gameObject.SetActive(false);
-                    break;
+                var type = mUI.animOnHide;
+            
+                switch (type)
+                {
+                    case UIAnimType.PopOut: 
+                        PopOutOnHide(); 
+                        break;
+                    case UIAnimType.PopMoveLeft:
+                    case UIAnimType.PopMoveRight:
+                    case UIAnimType.PopMoveUp:
+                    case UIAnimType.PopMoveDown:
+                        // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveUp:
+                        // case UIAnimType.PopMoveLeft | UIAnimType.PopMoveDown:
+                        // case UIAnimType.PopMoveRight | UIAnimType.PopMoveUp:
+                        // case UIAnimType.PopMoveRight | UIAnimType.PopMoveDown:
+                        PopMoveOnHide(GetDir(type));
+                        break;
+                    default:
+                        mUI.gameObject.SetActive(false);
+                        break;
+                }
             }
         }
 

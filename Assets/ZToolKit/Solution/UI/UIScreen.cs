@@ -6,14 +6,13 @@ namespace ZToolKit
     public abstract class UIScreen : MonoBehaviour
     {
         [Header("UIScreen")]
-        [Tooltip("弹窗一般会点击空白处会关闭，所以空白背景可以添加canClick组件。但管理器并不会自动搜寻该组件，需要手动拖拽")]
+        [Tooltip("弹窗一般会点击空白处会关闭，所以空白背景可以添加canClick组件。")]
         public CanClick[] hideCpts;
         [Tooltip("UI的打开动画形式")]
-        public UIAnimType animOnOpen;
+        public UIAnimType animOnOpen = UIAnimType.None;
         [Tooltip("UI的关闭动画形式")]
-        public UIAnimType animOnHide;
-
-        [Tooltip(@"弹窗一般有一个蒙版背景，所以动画并非整个UI, 需要一个根对象，如果为空，那么管理器会在UI中自动搜寻""Frame""作为根对象")]
+        public UIAnimType animOnHide = UIAnimType.None;
+        [Tooltip("动画根对象")]
         public RectTransform animRoot;
 
         protected virtual string SfxOnOpen => string.Empty;
@@ -26,11 +25,6 @@ namespace ZToolKit
         {
             OnInit();
 
-            if (!animRoot)
-            {
-                animRoot = transform.Find("Frame").GetComponent<RectTransform>();
-            }
-            
             foreach (var cpt in hideCpts)
             {
                 cpt.onClickAct += HideSelf;

@@ -7,14 +7,14 @@ using UnityEngine.UI;
 namespace ZToolKit
 {
     [DisallowMultipleComponent]
-    public class Localization : MonoBehaviour
+    public abstract class LocalizationBase : MonoBehaviour
     {
-        [Tooltip("文本组件")]
-        public Text text;
-
-        [Tooltip("语言key")]
+        public Graphic target;
+        
         public string key;
 
+        protected RectTransform mRectTransform;
+        
         private void Awake()
         {
             OnLanguageChange();
@@ -37,18 +37,14 @@ namespace ZToolKit
             L10nTool.Event_OnChangeLanguage -= OnLanguageChange;
         }
 
-        private void OnLanguageChange()
-        {
-            text.text = L10nTool.GetUIStr(transform, key);
-        }
+        protected abstract void OnLanguageChange();
 
 #if UNITY_EDITOR
-        
-        private void OnValidate()
+        protected virtual void OnValidate()
         {
-            text = transform.GetComponent<Text>();
+            target = transform.GetComponent<Graphic>();
+            mRectTransform = (RectTransform) transform;
         }
-        
 #endif
     }
 }
