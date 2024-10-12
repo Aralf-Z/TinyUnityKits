@@ -13,7 +13,7 @@ namespace ZToolKit.Editor
 {
     public class ResourcesConfigPanel : PanelBase
     {
-        public override int Priority => 5;
+        public override int Priority => 6;
         public override string PanelName => "[编辑器] 资源加载设置";
         
         public override void Init()

@@ -8,7 +8,7 @@ namespace ZToolKit.Editor
 {
     public class VersionCtrlPanel : PanelBase
     {
-        public override int Priority => 1;
+        public override int Priority => 5;
         public override string PanelName => "[编辑器] 版本控制";
 
         public override void Init()
