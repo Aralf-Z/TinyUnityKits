@@ -49,31 +49,7 @@ namespace ZToolKit.Editor
                  }}";
             }
         }
-        
-        private const string kBuiltinXml = @"
-            <module name="""">
-                <bean name=""vector2"" valueType=""1"" sep="","">
-                    <var name=""x"" type=""float""/>
-                    <var name=""y"" type=""float""/>
-                </bean>
-                <bean name=""vector3"" valueType=""1"" sep="","">
-                    <var name=""x"" type=""float""/>
-                    <var name=""y"" type=""float""/>
-                    <var name=""z"" type=""float""/>
-                </bean>
-                <bean name=""vector4"" valueType=""1"" sep="","">
-                    <var name=""x"" type=""float""/>
-                    <var name=""y"" type=""float""/>
-                    <var name=""z"" type=""float""/>
-                    <var name=""w"" type=""float""/>
-                </bean>
-            </module>";
-        //     <mapper target=""client"" codeTarget=""cs-bin"">
-        // <option name=""type"" value=""UnityEngine.Vector2""/>
-        // <option name=""constructor"" value=""ExternalTypeUtil.NewVector2""/>
-        // </mapper> //类型映射
-        
-        
+
         public override int Priority => 101;
         public override string PanelName => "[编辑器] Luban设置";
 
@@ -335,7 +311,9 @@ namespace ZToolKit.Editor
                 {
                     Directory.CreateDirectory(definesPath);
                 }
-                File.WriteAllText(definesFilePath, kBuiltinXml);
+
+                var builtinXml = File.ReadAllText(Path.Combine(mLubanPath, "Defines/builtin.xml"));
+                File.WriteAllText(definesFilePath, builtinXml);
                 EditorUtility.DisplayProgressBar("创建依赖", "Defines/builtin.xml", .4f);
                 
                 try
