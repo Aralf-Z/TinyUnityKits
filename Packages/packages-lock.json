@@ -6,14 +6,6 @@
       "source": "embedded",
       "dependencies": {}
     },
-    "com.esotericsoftware.spine.urp-shaders": {
-      "version": "file:com.esotericsoftware.spine.urp-shaders-4.2-2019.1",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.render-pipelines.universal": "7.1.5"
-      }
-    },
     "com.unity.2d.common": {
       "version": "6.0.7",
       "depth": 1,
@@ -122,49 +114,12 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.render-pipelines.core": {
-      "version": "12.1.15",
-      "depth": 2,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.physics": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      }
-    },
-    "com.unity.render-pipelines.universal": {
-      "version": "12.1.15",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.mathematics": "1.2.1",
-        "com.unity.burst": "1.8.9",
-        "com.unity.render-pipelines.core": "12.1.15",
-        "com.unity.shadergraph": "12.1.15"
-      }
-    },
     "com.unity.scriptablebuildpipeline": {
       "version": "2.1.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
-    },
-    "com.unity.searcher": {
-      "version": "4.9.1",
-      "depth": 3,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.shadergraph": {
-      "version": "12.1.15",
-      "depth": 2,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.render-pipelines.core": "12.1.15",
-        "com.unity.searcher": "4.9.1"
-      }
     },
     "com.unity.test-framework": {
       "version": "1.1.33",
