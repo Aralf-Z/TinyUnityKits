@@ -16,7 +16,7 @@ namespace ZToolKit
         public override void OnPointerClick(PointerEventData eventData)
         {
             base.OnPointerClick(eventData);
-            
+            Debug.Log(111);
             AudTool.PlaySfx(CfgTool.Audio.ClickTgl);
         }
     }
