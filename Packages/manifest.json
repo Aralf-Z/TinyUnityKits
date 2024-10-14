@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.tuyoogame.yooasset": "2.2.4-preview",
     "com.unity.2d.pixel-perfect": "5.0.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.spriteshape": "7.0.7",
