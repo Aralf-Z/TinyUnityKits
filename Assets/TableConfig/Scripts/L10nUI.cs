@@ -45,9 +45,6 @@ public sealed partial class L10nUI : Luban.BeanBase
 
     public  void ResolveRef(Tables tables)
     {
-        
-        
-        
     }
 
     public override string ToString()
@@ -61,3 +58,4 @@ public sealed partial class L10nUI : Luban.BeanBase
 }
 
 }
+

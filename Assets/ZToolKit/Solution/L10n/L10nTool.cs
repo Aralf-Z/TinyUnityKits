@@ -51,7 +51,7 @@ namespace ZToolKit
                 };
             }
             
-            LogTool.ZToolKitLogError("L10nTool",$"Invalid Key:{key}, path:{refTransform.GetPath()}");
+            LogTool.ZToolKitError("L10nTool",$"Invalid Key:{key}, path:{refTransform.GetPath()}");
             return default;
         }
 
@@ -67,7 +67,7 @@ namespace ZToolKit
                 };
             }
             
-            LogTool.ZToolKitLogError("L10nTool",$"Invalid Key:{key}");
+            LogTool.ZToolKitError("L10nTool",$"Invalid Key:{key}");
             return default;
         }
     }

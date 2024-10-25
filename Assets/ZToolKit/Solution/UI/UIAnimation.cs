@@ -40,11 +40,11 @@ namespace ZToolKit
 
         public void AnimOnOpen()
         {
+            mUI.gameObject.SetActive(true);
+            
             if (mUI.animRoot)
             {
                 var type = mUI.animOnOpen;
-            
-                mUI.gameObject.SetActive(true);
                 mUI.animRoot.localScale = Vector3.one;
                 mUI.animRoot.anchoredPosition = Vector2.zero;
                 mCg.alpha = 1;
@@ -95,6 +95,10 @@ namespace ZToolKit
                         mUI.gameObject.SetActive(false);
                         break;
                 }
+            }
+            else
+            {
+                mUI.gameObject.SetActive(false);
             }
         }
 

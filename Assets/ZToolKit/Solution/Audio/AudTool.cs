@@ -58,7 +58,7 @@ namespace ZToolKit
             
             if (clipName != string.Empty)
             {
-                LogTool.ZToolKitLogError("AudioTool",@$"资源：""{clipName}""不存在");
+                LogTool.ZToolKitError("AudioTool",@$"资源：""{clipName}""不存在");
             }
             
             return false;

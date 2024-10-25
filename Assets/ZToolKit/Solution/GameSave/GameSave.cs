@@ -54,7 +54,7 @@ namespace ZToolKit
             var savePath = GetSavePath();
             
             File.WriteAllText(savePath, saveJson);
-            LogTool.ZToolKitLog("GameSave","Game saved successfully!");
+            LogTool.ZToolKitInfo("GameSave","Game saved successfully!");
         }
 
         private static TSave LoadSave<TSave>() where TSave: new()

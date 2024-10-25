@@ -11,7 +11,55 @@ namespace ZToolKit
     public static class LogTool
     {
         public static bool logZToolKit = true;
+
+        #region 游戏日志
+
+        /// <summary>
+        /// 信息级别日志
+        /// </summary>
+        /// <param name="headStr"></param>
+        /// <param name="messageStr"></param>
+        /// <param name="color"></param>
+        public static void Info(string headStr, string messageStr, Color color = default)
+        {
+            DefaultLog($"Info-{headStr}", messageStr, color);
+        }
         
+        /// <summary>
+        /// 调试级别日志
+        /// </summary>
+        /// <param name="headStr"></param>
+        /// <param name="messageStr"></param>
+        /// <param name="color"></param>
+        public static void Debug(string headStr, string messageStr, Color color = default)
+        {
+            DefaultLog($"Debug-{headStr}", messageStr, color);
+        }
+
+        /// <summary>
+        /// 警告级别日志
+        /// </summary>
+        /// <param name="headStr"></param>
+        /// <param name="messageStr"></param>
+        public static void Warning(string headStr, string messageStr)
+        {
+            DefaultLog($"Warning-{headStr}", messageStr, Color.yellow);
+        }
+        
+        /// <summary>
+        /// 错误级别日志
+        /// </summary>
+        /// <param name="headStr"></param>
+        /// <param name="messageStr"></param>
+        public static void Error(string headStr, string messageStr)
+        {
+            DefaultLog($"Error-{headStr}", messageStr, Color.magenta);
+        }
+        
+        #endregion
+        
+        #region 编辑器日志
+
         /// <summary>
         /// 编辑器日志
         /// </summary>
@@ -22,7 +70,7 @@ namespace ZToolKit
         {
 #if UNITY_EDITOR
             color = color == default ? Color.white : color;
-            Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
+            UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
 #endif
         }
 
@@ -30,38 +78,49 @@ namespace ZToolKit
         /// 编辑器错误日志
         /// </summary>
         /// <param name="messageStr"></param>
-        public static void EditorLogError(string messageStr)
+        public static void EditorError(string messageStr)
         {
 #if UNITY_EDITOR
-            Debug.LogError(messageStr);
+            UnityEngine.Debug.LogError(messageStr);
 #endif
+        }
+
+        #endregion
+
+        #region ZToolKit日志
+
+        /// <summary>
+        /// ZToolKit信息日志
+        /// </summary>
+        /// <param name="headStr"></param>
+        /// <param name="messageStr"></param>
+        public static void ZToolKitInfo(string headStr, string messageStr)
+        {
+            if (logZToolKit)
+            {
+                UnityEngine.Debug.Log($"<color=#bd868dff>[ZTool-{headStr}]: {messageStr}</color>");
+            }
         }
         
         /// <summary>
-        /// 编辑器错误日志
+        /// ZToolKit错误日志
         /// </summary>
+        /// <param name="headStr"></param>
         /// <param name="messageStr"></param>
-        public static void EditorLogError(Exception messageStr)
-        {
-#if UNITY_EDITOR
-            Debug.LogError(messageStr);
-#endif
-        }
-        
-        public static void ZToolKitLog(string headStr, string messageStr)
+        public static void ZToolKitError(string headStr, string messageStr)
         {
             if (logZToolKit)
             {
-                Debug.Log($"<color=#bd868dff>[ZTool-{headStr}]: {messageStr}</color>");
+                UnityEngine.Debug.Log($"<color=#ca463dff>[ZTool-{headStr}]: {messageStr}</color>");
             }
         }
-        
-        public static void ZToolKitLogError(string headStr, string messageStr)
+
+        #endregion
+
+        private static void DefaultLog(string headStr, string messageStr, Color color = default)
         {
-            if (logZToolKit)
-            {
-                Debug.Log($"<color=#CA463Dff>[ZTool-{headStr}]: {messageStr}</color>");
-            }
+            color = color == default ? Color.white : color;
+            UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
         }
     }
 } 

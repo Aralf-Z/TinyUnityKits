@@ -36,7 +36,7 @@ namespace ZToolKit
                 return Resources.Load<T>(sNamePathDic[prefabName]);
             }
             
-            LogTool.EditorLogError(@$"ResLoad---Failed To Load ""{prefabName}""");
+            LogTool.EditorError(@$"ResLoad---Failed To Load ""{prefabName}""");
             return null;
         }
         
@@ -53,12 +53,12 @@ namespace ZToolKit
                 try
                 {
                     Init().GetAwaiter().GetResult();
-                    LogTool.ZToolKitLog("ResTool", "Lazy Load");
+                    LogTool.ZToolKitInfo("ResTool", "Lazy Load");
                 }
                 catch (Exception e)
                 {
                     Debug.LogError(e);
-                    LogTool.ZToolKitLogError("ResTool", "Lazy Load Error");
+                    LogTool.ZToolKitError("ResTool", "Lazy Load Error");
                 }
             }
         }

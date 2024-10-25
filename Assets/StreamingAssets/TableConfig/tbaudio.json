@@ -1,15 +1,15 @@
 [
   {
-    "enter_btn": "SFX_UI_Click_Designed_Pop_Generic_1",
-    "click_btn": "SFX_UI_Button_Keyboard_Enter_Thick_1",
-    "enter_tgl": "SFX_UI_Click_Designed_Pop_Generic_1",
-    "click_tgl": "SFX_UI_Button_Keyboard_Enter_Thick_1",
-    "drag_bar_music": "Bustling_Town_Short_Loop",
-    "drag_bar_sfx": "SFX_UI_Button_Keyboard_Enter_Thick_1",
-    "main_menu_bgm": "Bustling_Town_Short_Loop",
-    "game_bgm": "Combat_Loop",
-    "pop_out": "SFX_UI_Click_Designed_Pop_Open_2",
-    "pop_move": "SFX_UI_Click_Designed_Pop_Movement_Open_1",
-    "pop_hide": "SFX_UI_Click_Organic_Pop_Thin_Generic_1"
+    "enter_btn": "sfx_button_enter",
+    "click_btn": "sfx_button_click",
+    "enter_tgl": "sfx_button_enter",
+    "click_tgl": "sfx_button_click",
+    "drag_bar_music": "music_main_menu",
+    "drag_bar_sfx": "sfx_button_enter",
+    "main_menu_bgm": "music_main_menu",
+    "game_bgm": "music_game",
+    "pop_out": "sfx_pop_out",
+    "pop_move": "sfx_pop_move",
+    "pop_hide": "sfx_pop_hide"
   }
 ]

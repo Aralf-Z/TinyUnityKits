@@ -991,5 +991,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 7735412704113742558}
+  target: {fileID: 7735412704113742558}
   key: main_exit

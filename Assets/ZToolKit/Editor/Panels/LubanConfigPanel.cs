@@ -161,7 +161,7 @@ namespace ZToolKit.Editor
                     }
                     catch (Exception e)
                     {
-                        LogTool.EditorLogError(e);
+                        LogTool.EditorError(e.ToString());
                         throw;
                     }
                 } 
@@ -200,7 +200,7 @@ namespace ZToolKit.Editor
                     }
                     catch (Exception e)
                     {
-                        LogTool.EditorLogError(e);
+                        LogTool.EditorError(e.ToString());
                         throw;
                     }
                 }
@@ -322,7 +322,7 @@ namespace ZToolKit.Editor
 
                     if (process is null)
                     {
-                        LogTool.ZToolKitLogError("Luban",$"Error: process Failed");
+                        LogTool.ZToolKitError("Luban",$"Error: process Failed");
                     }
                     else
                     {
@@ -335,13 +335,13 @@ namespace ZToolKit.Editor
                         
                         if (outputStr.Contains("|ERROR|"))
                         {
-                            LogTool.ZToolKitLogError("Luban", "Analysis Failed");
+                            LogTool.ZToolKitError("Luban", "Analysis Failed");
                             
                         }
                         else
                         {
                             AnalysisConfigFile();
-                            LogTool.ZToolKitLog("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
+                            LogTool.ZToolKitInfo("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
                         }
                     
                         Debug.Log(outputStr);
@@ -349,7 +349,7 @@ namespace ZToolKit.Editor
                 }
                 catch (Exception ex)
                 {
-                    LogTool.ZToolKitLogError("Luban",$"Error: {ex.Message}");
+                    LogTool.ZToolKitError("Luban",$"Error: {ex.Message}");
                 }
             }
             finally
