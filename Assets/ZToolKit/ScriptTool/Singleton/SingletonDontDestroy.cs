@@ -17,9 +17,10 @@ namespace ZToolKit
                 }
 
                 var resName = typeof(T).Name;
-                if (ResTool.IsExist(resName))
+                var prefab = ResTool.Load<GameObject>(resName); 
+
+                if (prefab)
                 {
-                    var prefab = ResTool.Load<GameObject>(resName);
                     sInstance = Instantiate(prefab).GetComponent<T>();
                 }
                 else

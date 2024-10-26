@@ -55,17 +55,17 @@ namespace ZToolKit.Editor
                     }
 
                     var name = AssetDatabase.LoadAssetAtPath<Object>(originalPath).name;
-                    LogTool.ZToolKitInfo("ResTool", $"资源录入：{name}");
+                    LogTool.ToolInfo("ResTool", $"资源录入：{name}");
                     EditorUtility.DisplayProgressBar("ResourcesConfigBuilding", originalPath, (float) i / guids.Length);
                     resConfig.AddPair(name, path[0]);
                 }
                 
                 CreateResConfig(resConfig);
-                LogTool.ZToolKitInfo("ResTool", "资源路径配置完成");
+                LogTool.ToolInfo("ResTool", "资源路径配置完成");
             }
             catch (Exception e)
             {
-                LogTool.ZToolKitError("ResTool", $"资源路径配置失败:{e.Message}");
+                LogTool.ToolError("ResTool", $"资源路径配置失败:{e.Message}");
                 throw;
             }
             finally
@@ -76,7 +76,7 @@ namespace ZToolKit.Editor
 
         private static void CreateResConfig(ResCatalog data)
         {
-            var dataPath = Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig);
+            var dataPath = Path.Combine(Application.streamingAssetsPath, ResTool.ResCatalog);
             if (!Directory.Exists(Application.streamingAssetsPath))
             {
                 Directory.CreateDirectory(Application.streamingAssetsPath);

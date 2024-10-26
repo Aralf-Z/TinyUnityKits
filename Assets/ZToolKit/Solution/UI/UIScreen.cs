@@ -37,14 +37,20 @@ namespace ZToolKit
 
         public void Open(object data)
         {
-            AudTool.PlaySfx(SfxOnOpen);
+            if (SfxOnOpen != string.Empty)
+            {
+                AudTool.PlaySfx(SfxOnOpen);
+            }
             OnOpen(data);
             mUIAnim.AnimOnOpen();
         }
 
         public void Hide()
         {
-            AudTool.PlaySfx(SfxOnHide);
+            if (SfxOnOpen != string.Empty)
+            {
+                AudTool.PlaySfx(SfxOnHide);
+            }
             OnHide();
             mUIAnim.AnimOnHide();
         }

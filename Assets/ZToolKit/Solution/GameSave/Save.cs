@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    public static class GameSave
+    public partial class Save
     {
         
     }

@@ -1,8 +1,8 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using YooAsset;
 using ZToolKit;
 
 public class Load : MonoBehaviour
@@ -12,8 +12,11 @@ public class Load : MonoBehaviour
 
     private async void Start()
     {
+        //初始化Toolkit
         await ToolKit.Init();
 
+        await UniTask.Delay(2000);
+        
         SceneManager.LoadScene("_Scenes/MainMenu");
     }
 

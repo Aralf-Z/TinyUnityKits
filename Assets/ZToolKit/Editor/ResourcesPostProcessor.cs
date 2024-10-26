@@ -12,7 +12,7 @@ namespace ZToolKit.Editor
         
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, ResTool.ResConfig);
+            string filePath = Path.Combine(Application.streamingAssetsPath, ResTool.ResCatalog);
             ResCatalog allAssetDatas;
 
             if (File.Exists(filePath))

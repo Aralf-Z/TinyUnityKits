@@ -8,21 +8,20 @@
 //------------------------------------------------------------------------------
 
 using Luban;
-using SimpleJSON;
 
 
 namespace cfg
 {
 public sealed partial class L10nUI : Luban.BeanBase
 {
-    public L10nUI(JSONNode _buf) 
+    public L10nUI(ByteBuf _buf) 
     {
-        { if(!_buf["l10n_key"].IsString) { throw new SerializationException(); }  L10nKey = _buf["l10n_key"]; }
-        { if(!_buf["cn"].IsString) { throw new SerializationException(); }  Cn = _buf["cn"]; }
-        { if(!_buf["en"].IsString) { throw new SerializationException(); }  En = _buf["en"]; }
+        L10nKey = _buf.ReadString();
+        Cn = _buf.ReadString();
+        En = _buf.ReadString();
     }
 
-    public static L10nUI DeserializeL10nUI(JSONNode _buf)
+    public static L10nUI DeserializeL10nUI(ByteBuf _buf)
     {
         return new L10nUI(_buf);
     }

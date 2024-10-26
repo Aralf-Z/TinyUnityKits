@@ -91,6 +91,10 @@ public class SettingUI : UIScreen
             if (isOn != AudTool.IsActive)
             {
                 AudTool.SetActive(isOn);
+                if (isOn)
+                {
+                    //todo 播放缓存音乐
+                }
             }
         });
         

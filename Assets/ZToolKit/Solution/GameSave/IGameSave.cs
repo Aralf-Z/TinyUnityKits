@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    public static class GameSave
+    internal interface IGameSave
     {
-        
+       Save LoadGame();
+       void SaveGame(Save save);
     }
 }

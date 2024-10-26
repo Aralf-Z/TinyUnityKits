@@ -24,7 +24,7 @@ namespace ZToolKit
                 if (!sInited)
                 {
                     Init().GetAwaiter().GetResult();
-                    LogTool.ZToolKitInfo("CfgTool", "Lazy Load");
+                    LogTool.ToolInfo("CfgTool", "Lazy Load");
                 }
 
                 return sTables;

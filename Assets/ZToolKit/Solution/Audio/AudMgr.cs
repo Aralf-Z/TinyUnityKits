@@ -43,10 +43,19 @@ namespace ZToolKit
                 var vol = Instance.musicSource.volume;
                 Instance.musicSource.volume = 0;
 
-                Instance.musicSource.clip = ResTool.Load<AudioClip>(clipName);
-                Instance.musicSource.Play();
+                var clip = ResTool.Load<AudioClip>(clipName);
 
-                DOTween.To(() => Instance.musicSource.volume, x => Instance.musicSource.volume = x, vol, vol * 2);
+                if (clip)
+                {
+                    Instance.musicSource.clip = clip;
+                    Instance.musicSource.Play();
+
+                    DOTween.To(() => Instance.musicSource.volume, x => Instance.musicSource.volume = x, vol, vol * 2);
+                }
+                else
+                {
+                    LogTool.Error("Audio", @$"""{clipName}"" Load Failed");
+                }
             }
         }
 
@@ -54,7 +63,16 @@ namespace ZToolKit
         {
             if (Instance.mIsActive)
             {
-                Instance.sfxSource.PlayOneShot(ResTool.Load<AudioClip>(clipName));
+                var clip = ResTool.Load<AudioClip>(clipName);
+
+                if (clip)
+                {
+                    Instance.sfxSource.PlayOneShot(clip);
+                }
+                else
+                {
+                    LogTool.Error("Audio", @$"""{clipName}"" Load Failed");
+                }
             }
         }
 

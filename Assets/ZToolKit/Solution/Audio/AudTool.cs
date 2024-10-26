@@ -14,18 +14,12 @@ namespace ZToolKit
 
         public static void PlayMusic(string clipName)
         {
-            if (CheckClip(clipName))
-            {
-                AudMgr.PlayMusic(clipName);
-            }
+            AudMgr.PlayMusic(clipName);
         }
         
         public static void PlaySfx(string clipName)
         {
-            if (CheckClip(clipName))
-            {
-                AudMgr.PlaySfx(clipName);
-            }
+            AudMgr.PlaySfx(clipName);
         }
 
         public static void PlayTest(string clipName, float value)
@@ -46,25 +40,6 @@ namespace ZToolKit
         public static void SetSfxVol(float value)
         {
             AudMgr.SetSfxVol(value);
-        }
-
-        private static bool CheckClip(string clipName)
-        {
-#if UNITY_EDITOR
-            if (ResTool.IsExist(clipName))
-            {
-                return true;
-            }
-            
-            if (clipName != string.Empty)
-            {
-                LogTool.ZToolKitError("AudioTool",@$"资源：""{clipName}""不存在");
-            }
-            
-            return false;
-#else
-            return true;
-#endif
         }
     }
 }

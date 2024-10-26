@@ -322,7 +322,7 @@ namespace ZToolKit.Editor
 
                     if (process is null)
                     {
-                        LogTool.ZToolKitError("Luban",$"Error: process Failed");
+                        LogTool.ToolError("Luban",$"Error: process Failed");
                     }
                     else
                     {
@@ -335,13 +335,13 @@ namespace ZToolKit.Editor
                         
                         if (outputStr.Contains("|ERROR|"))
                         {
-                            LogTool.ZToolKitError("Luban", "Analysis Failed");
+                            LogTool.ToolError("Luban", "Analysis Failed");
                             
                         }
                         else
                         {
                             AnalysisConfigFile();
-                            LogTool.ZToolKitInfo("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
+                            LogTool.ToolInfo("Luban", $"Analysis Succeed, OutPut Type: {outputType}");
                         }
                     
                         Debug.Log(outputStr);
@@ -349,7 +349,7 @@ namespace ZToolKit.Editor
                 }
                 catch (Exception ex)
                 {
-                    LogTool.ZToolKitError("Luban",$"Error: {ex.Message}");
+                    LogTool.ToolError("Luban",$"Error: {ex.Message}");
                 }
             }
             finally

@@ -1,71 +1,73 @@
-/*
-
-*/
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
+#if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
 using UnityEngine.Networking;
+#endif
 using Object = UnityEngine.Object;
 
 namespace ZToolKit
 {
     public static class ResTool
     {
-        private static bool mInited;
+        public const string ResCatalog = "ResCatalog.json";
         
-        public static string ResConfig = "ResCatalog.json";
-
-        private static Dictionary<string, string> sNamePathDic;
+        private static bool sInited;
+        private static ResLoadHandlerBase sCurHandler;
 
         public static async UniTask Init()
         {
-            await LoadJson();
-            mInited = true;
-        }
-        
-        public static T Load<T>(string prefabName) where T : Object
-        {
-            CheckInit();
-            
-            if (sNamePathDic.ContainsKey(prefabName))
+            sCurHandler = GameConfig.ResMode switch
             {
-                return Resources.Load<T>(sNamePathDic[prefabName]);
-            }
+                ResMode.ResourcesLoad => new ResourcesHandler(),
+                ResMode.YooAsset => new YooAssetHandler(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            await sCurHandler.InitHandler();
             
-            LogTool.EditorError(@$"ResLoad---Failed To Load ""{prefabName}""");
-            return null;
+            sInited = true;
         }
         
-        internal static bool IsExist(string prefabName)
+        public static T Load<T>(string resName) where T : Object
         {
-            CheckInit();
-            return sNamePathDic.ContainsKey(prefabName);
+            CheckInit(); 
+            return sCurHandler.LoadAsset<T>(resName);
         }
-
+        
         private static void CheckInit()
         {
-            if (!mInited)
+            if (!sInited)
             {
                 try
                 {
                     Init().GetAwaiter().GetResult();
-                    LogTool.ZToolKitInfo("ResTool", "Lazy Load");
+                    LogTool.ToolInfo("ResTool", "Lazy Load");
                 }
                 catch (Exception e)
                 {
                     Debug.LogError(e);
-                    LogTool.ZToolKitError("ResTool", "Lazy Load Error");
+                    LogTool.ToolError("ResTool", "Lazy Load Error");
                 }
             }
         }
-        
-        private static async UniTask LoadJson()
+
+        private abstract class ResLoadHandlerBase
         {
-            string filePath = Path.Combine(Application.streamingAssetsPath, ResConfig);
+            public abstract UniTask InitHandler();
+            public abstract T LoadAsset<T>(string resName) where T : Object;
+        }
+
+        private class ResourcesHandler: ResLoadHandlerBase
+        {
+            private static Dictionary<string, string> sNamePathDic;
+            
+            public override async UniTask InitHandler()
+            {
+                string filePath = Path.Combine(Application.streamingAssetsPath, ResCatalog);
 
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
             try
@@ -89,16 +91,40 @@ namespace ZToolKit
                 throw;
             }
 #else
-            try
-            { 
-                sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(File.ReadAllText(filePath))?.namePathDic;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                throw;
-            }
+                try
+                { 
+                    sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(await File.ReadAllTextAsync(filePath))?.namePathDic;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    throw;
+                }
 #endif
+            }
+
+            public override T LoadAsset<T>(string resName)
+            {
+                if (sNamePathDic.ContainsKey(resName))
+                {
+                    return Resources.Load<T>(sNamePathDic[resName]);
+                }
+
+                return null;
+            }
+        }
+
+        private class YooAssetHandler : ResLoadHandlerBase
+        {
+            public override async UniTask InitHandler()
+            {
+                await YooAssetBehaviour.InitYooAsset();
+            }
+
+            public override T LoadAsset<T>(string resName)
+            {
+                return YooAsset.YooAssets.LoadAssetSync<T>(resName).GetAssetObject<T>();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ZToolKit
 {   
     public static class LogTool
     {
-        public static bool logZToolKit = true;
+        private static bool logZToolKit = true;
 
         #region 游戏日志
 
@@ -94,7 +94,7 @@ namespace ZToolKit
         /// </summary>
         /// <param name="headStr"></param>
         /// <param name="messageStr"></param>
-        public static void ZToolKitInfo(string headStr, string messageStr)
+        public static void ToolInfo(string headStr, string messageStr)
         {
             if (logZToolKit)
             {
@@ -107,7 +107,7 @@ namespace ZToolKit
         /// </summary>
         /// <param name="headStr"></param>
         /// <param name="messageStr"></param>
-        public static void ZToolKitError(string headStr, string messageStr)
+        public static void ToolError(string headStr, string messageStr)
         {
             if (logZToolKit)
             {
@@ -120,7 +120,7 @@ namespace ZToolKit
         private static void DefaultLog(string headStr, string messageStr, Color color = default)
         {
             color = color == default ? Color.white : color;
-            UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
+             UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
         }
     }
 } 
