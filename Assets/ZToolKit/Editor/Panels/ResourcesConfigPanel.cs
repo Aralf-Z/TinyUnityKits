@@ -77,11 +77,28 @@ namespace ZToolKit.Editor
         private static void CreateResConfig(ResCatalog data)
         {
             var dataPath = Path.Combine(Application.streamingAssetsPath, ResTool.ResCatalog);
+            var folders = ResTool.ResCatalog.Split("/");
+            var tempPath = Application.streamingAssetsPath;
+
             if (!Directory.Exists(Application.streamingAssetsPath))
             {
                 Directory.CreateDirectory(Application.streamingAssetsPath);
                 AssetDatabase.Refresh();
             }
+
+            for(int i = 0; i < folders.Length - 1; i++)
+            {
+                var fold = folders[i];
+                
+                tempPath = Path.Combine(tempPath, fold);
+                
+                if (!Directory.Exists(tempPath))
+                {
+                    Directory.CreateDirectory(tempPath);
+                    AssetDatabase.Refresh();
+                }
+            }
+            
             if (!File.Exists(dataPath))
             {
                 File.Create(dataPath);

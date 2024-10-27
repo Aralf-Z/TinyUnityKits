@@ -39,7 +39,7 @@ namespace ZToolKit
                     await package.InitializeAsync(initParametersOffline);
                     break;
                 
-                //联机运行模式
+                //联机运行模式 todo 联机运行模式
                 case EPlayMode.HostPlayMode:
                     string defaultHostServerHost = "http://127.0.0.1/CDN/Android/v1.0";
                     string fallbackHostServerHost = "http://127.0.0.1/CDN/Android/v1.0";
@@ -59,7 +59,7 @@ namespace ZToolKit
                     }
                     
                     break;
-                //WebGL运行模式
+                //WebGL运行模式 todo webgl运行模式
                 case EPlayMode.WebPlayMode:
                     string defaultHostServerWeb = "http://127.0.0.1/CDN/WebGL/v1.0";
                     string fallbackHostServerWeb = "http://127.0.0.1/CDN/WebGL/v1.0";

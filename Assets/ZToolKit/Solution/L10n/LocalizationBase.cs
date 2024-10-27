@@ -13,8 +13,6 @@ namespace ZToolKit
         
         public string key;
 
-        protected RectTransform mRectTransform;
-        
         private void Awake()
         {
             OnLanguageChange();
@@ -43,7 +41,6 @@ namespace ZToolKit
         protected virtual void OnValidate()
         {
             target = transform.GetComponent<Graphic>();
-            mRectTransform = (RectTransform) transform;
         }
 #endif
     }

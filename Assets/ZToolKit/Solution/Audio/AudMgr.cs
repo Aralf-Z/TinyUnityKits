@@ -19,7 +19,11 @@ namespace ZToolKit
         {
             get => mIsActive;
 
-            set => mIsActive = value;
+            set
+            {
+                mIsActive = value;
+                musicSource.Stop();
+            }
         }
 
         private bool mIsActive = true;

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6469d9f9a29ff44db5589284d6f7e39, type: 3}
   m_Name: BuildConfig
   m_EditorClassIdentifier: 
+  isConsoleActive: 1
   resMode: 1
-  playMode: 0
+  playMode: 1
+  Version: ver. 1.0.0

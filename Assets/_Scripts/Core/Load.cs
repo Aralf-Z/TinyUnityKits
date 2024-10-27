@@ -15,8 +15,6 @@ public class Load : MonoBehaviour
         //初始化Toolkit
         await ToolKit.Init();
 
-        await UniTask.Delay(2000);
-        
         SceneManager.LoadScene("_Scenes/MainMenu");
     }
 

@@ -546,6 +546,7 @@ GameObject:
   - component: {fileID: 1260340524481001904}
   - component: {fileID: 4102617827563551817}
   - component: {fileID: 2657413633949828256}
+  - component: {fileID: 3968466207161876961}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -615,6 +616,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Funny Game
+--- !u!114 &3968466207161876961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927340270939791964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2657413633949828256}
+  key: game_title
 --- !u!1 &7284260566024961625
 GameObject:
   m_ObjectHideFlags: 0

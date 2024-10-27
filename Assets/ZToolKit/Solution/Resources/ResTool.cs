@@ -13,7 +13,7 @@ namespace ZToolKit
 {
     public static class ResTool
     {
-        public const string ResCatalog = "ResCatalog.json";
+        public const string ResCatalog = "ZTool/Resources/ResCatalog.json";
         
         private static bool sInited;
         private static ResLoadHandlerBase sCurHandler;

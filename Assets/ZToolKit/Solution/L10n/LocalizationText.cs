@@ -11,7 +11,7 @@ namespace ZToolKit
     {
         protected override void OnLanguageChange()
         {
-            ((Text)target).text = L10nTool.GetUIStr(mRectTransform, key);
+            ((Text)target).text = L10nTool.GetUIStr((RectTransform)transform, key);
         }
     }
 }

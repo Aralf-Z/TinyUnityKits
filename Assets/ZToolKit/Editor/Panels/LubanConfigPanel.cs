@@ -285,7 +285,7 @@ namespace ZToolKit.Editor
                             $"-c cs{(outputType == kJson? "-simple":string.Empty)}-{outputType} " +
                             $"-d {outputType} " +
                             $"--conf {confRoot}\\luban.conf " +
-                            $"-x outputDataDir={workspace}\\Assets\\StreamingAssets\\TableConfig " +
+                            $"-x outputDataDir={workspace}\\Assets\\StreamingAssets\\ZTool\\Luban\\TableConfig " +
                             $"-x outputCodeDir={workspace}\\Assets\\TableConfig\\Scripts";
             
             // 创建一个新的进程信息对象
@@ -387,7 +387,8 @@ namespace ZToolKit.Editor
             try
             {
                 var cfgFiles = new List<string>();
-                var path = Path.Combine(Application.streamingAssetsPath, "TableConfig");
+                var path = Path.Combine(Application.streamingAssetsPath, "ZTool\\Luban\\TableConfig");
+
                 var files = Directory.GetFiles(path);
 
                 foreach (var file in files)
@@ -398,7 +399,7 @@ namespace ZToolKit.Editor
                         cfgFiles.Add(fileName);
                     }
                 }
-                
+
                 File.WriteAllText(CfgTool.fileListPath, JsonConvert.SerializeObject(cfgFiles));
                 AssetDatabase.Refresh();
             }

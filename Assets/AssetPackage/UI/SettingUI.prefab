@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2461239177883947269}
   - component: {fileID: 7045164589865483653}
   - component: {fileID: 8773842076025438437}
+  - component: {fileID: 5429517424145834213}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -80,6 +81,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Sound
+--- !u!114 &5429517424145834213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14386379970327193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8773842076025438437}
+  key: settings_sound
 --- !u!1 &199593679373349164
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +487,7 @@ GameObject:
   - component: {fileID: 1041436313174955153}
   - component: {fileID: 2704576234437463800}
   - component: {fileID: 7502786491789859294}
+  - component: {fileID: 68346927113213336}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -541,6 +557,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Sfx Volume
+--- !u!114 &68346927113213336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531899862426828808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7502786491789859294}
+  key: settings_sfx_vol
 --- !u!1 &2726181152634758212
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +582,7 @@ GameObject:
   - component: {fileID: 6259984934990124962}
   - component: {fileID: 2450726247386538057}
   - component: {fileID: 3475708716225850379}
+  - component: {fileID: 7836070608498851139}
   m_Layer: 0
   m_Name: Txt
   m_TagString: Untagged
@@ -621,6 +652,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: English
+--- !u!114 &7836070608498851139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2726181152634758212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 3475708716225850379}
+  key: settings_English
 --- !u!1 &2734613052934807543
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +782,7 @@ GameObject:
   - component: {fileID: 6700814181500314465}
   - component: {fileID: 4978960257840462080}
   - component: {fileID: 2529795899334622750}
+  - component: {fileID: 4692801105219114534}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -806,6 +852,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Music Volume
+--- !u!114 &4692801105219114534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3134946206231940262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 2529795899334622750}
+  key: settings_music_vol
 --- !u!1 &3415403086401389570
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,6 +877,7 @@ GameObject:
   - component: {fileID: 9113524310936555780}
   - component: {fileID: 4989855680799592892}
   - component: {fileID: 6178061660795147099}
+  - component: {fileID: 7664455399325466167}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -886,6 +947,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Lanuage
+--- !u!114 &7664455399325466167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3415403086401389570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 6178061660795147099}
+  key: settings_language
 --- !u!1 &3779899815739848573
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1061,7 @@ GameObject:
   - component: {fileID: 7096963465792192165}
   - component: {fileID: 4886319229823422653}
   - component: {fileID: 7595485893405691763}
+  - component: {fileID: 5663235688063896659}
   m_Layer: 0
   m_Name: Txt
   m_TagString: Untagged
@@ -1055,6 +1131,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u7B80\u4F53\u4E2D\u6587"
+--- !u!114 &5663235688063896659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3839759593500591275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 7595485893405691763}
+  key: settings_Chinese
 --- !u!1 &3861231268606169139
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,6 +2049,7 @@ GameObject:
   - component: {fileID: 7726706278796773692}
   - component: {fileID: 1087019956782976069}
   - component: {fileID: 1043680583588340396}
+  - component: {fileID: 7633130184363470451}
   m_Layer: 0
   m_Name: Txt
   m_TagString: Untagged
@@ -2028,6 +2119,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: FullScreen
+--- !u!114 &7633130184363470451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416550832037152054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1043680583588340396}
+  key: settings_full_screen
 --- !u!1 &6475177792063571665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,6 +2235,7 @@ GameObject:
   - component: {fileID: 8248205078505413773}
   - component: {fileID: 6740559082325767139}
   - component: {fileID: 8583877421220442708}
+  - component: {fileID: 5953009737101881985}
   m_Layer: 0
   m_Name: Txt
   m_TagString: Untagged
@@ -2199,6 +2305,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Windowed
+--- !u!114 &5953009737101881985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6493531352713041481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8583877421220442708}
+  key: settings_windowed
 --- !u!1 &6526810922104485332
 GameObject:
   m_ObjectHideFlags: 0
@@ -2945,6 +3065,7 @@ GameObject:
   - component: {fileID: 5169579261883517179}
   - component: {fileID: 780669199927536810}
   - component: {fileID: 4809923639388633851}
+  - component: {fileID: 7655297987728823252}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -3014,6 +3135,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: DisPlay
+--- !u!114 &7655297987728823252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9002197301944098188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7ff5a7d724c8a4681a2b905e723d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 4809923639388633851}
+  key: settings_display
 --- !u!1 &9021655649504118236
 GameObject:
   m_ObjectHideFlags: 0

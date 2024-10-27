@@ -38,7 +38,7 @@ MonoBehaviour:
         AssetTags: 
         UserData: 
     - GroupName: UI
-      GroupDesc: UIPrefab
+      GroupDesc: "UI\u9884\u5236\u4F53"
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
@@ -70,6 +70,19 @@ MonoBehaviour:
       Collectors:
       - CollectPath: Assets/AssetPackage/Audio
         CollectorGUID: 47a1cc7791b33824c9cc945a7c6843a0
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Art
+      GroupDesc: "\u7F8E\u672F"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/AssetPackage/Art
+        CollectorGUID: fd6b5902d09736743ac5cf13a01a11c5
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
