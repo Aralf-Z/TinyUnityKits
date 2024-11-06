@@ -37,11 +37,11 @@ namespace QFramework
 
     public interface IArchitecture
     {
-        void RegisterSystem<T>(T system) where T : ISystem;
+        void RegisterSystem<T>(T system, Type type) where T : ISystem;
 
-        void RegisterModel<T>(T model) where T : IModel;
+        void RegisterModel<T>(T model, Type type) where T : IModel;
 
-        void RegisterUtility<T>(T utility) where T : IUtility;
+        void RegisterUtility<T>(T utility, Type type) where T : IUtility;
 
         T GetSystem<T>() where T : class, ISystem;
 
@@ -126,10 +126,10 @@ namespace QFramework
 
         private IOCContainer mContainer = new IOCContainer();
 
-        public void RegisterSystem<TSystem>(TSystem system) where TSystem : ISystem
+        public void RegisterSystem<TSystem>(TSystem system, Type type) where TSystem : ISystem
         {
             system.SetArchitecture(this);
-            mContainer.Register<TSystem>(system);
+            mContainer.Register<TSystem>(system, type);
 
             if (mInited)
             {
@@ -138,10 +138,10 @@ namespace QFramework
             }
         }
 
-        public void RegisterModel<TModel>(TModel model) where TModel : IModel
+        public void RegisterModel<TModel>(TModel model, Type type) where TModel : IModel
         {
             model.SetArchitecture(this);
-            mContainer.Register<TModel>(model);
+            mContainer.Register<TModel>(model, type);
 
             if (mInited)
             {
@@ -150,8 +150,8 @@ namespace QFramework
             }
         }
 
-        public void RegisterUtility<TUtility>(TUtility utility) where TUtility : IUtility =>
-            mContainer.Register<TUtility>(utility);
+        public void RegisterUtility<TUtility>(TUtility utility, Type type) where TUtility : IUtility =>
+            mContainer.Register<TUtility>(utility, type);
 
         public TSystem GetSystem<TSystem>() where TSystem : class, ISystem => mContainer.Get<TSystem>();
 
@@ -411,9 +411,9 @@ namespace QFramework
 
     public static class CanSendCommandExtension
     {
-        public static void SendCommand<T>(this ICanSendCommand self) where T : ICommand, new() =>
-            self.GetArchitecture().SendCommand<T>(new T());
-
+        // 统一代码规范不使用这个
+        // public static void SendCommand<T>(this ICanSendCommand self) where T : ICommand, new() =>
+        //     self.GetArchitecture().SendCommand<T>(new T());
         public static void SendCommand<T>(this ICanSendCommand self, T command) where T : ICommand =>
             self.GetArchitecture().SendCommand<T>(command);
 
@@ -623,9 +623,9 @@ namespace QFramework
     {
         private Dictionary<Type, object> mInstances = new Dictionary<Type, object>();
 
-        public void Register<T>(T instance)
+        public void Register<T>(T instance, Type type)
         {
-            var key = typeof(T);
+            var key = type;
 
             if (mInstances.ContainsKey(key))
             {
@@ -736,8 +736,7 @@ namespace QFramework
 
     internal class ComparerAutoRegister
     {
-#if UNITY_5_6_OR_NEWER
-        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.BeforeSceneLoad)]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void AutoRegister()
         {
             BindableProperty<int>.Comparer = (a, b) => a == b;
@@ -760,7 +759,6 @@ namespace QFramework
             BindableProperty<UnityEngine.RangeInt>.Comparer = (a, b) => a.start == b.start && a.length == b.length;
             BindableProperty<UnityEngine.RectInt>.Comparer = (a, b) => a.Equals(b);
         }
-#endif
     }
 
     #endregion

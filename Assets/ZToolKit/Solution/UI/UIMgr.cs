@@ -11,7 +11,7 @@ namespace ZToolKit
         Background = 0,
 
         /// <summary>
-        /// 一般界面
+        /// 一般界面r
         /// </summary>
         Normal = 10,
 

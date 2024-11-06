@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConsoleActive: 1
   resMode: 1
-  playMode: 1
+  playMode: 0
   Version: ver. 1.0.0

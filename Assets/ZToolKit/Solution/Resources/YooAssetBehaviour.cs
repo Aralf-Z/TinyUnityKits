@@ -51,7 +51,7 @@ namespace ZToolKit
                     await initOperationHost;
                     if (initOperationHost.Status == EOperationStatus.Succeed)
                     {
-                        LogTool.Info("YooAsset", "HostPlayMode Init Succeed");
+                        LogTool.Info("YooAsset", "HostPlayMode Init Succeed", "bd868dff".Hex2Color());
                     }
                     else
                     {
@@ -61,8 +61,9 @@ namespace ZToolKit
                     break;
                 //WebGL运行模式 todo webgl运行模式
                 case EPlayMode.WebPlayMode:
-                    string defaultHostServerWeb = "http://127.0.0.1/CDN/WebGL/v1.0";
-                    string fallbackHostServerWeb = "http://127.0.0.1/CDN/WebGL/v1.0";
+                    string path =  Path.Combine(Application.streamingAssetsPath, "yoo");
+                    string defaultHostServerWeb = path;
+                    string fallbackHostServerWeb = path;
                     var initParametersWeb = new WebPlayModeParameters();
                     initParametersWeb.BuildinQueryServices = new GameQueryServices();
                     initParametersWeb.RemoteServices = new RemoteServices(defaultHostServerWeb, fallbackHostServerWeb);
@@ -70,7 +71,7 @@ namespace ZToolKit
                     await initOperationWeb;
                     if (initOperationWeb.Status == EOperationStatus.Succeed)
                     {
-                        LogTool.Info("YooAsset", "WebPlayMode Init Succeed");
+                        LogTool.Info("YooAsset", "WebPlayMode Init Succeed", "bd868dff".Hex2Color());
                     }
                     else
                     {

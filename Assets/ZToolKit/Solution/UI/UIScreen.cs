@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ZToolKit
 {
-    public abstract class UIScreen : MonoBehaviour
+    public abstract class UIScreen: MonoBehaviour
     {
         [Header("UIScreen")]
         [Tooltip("弹窗一般会点击空白处会关闭，所以空白背景可以添加canClick组件。")]

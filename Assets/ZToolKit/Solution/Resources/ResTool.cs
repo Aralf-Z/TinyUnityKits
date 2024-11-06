@@ -49,6 +49,7 @@ namespace ZToolKit
                 }
                 catch (Exception e)
                 {
+
                     Debug.LogError(e);
                     LogTool.ToolError("ResTool", "Lazy Load Error");
                 }
@@ -119,8 +120,9 @@ namespace ZToolKit
             public override async UniTask InitHandler()
             {
                 await YooAssetBehaviour.InitYooAsset();
+                
             }
-
+            
             public override T LoadAsset<T>(string resName)
             {
                 return YooAsset.YooAssets.LoadAssetSync<T>(resName).GetAssetObject<T>();
