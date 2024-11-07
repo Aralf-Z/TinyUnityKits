@@ -119,7 +119,7 @@ namespace ZToolKit
 
         private static void DefaultLog(string headStr, string messageStr, Color color = default)
         {
-            color = color == default ? Color.white : color;
+            color = color == default ? new Color(1,1,1,.8f) : color;
              UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
         }
     }

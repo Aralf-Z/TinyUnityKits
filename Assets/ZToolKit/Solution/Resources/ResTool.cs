@@ -49,7 +49,6 @@ namespace ZToolKit
                 }
                 catch (Exception e)
                 {
-
                     Debug.LogError(e);
                     LogTool.ToolError("ResTool", "Lazy Load Error");
                 }
@@ -71,26 +70,36 @@ namespace ZToolKit
                 string filePath = Path.Combine(Application.streamingAssetsPath, ResCatalog);
 
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
-            try
-            {
-                using var request = UnityWebRequest.Get(filePath);
-                await request.SendWebRequest();
+                try
+                {
+                    using var request = UnityWebRequest.Get(filePath);
+                    await request.SendWebRequest();
 
-                if (request.result == UnityWebRequest.Result.Success)
-                {
-                    string fileContent = request.downloadHandler.text;
-                    sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(fileContent)?.namePathDic;
+                    if (request.result == UnityWebRequest.Result.Success)
+                    {
+                        string fileContent = request.downloadHandler.text;
+                        sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(fileContent)?.namePathDic;
+                    }
+                    else
+                    {
+                        Debug.LogError(request.error);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    Debug.LogError(request.error);
+                    Debug.LogError(e);
+                    throw;
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                throw;
-            }
+#elif UNITY_EDITOR
+                try
+                { 
+                    sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(File.ReadAllText(filePath))?.namePathDic;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    throw;
+                }
 #else
                 try
                 { 
