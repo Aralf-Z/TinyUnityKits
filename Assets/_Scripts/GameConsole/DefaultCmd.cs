@@ -6,9 +6,20 @@ using UnityEngine;
 
 public static class DefaultCmd
 {
+    private class ConsoleController:
+        IController
+    {
+        public IArchitecture GetArchitecture()
+        {
+            return GameCoreMgr.Interface;
+        }
+    }
+
+    private static ConsoleController cc = new ConsoleController();
+    
     [Command(desc: "杀死一个敌人")]
     private static void KillEnemy(int num)
     {
-        ConsoleCore.Instance.SendCommand(new CmdKillEnemy(num));
+        cc.SendCommand(new CmdKillEnemy(num));
     }
 }

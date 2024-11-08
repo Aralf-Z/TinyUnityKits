@@ -32,7 +32,6 @@ public class GameConsole : MonoBehaviour
     [SerializeField, Tooltip("[debug] output virtual machine exception call stack")]
     private bool shouldOutputVMExceptionStack = false;
 
-
     ConsoleController<LogType> console;
 
     private bool isInited;

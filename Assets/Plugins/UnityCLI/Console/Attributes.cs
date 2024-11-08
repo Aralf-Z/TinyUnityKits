@@ -19,10 +19,10 @@ namespace RedSaw.CommandLineInterface{
         /// <summary> tag of command, for you can query commands by tag, or constraint commands by tag </summary>
         public string Tag { get; set; }
 
-        public CommandAttribute(string name = null, string desc = "command has no description"){
+        public CommandAttribute(string name = null, string tag = null, string desc = "command has no description"){
 
             this.Name = name;
-            this.Tag = null;
+            this.Tag = tag;
             this.Desc = desc;
         }
     }

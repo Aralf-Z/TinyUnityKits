@@ -261,24 +261,20 @@ namespace RedSaw.CommandLineInterface{
         readonly InputHistory inputHistory;
         readonly LinearSelector selector;
         bool ignoreTextChanged;
-
+        
+        #region About Command System
         /// <summary>initialize console</summary>
         /// <param name="renderer">the renderer of console</param>
         /// <param name="userInput">the input of console</param>
-
-        #region About Command System
         /// <param name="commandQueryCacheCapacity">the capacity of command query cache, 20 as default</param>
         /// <param name="outputStackTraceOfCommandExecution">
         /// should output stack trace of command excution, it maybe too long.. 
         /// <para>only use for debug</para>
-        #endregion
-
         /// <param name="inputHistoryCapacity">the capacity of input history</param>
         /// <param name="alternativeCommandCount">the count of alternative command options</param>
         /// <param name="shouldRecordFailedCommand">should record failed command input</param>
         /// <param name="outputPanelCapacity">the capacity of output panel</param>
         /// <param name="outputWithTime">should output with time information of [HH:mm:ss]</param>
-
         /// </param>
         public ConsoleController(
             IConsoleRenderer renderer, 
@@ -497,4 +493,6 @@ namespace RedSaw.CommandLineInterface{
             Output($"---------- {instance} end ----------");
         }
     }
+    
+    #endregion
 }

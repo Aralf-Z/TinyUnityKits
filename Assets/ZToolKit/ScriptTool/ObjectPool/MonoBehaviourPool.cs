@@ -16,20 +16,29 @@ namespace ZToolKit
     public class MonoBehaviourPool<T> : IObjectPool<T> where T : MonoBehaviour, IObject<T>
     {
         private readonly Queue<T> mPool = new ();
-        private readonly HashSet<T> mShowing = new ();
+        private readonly HashSet<T> mUsing = new ();
         private readonly Transform mContainer;
         private readonly GameObject mTemplate;
         private readonly Action<T> mInitAct;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="container">对象容器</param>
+        /// <param name="template">对象gameObject模板</param>
+        /// <param name="initAct">脚本初始化Act</param>
         public MonoBehaviourPool(Transform container,GameObject template, Action<T> initAct = null)
         {
             mTemplate = template;
             mContainer = container;
             template.GetComponent<T>();
-            template.SetActive(false);
             mInitAct = initAct;
         }
 
+        /// <summary>
+        /// 获得一个脚本对象
+        /// </summary>
+        /// <returns></returns>
         public T Get()
         {
             if (mPool.Count <= 0)
@@ -41,11 +50,11 @@ namespace ZToolKit
             var obj = mPool.Dequeue();
             obj.gameObject.SetActive(true);
             obj.IsCollected = false;
-            mShowing.Add(obj);
+            mUsing.Add(obj);
         
             return obj;
         }
-
+        
         public void Recycle(T obj)
         {
             if (obj.IsCollected) return;
@@ -53,12 +62,21 @@ namespace ZToolKit
             obj.OnRecycle();
             obj.gameObject.SetActive(false);
             mPool.Enqueue(obj);
-            mShowing.Remove(obj);
+            mUsing.Remove(obj);
         }
 
         public void Recycle(IEnumerable<T> objs)
         {
-            foreach (var obj in objs) Recycle(obj);
+            foreach (var obj in objs)
+            {Recycle(obj);}
+        }
+
+        /// <summary>
+        /// 回收使用中的，注意引用中的对象很可能会被回收
+        /// </summary>
+        public void RecycleUsing()
+        {
+            Recycle(mUsing);
         }
         
         public void ClearCache()
@@ -69,14 +87,14 @@ namespace ZToolKit
                 Object.Destroy(obj.gameObject);
             }
 
-            var tempShowing = mShowing.ToList();
+            var tempShowing = mUsing.ToList();
             var index = 0;
             
             while (index++ < tempShowing.Count)
                 Object.Destroy(tempShowing[index].gameObject);
 
             mPool.Clear();
-            mShowing.Clear();
+            mUsing.Clear();
         }
     }
 }
