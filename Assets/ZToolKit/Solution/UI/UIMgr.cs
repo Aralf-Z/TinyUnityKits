@@ -42,10 +42,10 @@ namespace ZToolKit
         private readonly Dictionary<string, UIScreen> mUIScreens = new();
         private readonly Dictionary<string, UIScreen> mShowingUIScreens = new();
         
-        public static T OpenUIScreen<T>(UIPanel uiPanel, object data = default) where T : UIScreen
+        public static T OpenUIScreen<T>(object data = default) where T : UIScreen
         {
             string uiName = typeof(T).Name;
-            var uiScreen = (T)GetUIScreen(uiName, uiPanel);
+            var uiScreen = (T)GetUIScreen(uiName);
             
             uiScreen.Open(data);
             if (!Instance.mShowingUIScreens.ContainsKey(uiName))
@@ -70,7 +70,7 @@ namespace ZToolKit
             }
         }
         
-        private static UIScreen GetUIScreen(string uiName, UIPanel uiPanel)
+        private static UIScreen GetUIScreen(string uiName)
         {
             if (!Instance.mUIScreens.ContainsKey(uiName))
             {
@@ -81,7 +81,7 @@ namespace ZToolKit
                 Instance.mUIScreens.Add(uiName, ui);
             }
             var screen = Instance.mUIScreens[uiName];
-            screen.transform.SetParent(Instance.mUIPanels[uiPanel], false);
+            screen.transform.SetParent(Instance.mUIPanels[screen.uiPanel], false);
             screen.transform.SetAsLastSibling();
             
             return screen;

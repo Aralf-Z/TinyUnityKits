@@ -1629,10 +1629,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d96c617066c1a584a9503645c9c5d722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideCpts: []
+  uiPanel: 20
   animOnOpen: 0
   animOnHide: 0
   animRoot: {fileID: 0}
+  hideCpts: []
   cheatPanel: {fileID: 1679991676018871338}
   cheatBtn: {fileID: 605945504074449447}
   cheatBtnImg: {fileID: 7216828265542465447}

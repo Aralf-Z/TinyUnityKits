@@ -4,6 +4,7 @@ using System.IO;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
+using YooAsset;
 #if (UNITY_WEBGL || UNITY_ANDROID) && !UNITY_EDITOR
 using UnityEngine.Networking;
 #endif
@@ -129,12 +130,11 @@ namespace ZToolKit
             public override async UniTask InitHandler()
             {
                 await YooAssetBehaviour.InitYooAsset();
-                
             }
             
             public override T LoadAsset<T>(string resName)
             {
-                return YooAsset.YooAssets.LoadAssetSync<T>(resName).GetAssetObject<T>();
+                return YooAssets.LoadAssetSync<T>(resName).GetAssetObject<T>();
             }
         }
     }

@@ -10,7 +10,7 @@ public class GameHudUI: UIScreen
     public Button settingBtn;
     public Button helpBtn;
     public Button backMainBtn;
-    
+
     protected override void OnInit()
     {
         settingBtn.onClick.AddListener(() => UITool.OpenUI<SettingUI>(UIPanel.Tip));

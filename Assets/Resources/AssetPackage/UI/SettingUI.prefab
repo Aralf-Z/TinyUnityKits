@@ -1799,6 +1799,7 @@ MonoBehaviour:
   animOnOpen: 1
   animOnHide: 1
   animRoot: {fileID: 7808691380975995122}
+  uiPanel: 20
   fullScreenTgl: {fileID: 1358678197617568674}
   windowedTgl: {fileID: 1986858343811831601}
   englishTgl: {fileID: 4543392570799696465}

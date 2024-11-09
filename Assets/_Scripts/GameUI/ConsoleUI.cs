@@ -8,7 +8,6 @@ using ZToolKit;
 
 public class ConsoleUI : UIScreen
 {
-    [Space(5f)]
     [Header("CheatUI")]
     public ConsoleUI_CheatPanel cheatPanel;
 
@@ -16,7 +15,7 @@ public class ConsoleUI : UIScreen
     public Image cheatBtnImg;
 
     public bool isOpenCheatOnInit;
-    
+
     protected override void OnInit()
     {
         cheatPanel.SetActiveOnInit(isOpenCheatOnInit);

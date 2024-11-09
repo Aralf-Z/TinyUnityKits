@@ -164,7 +164,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.00012207, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7473773794872534546
 MonoBehaviour:
@@ -178,11 +178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad3b2816e13a7e40a13b826ac250534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideCpts:
-  - {fileID: 1777365280615084666}
+  uiPanel: 20
   animOnOpen: 1
   animOnHide: 1
   animRoot: {fileID: 0}
+  hideCpts:
+  - {fileID: 1777365280615084666}
   exitBtn: {fileID: 2973637825280953624}
 --- !u!1 &5927340270939791964
 GameObject:

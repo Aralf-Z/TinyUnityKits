@@ -82,6 +82,12 @@ namespace ZToolKit
             {
                 var playProperty = serializedObject.FindProperty("playMode");
                 EditorGUILayout.PropertyField(playProperty , false);
+                if (cfg.playMode == EPlayMode.WebPlayMode)
+                {
+                    EditorGUILayout.HelpBox("YooAsset的Web模式只支持异步加载，目前并未为此做同步适配。" +
+                                            "以下模块在YooAsset的web模式下无法使用，web端使用以下模块推荐使用ResourcesLoad:\n" +
+                                            "LocalizationImage, UITool, AudTool, SingletonDontDestroy", MessageType.Warning);
+                }
             }
             
             serializedObject.ApplyModifiedProperties();

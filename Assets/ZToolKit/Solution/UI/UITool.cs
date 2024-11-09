@@ -11,13 +11,12 @@ namespace ZToolKit
         /// <summary>
         /// 打开UI
         /// </summary>
-        /// <param name="uiPanel">UI层级</param>
         /// <param name="uiData">UI数据</param>
         /// <typeparam name="T">UI</typeparam>
         /// <returns></returns>
-        public static T OpenUI<T>(UIPanel uiPanel, object uiData = default) where T : UIScreen
+        public static T OpenUI<T>(object uiData = default) where T : UIScreen
         {
-            return UIMgr.OpenUIScreen<T>(uiPanel, uiData);
+            return UIMgr.OpenUIScreen<T>(uiData);
         }
 
         /// <summary>
