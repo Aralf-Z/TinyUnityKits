@@ -17,9 +17,9 @@ public static class DefaultCmd
 
     private static ConsoleController cc = new ConsoleController();
     
-    [Command(name: "杀死敌人", desc: "杀死x个敌人")]
-    private static void KillEnemy(int num)
+    [Command(desc: "打印")]
+    private static void printf(string str)
     {
-        cc.SendCommand(new CmdKillEnemy(num));
+        Debug.Log(str);
     }
 }

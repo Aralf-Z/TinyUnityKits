@@ -9,7 +9,7 @@ using ZToolKit;
 public class ConsoleUI_SingleCheat : UIElement<ConsoleUI_SingleCheat>
     , IObject<ConsoleUI_SingleCheat>
 {
-    public Text inputTxt;
+    public InputField inputTxt;
     public Button submitBtn;
     public Text descriptionTxt;
 
@@ -23,6 +23,7 @@ public class ConsoleUI_SingleCheat : UIElement<ConsoleUI_SingleCheat>
     public void SetSubmitAct(Action<Command, string> submitAct)
     {
         submitBtn.onClick.AddListener(() => submitAct?.Invoke(mCommand, inputTxt.text));
+        inputTxt.onSubmit.AddListener(text => submitAct?.Invoke(mCommand, text));
     }
     
     public override void Open()

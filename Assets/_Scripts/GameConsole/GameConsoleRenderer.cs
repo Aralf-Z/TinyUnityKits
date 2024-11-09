@@ -184,4 +184,9 @@ public class GameConsoleRenderer : MonoBehaviour, IConsoleRenderer
 
         Output(msg);
     }
+
+    private void Awake()
+    {
+        optionsPanel.gameObject.SetActive(false);
+    }
 }

@@ -39,9 +39,9 @@ public class ConsoleUI_CheatPanel : UIElement<ConsoleUI_CheatPanel>
     public override void Open()
     {
         mRectTransf.DOKill();
-        mRectTransf.anchoredPosition = new Vector2(-780, 0);
+        mRectTransf.anchoredPosition = new Vector2(810, 0);
         gameObject.SetActive(true);
-        mRectTransf.DOAnchorPosX(0, .5f);
+        mRectTransf.DOAnchorPosX(1600, .5f);
     }
 
     public override void UpdateSelf()
@@ -52,8 +52,8 @@ public class ConsoleUI_CheatPanel : UIElement<ConsoleUI_CheatPanel>
     public override void Hide()
     {
         mRectTransf.DOKill();
-        mRectTransf.anchoredPosition = new Vector2(0, 0);
-        mRectTransf.DOAnchorPosX(-780, .5f)
+        mRectTransf.anchoredPosition = new Vector2(1600, 0);
+        mRectTransf.DOAnchorPosX(810, .5f)
             .OnComplete(() => gameObject.SetActive(false));
     }
 
