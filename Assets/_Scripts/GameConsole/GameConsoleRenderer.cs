@@ -105,8 +105,10 @@ public class GameConsoleRenderer : MonoBehaviour, IConsoleRenderer
             cause maybe the implementation of the game console in Non-Unity GameEngine
             so use Action<string> instead of UnityEvent<string>
         */
-
-        inputField.onSubmit.AddListener((string input) => { callback?.Invoke(input); });
+        inputField.onSubmit.AddListener((string input) =>
+        {
+            callback?.Invoke(input);
+        });
     }
 
     public void BindOnTextChanged(Action<string> callback)
@@ -134,12 +136,13 @@ public class GameConsoleRenderer : MonoBehaviour, IConsoleRenderer
         lineCount = 0;
         outputPanel.text = string.Empty;
     }
-
+    
     public void Output(string msg)
     {
         try
         {
             outputPanel.text += msg + "\n";
+            
             if (++lineCount > outputPanelCapacity)
             {
                 outputPanel.text = outputPanel.text[(outputPanel.text.IndexOf('\n') + 1)..];

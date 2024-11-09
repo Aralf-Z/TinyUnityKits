@@ -13,9 +13,6 @@ public class MainMenuManager : MonoBehaviour
         UITool.OpenUI<MainMenuUI>(UIPanel.Normal);
 
         this.RegisterEvent<EvtOnKillEnemy>(DebugEnemy);
-        this.SendCommand(new CmdKillEnemy(1));
-        this.SendCommand(new CmdKillEnemy(2));
-        this.SendCommand(new CmdKillEnemy(3));
     }
 
     private void Update()
@@ -36,3 +33,4 @@ public class MainMenuManager : MonoBehaviour
         return GameCoreMgr.Interface;
     }
 }
+ 

@@ -230,12 +230,12 @@ namespace RedSaw.CommandLineInterface{
             /* initialize virtual machine */
             lexer = new Lexer();
             syntaxAnalyzer = new SyntaxAnalyzer();
-            vm = new VirtualMachine(
+            Vm = new VirtualMachine(
                 IgnoreInvalidSetBehaviour,
                 ReceiveValueFromNonStringType,
                 TreatVoidAsNull
             );
-            charAutomaton = new(vm.GetPropertyType, vm.GetCallableType);
+            charAutomaton = new(Vm.GetPropertyType, Vm.GetCallableType);
 
             this.scoreThresholdCommand = Math.Clamp(scoreThresholdCommand, 0, 1);
             this.scoreThresholdVariable = Math.Clamp(scoreThresholdVariable, 0, 1);
@@ -248,17 +248,17 @@ namespace RedSaw.CommandLineInterface{
             
             /* load custom commands */
             foreach(var command in commandCreator.CollectCommands<CommandAttribute>()){
-                vm.RegisterCallable(command);
+                Vm.RegisterCallable(command);
             }
 
             /* load custom properties */
             foreach(var property in commandCreator.CollectProperties<CommandPropertyAttribute>()){
-                vm.RegisterProperty(property);
+                Vm.RegisterProperty(property);
             }
 
             /* load value parsers */
             foreach(var pack in commandCreator.CollectValueParsers<CommandValueParserAttribute>()){
-                vm.RegisterValueParser(pack.Item2, pack.Item1, pack.Item3);
+                Vm.RegisterValueParser(pack.Item2, pack.Item1, pack.Item3);
             }
             
         }
@@ -277,29 +277,29 @@ namespace RedSaw.CommandLineInterface{
         readonly QueryCache<Suggestion> QC_variable;
         readonly QueryCache<Suggestion> QC_type;
 
-        /// <summary>a simple virtual machine to execute user input</summary>
-        readonly VirtualMachine vm;
-
         readonly CharAutomaton charAutomaton;
         string lastQueryStr = string.Empty;
 
+        /// <summary>a simple virtual machine to execute user input</summary>
+        public VirtualMachine Vm { get; }
+
         /// <summary>register a new console command whatever static method or instance method</summary>
-        public void RegisterCommand(Command command) => vm.RegisterCallable(command);
+        public void RegisterCommand(Command command) => Vm.RegisterCallable(command);
 
         /// <summary>register a new console property</summary>
-        public void RegisterProperty(StackProperty property) => vm.RegisterProperty(property);
+        public void RegisterProperty(StackProperty property) => Vm.RegisterProperty(property);
 
         /// <summary>register a new console value parser</summary>
-        public void RegisterValueParser(Type type, ValueParser parser, string alias = null) => vm.RegisterValueParser(type, parser, alias);
+        public void RegisterValueParser(Type type, ValueParser parser, string alias = null) => Vm.RegisterValueParser(type, parser, alias);
 
         /// <summary>register a new console value parser</summary>
-        public void RegisterValueParser<TType>(ValueParser parser, string alias = null) => vm.RegisterValueParser(typeof(TType), parser, alias);
+        public void RegisterValueParser<TType>(ValueParser parser, string alias = null) => Vm.RegisterValueParser(typeof(TType), parser, alias);
 
         /// <summary>get variable created at runtime</summary>
-        public object GetLocalVariable(string name) => vm.GetLocalVariable(name);
+        public object GetLocalVariable(string name) => Vm.GetLocalVariable(name);
 
         /// <summary>set variable created at runtime</summary>
-        public void SetLocalVariable(string name, object value) => vm.SetLocalVariable(name, value);
+        public void SetLocalVariable(string name, object value) => Vm.SetLocalVariable(name, value);
 
         /// <summary>
         /// get current suggestions
@@ -333,10 +333,9 @@ namespace RedSaw.CommandLineInterface{
         public Exception Execute(string commandInput, out object executeResult){
 
             try{
-                
                 var lexerResult = lexer.Parse(commandInput);
                 var syntaxTree = syntaxAnalyzer.Analyze(lexerResult);
-                executeResult = vm.ExecuteRoot(syntaxTree);
+                executeResult = Vm.ExecuteRoot(syntaxTree);
                 return null;
 
             }catch( CommandSystemException ex ){
@@ -365,7 +364,7 @@ namespace RedSaw.CommandLineInterface{
             if(QC_command.GetCache(queryDetailInfo, out var result))return result;
 
             /* start to query */
-            var bestChoices = vm.AllCallables
+            var bestChoices = Vm.AllCallables
             .Where( s => s is Command command && command.CompareTag(tag) )
             .Select(s => new {value = s, score = scoreFunc(query, s.Name)})
             .Where(s => s.score > scoreThresholdCommand)
@@ -387,7 +386,7 @@ namespace RedSaw.CommandLineInterface{
             var queryDetailInfo = query + ":" + tag ?? string.Empty;
             if(QC_variable.GetCache(queryDetailInfo, out var result))return result;
 
-            var bestChoices = vm.AllProperties
+            var bestChoices = Vm.AllProperties
             .Where( s => s.CompareTag(tag) )
             .Select( s => new { value = s, score = scoreFunc(query, s.Name )})
             .Where(s => s.score > scoreThresholdVariable)

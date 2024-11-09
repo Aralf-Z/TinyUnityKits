@@ -9,6 +9,8 @@ public class GameConsole : MonoBehaviour
     [Header("Initialize Parameters")] [SerializeField]
     private GameConsoleRenderer consoleRenderer;
 
+    [SerializeField] private ConsoleUI_CheatPanel cheatPanel;
+
     [SerializeField] private GameConsoleHeader headerBar;
 
     [SerializeField, Tooltip("the capacity of input history, at least 1")]
@@ -34,10 +36,8 @@ public class GameConsole : MonoBehaviour
 
     ConsoleController<LogType> console;
 
-    private bool isInited;
-
     /// <summary>initialize console, call this function to initialize console </summary>
-    public void Init()
+    public void Awake()
     {
         if (consoleRenderer == null)
         {
@@ -61,22 +61,17 @@ public class GameConsole : MonoBehaviour
             outputWithTime: shouldOutputWithTime,
             outputStackTraceOfCommandExecution: shouldOutputVMExceptionStack
         );
+
+        cheatPanel.Init();
+        cheatPanel.SetConsole(console);
+
         if (shouldReceiveUnityMessage) Application.logMessageReceived += UnityConsoleLog;
-
-
         var parentTransform = transform.GetComponent<RectTransform>();
         headerBar.Init((pos) => parentTransform.position += (Vector3) pos);
-
-        isInited = true;
     }
 
     void Update()
     {
-        if (!isInited)
-        {
-            Init();
-        }
-
         console.Update();
     }
 

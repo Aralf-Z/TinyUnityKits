@@ -247,9 +247,9 @@ namespace RedSaw.CommandLineInterface{
 
         readonly IConsoleRenderer renderer;
         readonly IConsoleInput userInput;
-        readonly CommandSystem commandSystem;
         readonly LogManager<TLog> logManager;
-
+        public CommandSystem CommandSystem { get; }
+        
         public event Action OnFocusOut;
         public event Action OnFocus;
 
@@ -261,7 +261,9 @@ namespace RedSaw.CommandLineInterface{
         readonly InputHistory inputHistory;
         readonly LinearSelector selector;
         bool ignoreTextChanged;
+
         
+
         #region About Command System
         /// <summary>initialize console</summary>
         /// <param name="renderer">the renderer of console</param>
@@ -298,7 +300,7 @@ namespace RedSaw.CommandLineInterface{
             this.userInput = userInput;
 
             // about command system
-            commandSystem = new CommandSystem(
+            CommandSystem = new CommandSystem(
                 commandCreator,
                 commandQueryCacheCapacity:commandQueryCacheCapacity
             );
@@ -422,7 +424,7 @@ namespace RedSaw.CommandLineInterface{
             }
 
             string queryText = renderer.InputTextToCursor;
-            var result = commandSystem.GetCurrentSuggestions(queryText, alternativeCommandCount, CLIUtils.FindSimilarity);
+            var result = CommandSystem.GetCurrentSuggestions(queryText, alternativeCommandCount, CLIUtils.FindSimilarity);
 
             if(result.Length == 0){
                 if(renderer.IsAlternativeOptionsActive){
@@ -450,7 +452,7 @@ namespace RedSaw.CommandLineInterface{
         public void OnSubmit(string text){
 
             if(renderer.IsAlternativeOptionsActive && selector.GetCurrentSelection(out string selection)){
-                renderer.InputTextToCursor = commandSystem.TakeSuggestion(renderer.InputTextToCursor, selection);
+                renderer.InputTextToCursor = CommandSystem.TakeSuggestion(renderer.InputTextToCursor, selection);
                 renderer.IsAlternativeOptionsActive = false;
                 renderer.ActivateInput();
                 renderer.SetInputCursorPosition(renderer.InputText.Length);
@@ -462,7 +464,7 @@ namespace RedSaw.CommandLineInterface{
 
             Output(text);
             if(text.Length > 0){
-                var ex = commandSystem.Execute(text, out object executeResult);
+                var ex = CommandSystem.Execute(text, out object executeResult);
                 if( ex == null ){
                     inputHistory.Record(text);
                     OutputResult(executeResult);

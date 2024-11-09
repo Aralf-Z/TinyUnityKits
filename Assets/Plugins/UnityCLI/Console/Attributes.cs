@@ -67,6 +67,4 @@ namespace RedSaw.CommandLineInterface{
             this.Tag = null;
         }
     }
-
-
 }

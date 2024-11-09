@@ -15,9 +15,12 @@ public class ConsoleUI : UIScreen
     public Button cheatBtn;
     public Image cheatBtnImg;
 
+    public bool isOpenCheatOnInit;
+    
     protected override void OnInit()
     {
-        cheatPanel.Init();
+        cheatPanel.SetActiveOnInit(isOpenCheatOnInit);
+        cheatBtnImg.transform.localScale = new Vector3(isOpenCheatOnInit ? 1 : -1, 1, 1);
         cheatBtn.onClick.AddListener(OnClickCheatBtn);
     }
 
@@ -33,7 +36,7 @@ public class ConsoleUI : UIScreen
 
     private void OnClickCheatBtn()
     {
-        if (cheatPanel.isOpen)
+        if (cheatPanel.GoActive)
         {
             cheatBtnImg.transform.localScale = new Vector3(-1,1,1);
             cheatPanel.Hide();
@@ -52,25 +55,4 @@ public class ConsoleUI : UIScreen
             HideSelf();
         }
     }
-
-    #region CheatPanel
-
-    public class CheatSystem
-    {
-        private ICommandCreator mCommandCreator = new CommandCreator();
-        private VirtualMachine mVm = new VirtualMachine();
-
-        public List<Command> allCommands = new List<Command>();
-        
-        public CheatSystem()
-        {
-            foreach (var command in mCommandCreator.CollectCommands<CommandAttribute>())
-            {
-                allCommands.Add(command);
-                mVm.RegisterCallable(command);
-            }
-        }
-    }
-
-    #endregion
 }

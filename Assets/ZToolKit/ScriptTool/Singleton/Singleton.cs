@@ -1,5 +1,5 @@
 
-namespace PFramework
+namespace ZToolKit
 {
     /// <summary>
     /// 普通单例类

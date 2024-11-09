@@ -76,7 +76,7 @@ namespace ZToolKit
         /// </summary>
         public void RecycleUsing()
         {
-            Recycle(mUsing);
+            Recycle(mUsing.ToArray());
         }
         
         public void ClearCache()

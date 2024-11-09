@@ -721,7 +721,6 @@ namespace RedSaw.CommandLineInterface
         /// <param name="shouldOverwrite">if true, vm will overwrite callable with same name</param>
         public bool RegisterCallable(StackCallable callable, bool shouldOverwrite = true)
         {
-
             if (callables.ContainsKey(callable.Name))
             {
                 if (shouldOverwrite)
