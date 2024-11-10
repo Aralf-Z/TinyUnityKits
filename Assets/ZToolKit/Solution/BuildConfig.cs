@@ -6,12 +6,6 @@ using YooAsset;
 
 namespace ZToolKit
 {
-    public enum ResMode
-    {
-        ResourcesLoad,
-        YooAsset,
-    }
-    
     [CreateAssetMenu(fileName = "BuildConfig", menuName = "ZTool-GameConfig/BuildConfig", order = 0)]
     public class BuildConfig : ScriptableObject
     {
@@ -22,14 +16,12 @@ namespace ZToolKit
         public EPlayMode playMode = EPlayMode.EditorSimulateMode;
 
         //todo 本地化设置：1字体，2是否自适应---通配设置
-        
-        public string Version = "ver. 1.0.0";
 
-        private int version_X_0_0;
+        public int SavesCountInAnArchive = 5;
         
-        private int version_0_Y_0;
-        
-        private int version_0_0_Z;
+        public SaveLocation saveLocation = SaveLocation.Assets;
+
+        public SaveType saveType = SaveType.Json;
     }
     
     public static class GameConfig
@@ -39,6 +31,10 @@ namespace ZToolKit
         public static ResMode ResMode { get; }
 
         public static EPlayMode PlayMode { get; }
+        
+        public static SaveLocation SaveLocation { get; }
+        
+        public static SaveType SaveType { get; }
         
         static GameConfig()
         {
@@ -90,6 +86,24 @@ namespace ZToolKit
                 }
             }
             
+            //SaveTool
+            EditorGUILayout.Space(5);
+            EditorGUILayout.LabelField("Save", titleFont);
+            var countProperty = serializedObject.FindProperty("SavesCountInAnArchive");
+            EditorGUILayout.PropertyField(countProperty, false); 
+            var locationProperty = serializedObject.FindProperty("saveLocation");
+            EditorGUILayout.PropertyField(locationProperty, false);
+            var typeProperty = serializedObject.FindProperty("saveType");
+            EditorGUILayout.PropertyField(typeProperty, false);
+            if (cfg.saveLocation == SaveLocation.Assets)
+            {
+                EditorGUILayout.HelpBox("仅支持windows便携包，用以分发测试使用", MessageType.Warning);
+            }
+            if (cfg.saveLocation is SaveLocation.Assets or SaveLocation.Persistent)
+            {
+                //todo 
+            }
+
             serializedObject.ApplyModifiedProperties();
         }
     }

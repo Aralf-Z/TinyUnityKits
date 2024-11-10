@@ -10,8 +10,12 @@ namespace ZToolKit
 {   
     public static class LogTool
     {
-        private static bool logZToolKit = true;
-
+        private static void DefaultLog(string headStr, string messageStr, Color color = default)
+        {
+            color = color == default ? new Color(1,1,1,.8f) : color;
+            UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
+        }
+        
         #region 游戏日志
 
         /// <summary>
@@ -96,10 +100,7 @@ namespace ZToolKit
         /// <param name="messageStr"></param>
         public static void ToolInfo(string headStr, string messageStr)
         {
-            if (logZToolKit)
-            {
-                UnityEngine.Debug.Log($"<color=#bd868dff>[ZTool-{headStr}]: {messageStr}</color>");
-            }
+            UnityEngine.Debug.Log($"<color=#bd868dff>[ZTool-{headStr}]: {messageStr}</color>");
         }
         
         /// <summary>
@@ -109,18 +110,9 @@ namespace ZToolKit
         /// <param name="messageStr"></param>
         public static void ToolError(string headStr, string messageStr)
         {
-            if (logZToolKit)
-            {
-                UnityEngine.Debug.Log($"<color=#ca463dff>[ZTool-{headStr}]: {messageStr}</color>");
-            }
+            UnityEngine.Debug.Log($"<color=#ca463dff>[ZTool-{headStr}]: {messageStr}</color>");
         }
 
         #endregion
-
-        private static void DefaultLog(string headStr, string messageStr, Color color = default)
-        {
-            color = color == default ? new Color(1,1,1,.8f) : color;
-             UnityEngine.Debug.Log($"<color={color.ToHex()}>[{headStr}]: {messageStr}</color>");
-        }
     }
 } 

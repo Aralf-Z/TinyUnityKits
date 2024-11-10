@@ -12,6 +12,12 @@ using Object = UnityEngine.Object;
 
 namespace ZToolKit
 {
+    public enum ResMode
+    {
+        ResourcesLoad,
+        YooAsset,
+    }
+    
     public static class ResTool
     {
         public const string ResCatalog = "ZTool/Resources/ResCatalog.json";
