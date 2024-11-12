@@ -39,6 +39,39 @@ public class GameCoreMgr :
         }
     }
 
+    public override TSystem GetSystem<TSystem>()
+    {
+        var sys = base.GetSystem<TSystem>();
+        if (sys is null)
+        {
+            LogTool.Error("QfArch", $"{typeof(TSystem)} is not Registered in GameCoreMgr");
+        }
+
+        return sys;
+    }
+
+    public override TModel GetModel<TModel>()
+    {
+        var mdl = base.GetModel<TModel>();
+        if (mdl is null)
+        {
+            LogTool.Error("QfArch", $"{typeof(TModel)} is not Registered in GameCoreMgr");
+        }
+
+        return mdl;
+    }
+    
+    public override TUtility GetUtility<TUtility>()
+    {
+        var util = base.GetUtility<TUtility>();
+        if (util is null)
+        {
+            LogTool.Error("QfArch", $"{typeof(TUtility)} is not Registered in GameCoreMgr");
+        }
+
+        return util;
+    }
+
     protected override void OnDeinit()
     {
     }

@@ -17,7 +17,7 @@ namespace ZToolKit
 
         //todo 本地化设置：1字体，2是否自适应---通配设置
 
-        public int SavesCountInAnArchive = 5;
+        public int SaveCountInAnArchive = 5;
         
         public SaveLocation saveLocation = SaveLocation.Assets;
 
@@ -32,6 +32,8 @@ namespace ZToolKit
 
         public static EPlayMode PlayMode { get; }
         
+        public static int SaveCountInAnArchive { get; }
+        
         public static SaveLocation SaveLocation { get; }
         
         public static SaveType SaveType { get; }
@@ -43,6 +45,9 @@ namespace ZToolKit
             isConsoleActive = buildConfig.isConsoleActive;
             ResMode = buildConfig.resMode;
             PlayMode = buildConfig.playMode;
+            SaveCountInAnArchive = buildConfig.SaveCountInAnArchive;
+            SaveLocation = buildConfig.saveLocation;
+            SaveType = buildConfig.saveType;
         }
     }
 
@@ -89,7 +94,7 @@ namespace ZToolKit
             //SaveTool
             EditorGUILayout.Space(5);
             EditorGUILayout.LabelField("Save", titleFont);
-            var countProperty = serializedObject.FindProperty("SavesCountInAnArchive");
+            var countProperty = serializedObject.FindProperty("SaveCountInAnArchive");
             EditorGUILayout.PropertyField(countProperty, false); 
             var locationProperty = serializedObject.FindProperty("saveLocation");
             EditorGUILayout.PropertyField(locationProperty, false);

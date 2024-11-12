@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ZToolKit
 {
@@ -32,18 +33,18 @@ namespace ZToolKit
     }
 
     /// <summary>
-    /// 存档档案->可以理解成一个账号数据,只记录信息，不记录存档
+    /// 档案, 可以理解成一个账号数据,只记录信息,不记录存档
     /// </summary>
-    public class SaveArchive
+    public class Archive
     {
         /// <summary> 档案名称 </summary>
-        public string archiveName;
-        public List<string> saves;
+        public string name;
         /// <summary> 档案下的所有存档 </summary>
-
-        public SaveArchive(string archiveName)
+        public List<string> saves;
+        
+        public Archive(string name)
         {
-            this.archiveName = archiveName;
+            this.name = name;
             saves = new List<string>();
         }
 
@@ -52,7 +53,7 @@ namespace ZToolKit
         /// </summary>
         /// <param name="saveName">存档名称</param>
         /// <returns>是否重名</returns>
-        public bool AddSave(string saveName)
+        public bool TryAddSave(string saveName)
         {
             if (saves.Contains(saveName))
             {
@@ -62,21 +63,61 @@ namespace ZToolKit
             return false;
         }
 
+        /// <summary>
+        /// 删除存档
+        /// </summary>
+        /// <param name="saveName">存档名称</param>
+        /// <returns>是否重名</returns>
+        public void RemoveSave(string saveName)
+        {
+            saves.Remove(saveName);
+        }
+
+        /// <summary>
+        /// 删除最旧存档
+        /// </summary>
+        public void RemoveTheOldest()
+        {
+            saves.RemoveAt(0);
+        }
+
+        /// <summary>
+        /// 存档个数
+        /// </summary>
+        /// <returns></returns>
+        public int Count()
+        {
+            return saves.Count;
+        }
+        
+        /// <summary>
+        /// 是否有存档
+        /// </summary>
+        /// <param name="saveName"></param>
+        /// <returns></returns>
         public bool Contains(string saveName)
         {
             return saves.Contains(saveName);
         }
     }
-    
+
+    /// <summary>
+    /// 存档相关的配置文件
+    /// </summary>
+    public class SaveConfig
+    {
+        public string curArchive;
+        public string curSave;
+        public Dictionary<string, Archive> archives;
+    }
+
     public static class SaveTool
     {
-        private static IGameSave gameSave;
+        private static readonly IGameSave gameSave;
         
-        public static ISaveConvert saveConvert;
-        
-        public static SaveArchive curArchive;
+        private static readonly ISaveConvert saveConvert;
 
-        public static void Init()
+        static SaveTool()
         {
             gameSave = GameConfig.SaveLocation switch
             {
@@ -93,30 +134,60 @@ namespace ZToolKit
             };
         }
 
-        public static T Load<T>(string saveName) where T : SaveBase, new()
+        public static T ReadSave<T>(Archive archive, string saveName) where T : SaveBase, new()
         {
-            return gameSave.LoadGame<T>(curArchive.archiveName, saveName);
+            return gameSave.LoadGame<T>(archive.name, saveName);
         }
 
-        public static bool Save<T>(T save) where T : SaveBase, new()
+        public static bool WriteSave<T>(T save) where T : SaveBase, new()
         {
             return gameSave.SaveGame(save);
         }
+
+        public static bool DeleteSave(string archiveName, string saveName)
+        {
+            return gameSave.DeleteGame(archiveName, saveName);
+        }
+
+        public static SaveConfig ReadConfig()
+        {
+            return gameSave.LoadCfg();
+        }
         
+        public static void WriteArchive(SaveConfig cfg)
+        {
+            gameSave.WriteCfg(cfg);
+        }
 
         #region Convert
 
-        public interface ISaveConvert
+        private interface ISaveConvert
         {
-            T StringConvert<T>(string str);
+            string GetSaveFileName(string saveName);
+            T SaveConvert<T>(string saveStr);
+            string SerializeSave<T>(T save);
         }
     
-        public class JsonSaveConvert:
+        private class JsonSaveConvert:
             ISaveConvert
         {
-            public T StringConvert<T>(string str)
+            public string GetSaveFileName(string saveName)
+            {
+                return $"{saveName}.json";
+            }
+
+            public T SaveConvert<T>(string str)
             {
                 return JsonConvert.DeserializeObject<T>(str);
+            }
+
+            public string SerializeSave<T>(T save)
+            {
+                JsonSerializerSettings jsonSerializerSettings = new();
+                jsonSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
+                return JsonConvert.SerializeObject(save, jsonSerializerSettings);
             }
         }
 
@@ -124,63 +195,40 @@ namespace ZToolKit
 
         #region GameSave
         
-        internal interface IGameSave 
+        private interface IGameSave 
         {
-            /// <summary>
-            /// 加载存档列表
-            /// </summary>
-            /// <returns></returns>
-            List<SaveArchive> LoadSaveList();
-        
             TSave LoadGame<TSave>(string archiveName, string saveName) where TSave : SaveBase, new();
             bool SaveGame<TSave>(TSave save)where TSave : SaveBase, new();
+            bool DeleteGame(string archiveName, string saveName);
 
-            UniTask<TSave> LoadGameAsync<TSave>(string archiveName, string saveName)where TSave : SaveBase, new();
-            UniTask SaveGameAsync<TSave>(TSave save)where TSave : SaveBase, new();
+            SaveConfig LoadCfg();
+            void WriteCfg(SaveConfig archive);
         }
 
-        internal abstract class GameSaveFolder :
+        private abstract class GameSave:
             IGameSave
         {
-            public abstract string saveFolder { get; }
-
-            public List<SaveArchive> LoadSaveList()
-            {
-                throw new NotImplementedException();
-            }
-
             public TSave LoadGame<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
             {
                 try
                 {
-                    if (!File.Exists(saveFolder))
-                    {
-                        return new TSave();
-                    }
-
-                    var saveStr = File.ReadAllText(saveFolder);
-                    return SaveTool.saveConvert.StringConvert<TSave>(saveStr);
+                    var saveStr = ReadSave(archiveName, saveName);
+                    return saveConvert.SaveConvert<TSave>(saveStr) ?? new TSave(){archive = archiveName, name = saveName};
                 }
                 catch (Exception e)
                 {
                     LogTool.ToolError("SaveTool", e.Message);
                 }
 
-                return new TSave();
+                return new TSave(){archive = archiveName, name = saveName};
             }
 
-            public bool SaveGame<TSave>(TSave save) where TSave : SaveBase, new()
+            public bool SaveGame<TSave>(TSave save)where TSave : SaveBase, new()
             {
                 try
                 {
-                    JsonSerializerSettings jsonSerializerSettings = new();
-                    jsonSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    jsonSerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-
-                    var saveJson = JsonConvert.SerializeObject(save, jsonSerializerSettings);
-
-                    File.WriteAllText(saveFolder, saveJson);
-                    LogTool.ToolInfo("GameSave", "Game saved successfully!");
+                    WriteSave(saveConvert.SerializeSave(save), save.archive, save.name);
+                    LogTool.ToolInfo("SaveTool", "Game saved successfully!");
                     return true;
                 }
                 catch (Exception e)
@@ -191,107 +239,180 @@ namespace ZToolKit
                 return false;
             }
 
-            public UniTask<TSave> LoadGameAsync<TSave>(string archiveName, string saveName)
-                where TSave : SaveBase, new()
+            public SaveConfig LoadCfg()
             {
-                throw new NotImplementedException();
+                var config = ReadArchiveConfig();
+                
+                if (string.IsNullOrEmpty(config))
+                {
+                    var archives = new SaveConfig();
+                    WriteArchiveConfig(JsonConvert.SerializeObject(archives));
+                    return archives;
+                }
+                
+                return JsonConvert.DeserializeObject<SaveConfig>(config);
             }
 
-            public UniTask SaveGameAsync<TSave>(TSave save) where TSave : SaveBase, new()
+            public void WriteCfg(SaveConfig archives)
             {
-                throw new NotImplementedException();
+                WriteArchiveConfig(JsonConvert.SerializeObject(archives));
             }
+
+            public abstract bool DeleteGame(string archiveName, string saveName);
+            protected abstract string ReadSave(string archiveName, string saveName);
+            protected abstract void WriteSave(string saveStr, string archiveName, string saveName);
+            protected abstract string ReadArchiveConfig();
+            protected abstract void WriteArchiveConfig(string cfg);
         }
 
-        public class GameSaveAssets : 
-            IGameSave
+        private abstract class GameSaveFolder: GameSave
         {
-            public List<SaveArchive> LoadSaveList()
+            public abstract string saveFolder { get; }
+
+            private string GetSavePath(string archiveName, string saveName)
             {
-                throw new NotImplementedException();
+                if(!Directory.Exists(Path.Combine(saveFolder,archiveName)))
+                {
+                    Directory.CreateDirectory(Path.Combine(saveFolder, archiveName));
+                }
+                
+                return Path.Combine(saveFolder, $"{archiveName}/{saveConvert.GetSaveFileName(saveName)}");
+            }
+            
+            private string GetArcFilePath()
+            {
+                var path = Path.Combine(saveFolder, $"ArchiveCfg.json");
+                if(!File.Exists(path))
+                {
+                    File.Create(path);
+#if  UNITY_EDITOR
+                 AssetDatabase.Refresh();   
+#endif
+                }
+
+                return path;
+            }
+            
+            public override bool DeleteGame(string archiveName, string saveName)
+            {
+                try 
+                {
+                    File.Delete(GetSavePath(archiveName, saveName));
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    LogTool.ToolError("SaveTool", e.Message);
+                    return false;
+                }
             }
 
-            public TSave LoadGame<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
+            protected override string ReadSave(string archiveName, string saveName)
             {
-                throw new NotImplementedException();
+                var savePath = GetSavePath(archiveName, saveName);
+                if (!File.Exists(savePath))
+                {
+                    return string.Empty;
+                }
+
+                return File.ReadAllText(savePath);
             }
 
-            public bool SaveGame<TSave>(TSave save) where TSave : SaveBase, new()
+            protected override void WriteSave(string saveStr, string archiveName, string saveName)
             {
-                throw new NotImplementedException();
+                var savePath = GetSavePath(archiveName, saveName);
+                File.WriteAllText(savePath, saveStr);
+            }
+            
+            
+            protected override string ReadArchiveConfig()
+            {
+               return File.ReadAllText(GetArcFilePath());
             }
 
-            public UniTask<TSave> LoadGameAsync<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
+            protected override void WriteArchiveConfig(string cfg)
             {
-                throw new NotImplementedException();
-            }
-
-            public UniTask SaveGameAsync<TSave>(TSave save) where TSave : SaveBase, new()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public class GameSavePersistent :
-            IGameSave
-        {
-            public List<SaveArchive> LoadSaveList()
-            {
-                throw new NotImplementedException();
-            }
-
-            public TSave LoadGame<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool SaveGame<TSave>(TSave save) where TSave : SaveBase, new()
-            {
-                throw new NotImplementedException();
-            }
-
-            public UniTask<TSave> LoadGameAsync<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
-            {
-                throw new NotImplementedException();
-            }
-
-            public UniTask SaveGameAsync<TSave>(TSave save) where TSave : SaveBase, new()
-            {
-                throw new NotImplementedException();
+                File.WriteAllText(GetArcFilePath(), cfg);
             }
         }
         
-        internal class GameSavePlayerPrefs:
-            IGameSave
+        private class GameSaveAssets : GameSaveFolder 
         {
-            public List<SaveArchive> LoadSaveList()
+            public override string saveFolder
             {
-                throw new NotImplementedException();
+                get
+                {
+                    var path = Path.Combine(Application.dataPath, "Save");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    return path;
+                }
+            }
+        }
+
+        private class GameSavePersistent : GameSaveFolder 
+        {
+            public override string saveFolder
+            {
+                get
+                {
+                    var path = Path.Combine(Application.persistentDataPath, "Save");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    return Path.Combine(path);
+                }
+            }
+        }
+        
+        private class GameSavePlayerPrefs: GameSave
+        {
+            private const string kArchiveConfigKey = "Archives";
+            
+            private string GetSaveKey(string archiveName, string saveName)
+            {
+                return $"Save{archiveName}{saveName}";
             }
 
-            public TSave LoadGame<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
+            public override bool DeleteGame(string archiveName, string saveName)
             {
-                throw new NotImplementedException();
+                try
+                {
+                    PlayerPrefs.DeleteKey(GetSaveKey(archiveName,saveName));
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    LogTool.ToolError("SaveTool", e.Message);
+                    return false;
+                }
             }
 
-            public bool SaveGame<TSave>(TSave save) where TSave : SaveBase, new()
+            protected override string ReadSave(string archiveName, string saveName)
             {
-                throw new NotImplementedException();
+                return PlayerPrefs.GetString(GetSaveKey(archiveName,saveName));
             }
 
-            public UniTask<TSave> LoadGameAsync<TSave>(string archiveName, string saveName) where TSave : SaveBase, new()
+            protected override void WriteSave(string saveStr, string archiveName, string saveName)
             {
-                throw new NotImplementedException();
+                PlayerPrefs.SetString(GetSaveKey(archiveName,saveName), saveStr);
             }
 
-            public UniTask SaveGameAsync<TSave>(TSave save) where TSave : SaveBase, new()
+            protected override string ReadArchiveConfig()
             {
-                throw new NotImplementedException();
+                return PlayerPrefs.GetString(kArchiveConfigKey);
+            }
+
+            protected override void WriteArchiveConfig(string cfg)
+            {
+                PlayerPrefs.SetString(kArchiveConfigKey, JsonConvert.SerializeObject(cfg));
             }
         }
         
         #endregion
-        
         
     }
 }

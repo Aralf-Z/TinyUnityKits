@@ -155,11 +155,11 @@ namespace QFramework
 
         public void RegisterUtility<TUtility>(TUtility utility, Type type) where TUtility : IUtility => mContainer.Register<TUtility>(utility, type);
 
-        public TSystem GetSystem<TSystem>() where TSystem : class, ISystem => mContainer.Get<TSystem>();
+        public virtual TSystem GetSystem<TSystem>() where TSystem : class, ISystem => mContainer.Get<TSystem>();
 
-        public TModel GetModel<TModel>() where TModel : class, IModel => mContainer.Get<TModel>();
+        public virtual TModel GetModel<TModel>() where TModel : class, IModel => mContainer.Get<TModel>();
 
-        public TUtility GetUtility<TUtility>() where TUtility : class, IUtility => mContainer.Get<TUtility>();
+        public virtual TUtility GetUtility<TUtility>() where TUtility : class, IUtility => mContainer.Get<TUtility>();
         
         public void SendCommand<TCommand>(TCommand command) where TCommand : struct, ICommand => ExecuteCommand(command);
         
