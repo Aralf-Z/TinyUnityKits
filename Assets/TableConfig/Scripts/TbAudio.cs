@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using SimpleJSON;
 
 
 namespace cfg
@@ -19,11 +20,11 @@ public partial class TbAudio
 
      public Audio Data => _data;
 
-    public TbAudio(ByteBuf _buf)
+    public TbAudio(JSONNode _buf)
     {
-        int n = _buf.ReadSize();
+        int n = _buf.Count;
         if (n != 1) throw new SerializationException("table mode=one, but size != 1");
-        _data = Audio.DeserializeAudio(_buf);
+        { if(!_buf[0].IsObject) { throw new SerializationException(); }  _data = Audio.DeserializeAudio(_buf[0]);  }
     }
 
 

@@ -8,21 +8,22 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using SimpleJSON;
 
 
 namespace cfg
 {
 public partial struct vector4
 {
-    public vector4(ByteBuf _buf) 
+    public vector4(JSONNode _buf) 
     {
-        X = _buf.ReadFloat();
-        Y = _buf.ReadFloat();
-        Z = _buf.ReadFloat();
-        W = _buf.ReadFloat();
+        { if(!_buf["x"].IsNumber) { throw new SerializationException(); }  X = _buf["x"]; }
+        { if(!_buf["y"].IsNumber) { throw new SerializationException(); }  Y = _buf["y"]; }
+        { if(!_buf["z"].IsNumber) { throw new SerializationException(); }  Z = _buf["z"]; }
+        { if(!_buf["w"].IsNumber) { throw new SerializationException(); }  W = _buf["w"]; }
     }
 
-    public static vector4 Deserializevector4(ByteBuf _buf)
+    public static vector4 Deserializevector4(JSONNode _buf)
     {
         return new vector4(_buf);
     }

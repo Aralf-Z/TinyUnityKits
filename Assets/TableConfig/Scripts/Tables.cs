@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using SimpleJSON;
 
 namespace cfg
 {
@@ -17,7 +18,7 @@ public partial class Tables
     public TbL10nUI TbL10nUI {get; }
     public TbL10nGame TbL10nGame {get; }
 
-    public Tables(System.Func<string, ByteBuf> loader)
+    public Tables(System.Func<string, JSONNode> loader)
     {
         TbAudio = new TbAudio(loader("tbaudio"));
         TbL10nUI = new TbL10nUI(loader("tbl10nui"));

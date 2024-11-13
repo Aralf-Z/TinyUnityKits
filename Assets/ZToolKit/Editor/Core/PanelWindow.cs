@@ -18,7 +18,7 @@ namespace ZToolKit.Editor
         [MenuItem("Tools/ZToolKit #Z", false, 1)]
         private static void OpenSelf()
         {
-            var w = GetWindow<PanelWindow>("ConfigPanel");
+            var w = GetWindow<PanelWindow>("ConfigPanelWindow", true, WindowsDefine.DockedWindowTypes);
             w.maxSize = new Vector2(900, 900);
             w.minSize = new Vector2(630, 450);
         }

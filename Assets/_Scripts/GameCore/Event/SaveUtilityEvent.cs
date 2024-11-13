@@ -15,7 +15,12 @@ public struct EvtArchivesChanged
     }
 }
 
-public struct EvtSaveNameRepeat
+public struct EvtNameRepeat
+{
+    
+}
+
+public struct EvtNameEmpty
 {
     
 }

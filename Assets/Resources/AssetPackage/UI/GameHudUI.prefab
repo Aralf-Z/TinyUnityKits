@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4901961, g: 0.8431373, b: 0.93725497, a: 1}
+  m_Color: {r: 0.38431373, g: 0.57254905, b: 0.61960787, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4901961, g: 0.8431373, b: 0.93725497, a: 1}
+  m_Color: {r: 0.38431373, g: 0.57254905, b: 0.61960787, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4901961, g: 0.8431373, b: 0.93725497, a: 1}
+  m_Color: {r: 0.38431373, g: 0.57254905, b: 0.61960787, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -528,10 +528,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec329011be8988946a8272edccf8a520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideCpts: []
+  uiPanel: 10
   animOnOpen: 0
   animOnHide: 0
   animRoot: {fileID: 0}
+  hideCpts: []
   settingBtn: {fileID: 6609434438852977223}
   helpBtn: {fileID: 2303666953540154487}
   backMainBtn: {fileID: 8792658005926479151}

@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using SimpleJSON;
 
 
 namespace cfg
@@ -17,15 +18,15 @@ public partial class TbL10nUI
     private readonly System.Collections.Generic.Dictionary<string, L10nUI> _dataMap;
     private readonly System.Collections.Generic.List<L10nUI> _dataList;
     
-    public TbL10nUI(ByteBuf _buf)
+    public TbL10nUI(JSONNode _buf)
     {
         _dataMap = new System.Collections.Generic.Dictionary<string, L10nUI>();
         _dataList = new System.Collections.Generic.List<L10nUI>();
         
-        for(int n = _buf.ReadSize() ; n > 0 ; --n)
+        foreach(JSONNode _ele in _buf.Children)
         {
             L10nUI _v;
-            _v = L10nUI.DeserializeL10nUI(_buf);
+            { if(!_ele.IsObject) { throw new SerializationException(); }  _v = L10nUI.DeserializeL10nUI(_ele);  }
             _dataList.Add(_v);
             _dataMap.Add(_v.L10nKey, _v);
         }

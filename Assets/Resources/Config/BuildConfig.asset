@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConsoleActive: 1
   resMode: 0
-  playMode: 3
-  Version: ver. 1.0.0
+  playMode: 0
+  SaveCountInAnArchive: 99999
+  saveLocation: 3
+  saveType: 1

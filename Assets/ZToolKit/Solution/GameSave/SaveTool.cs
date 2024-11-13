@@ -41,63 +41,14 @@ namespace ZToolKit
         public string name;
         /// <summary> 档案下的所有存档 </summary>
         public List<string> saves;
+        /// <summary> 最大存档数量 </summary>
+        public int maxCount;
         
         public Archive(string name)
         {
             this.name = name;
             saves = new List<string>();
-        }
-
-        /// <summary>
-        /// 添加存档
-        /// </summary>
-        /// <param name="saveName">存档名称</param>
-        /// <returns>是否重名</returns>
-        public bool TryAddSave(string saveName)
-        {
-            if (saves.Contains(saveName))
-            {
-                return true;
-            }
-            saves.Add(saveName);
-            return false;
-        }
-
-        /// <summary>
-        /// 删除存档
-        /// </summary>
-        /// <param name="saveName">存档名称</param>
-        /// <returns>是否重名</returns>
-        public void RemoveSave(string saveName)
-        {
-            saves.Remove(saveName);
-        }
-
-        /// <summary>
-        /// 删除最旧存档
-        /// </summary>
-        public void RemoveTheOldest()
-        {
-            saves.RemoveAt(0);
-        }
-
-        /// <summary>
-        /// 存档个数
-        /// </summary>
-        /// <returns></returns>
-        public int Count()
-        {
-            return saves.Count;
-        }
-        
-        /// <summary>
-        /// 是否有存档
-        /// </summary>
-        /// <param name="saveName"></param>
-        /// <returns></returns>
-        public bool Contains(string saveName)
-        {
-            return saves.Contains(saveName);
+            maxCount = int.MaxValue;
         }
     }
 
@@ -107,7 +58,6 @@ namespace ZToolKit
     public class SaveConfig
     {
         public string curArchive;
-        public string curSave;
         public Dictionary<string, Archive> archives;
     }
 
@@ -139,14 +89,14 @@ namespace ZToolKit
             return gameSave.LoadGame<T>(archive.name, saveName);
         }
 
-        public static bool WriteSave<T>(T save) where T : SaveBase, new()
+        public static void WriteSave<T>(T save) where T : SaveBase, new()
         {
-            return gameSave.SaveGame(save);
+            gameSave.SaveGame(save);
         }
 
-        public static bool DeleteSave(string archiveName, string saveName)
+        public static void DeleteSave(string archiveName, string saveName)
         {
-            return gameSave.DeleteGame(archiveName, saveName);
+            gameSave.DeleteGame(archiveName, saveName);
         }
 
         public static SaveConfig ReadConfig()
@@ -154,7 +104,7 @@ namespace ZToolKit
             return gameSave.LoadCfg();
         }
         
-        public static void WriteArchive(SaveConfig cfg)
+        public static void WriteConfig(SaveConfig cfg)
         {
             gameSave.WriteCfg(cfg);
         }
@@ -198,8 +148,8 @@ namespace ZToolKit
         private interface IGameSave 
         {
             TSave LoadGame<TSave>(string archiveName, string saveName) where TSave : SaveBase, new();
-            bool SaveGame<TSave>(TSave save)where TSave : SaveBase, new();
-            bool DeleteGame(string archiveName, string saveName);
+            void SaveGame<TSave>(TSave save)where TSave : SaveBase, new();
+            void DeleteGame(string archiveName, string saveName);
 
             SaveConfig LoadCfg();
             void WriteCfg(SaveConfig archive);
@@ -223,20 +173,10 @@ namespace ZToolKit
                 return new TSave(){archive = archiveName, name = saveName};
             }
 
-            public bool SaveGame<TSave>(TSave save)where TSave : SaveBase, new()
+            public void SaveGame<TSave>(TSave save)where TSave : SaveBase, new()
             {
-                try
-                {
-                    WriteSave(saveConvert.SerializeSave(save), save.archive, save.name);
-                    LogTool.ToolInfo("SaveTool", "Game saved successfully!");
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    LogTool.ToolError("SaveTool", e.Message);
-                }
-
-                return false;
+                WriteSave(saveConvert.SerializeSave(save), save.archive, save.name);
+                LogTool.ToolInfo("SaveTool", $"{save.archive}:{save.name} saved.");
             }
 
             public SaveConfig LoadCfg()
@@ -258,7 +198,7 @@ namespace ZToolKit
                 WriteArchiveConfig(JsonConvert.SerializeObject(archives));
             }
 
-            public abstract bool DeleteGame(string archiveName, string saveName);
+            public abstract void DeleteGame(string archiveName, string saveName);
             protected abstract string ReadSave(string archiveName, string saveName);
             protected abstract void WriteSave(string saveStr, string archiveName, string saveName);
             protected abstract string ReadArchiveConfig();
@@ -293,18 +233,9 @@ namespace ZToolKit
                 return path;
             }
             
-            public override bool DeleteGame(string archiveName, string saveName)
+            public override void DeleteGame(string archiveName, string saveName)
             {
-                try 
-                {
-                    File.Delete(GetSavePath(archiveName, saveName));
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    LogTool.ToolError("SaveTool", e.Message);
-                    return false;
-                }
+                File.Delete(GetSavePath(archiveName, saveName));
             }
 
             protected override string ReadSave(string archiveName, string saveName)
@@ -377,18 +308,9 @@ namespace ZToolKit
                 return $"Save{archiveName}{saveName}";
             }
 
-            public override bool DeleteGame(string archiveName, string saveName)
+            public override void DeleteGame(string archiveName, string saveName)
             {
-                try
-                {
-                    PlayerPrefs.DeleteKey(GetSaveKey(archiveName,saveName));
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    LogTool.ToolError("SaveTool", e.Message);
-                    return false;
-                }
+                PlayerPrefs.DeleteKey(GetSaveKey(archiveName,saveName));
             }
 
             protected override string ReadSave(string archiveName, string saveName)

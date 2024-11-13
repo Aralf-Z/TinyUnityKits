@@ -59,8 +59,8 @@ namespace ZToolKit
         public override void OnInspectorGUI()
         {
             var cfg = (BuildConfig) target;
-            var titleFont = new GUIStyle {fontSize = 15, normal = new GUIStyleState{textColor = Color.cyan}};
-            
+            var titleFont = new GUIStyle {fontSize = 13, normal = new GUIStyleState{textColor = Color.white}};
+
             //m_Script
             var propertyScr = serializedObject.FindProperty("m_Script");
             EditorGUI.BeginDisabledGroup(true);
@@ -86,7 +86,7 @@ namespace ZToolKit
                 if (cfg.playMode == EPlayMode.WebPlayMode)
                 {
                     EditorGUILayout.HelpBox("YooAsset的Web模式只支持异步加载，目前并未为此做同步适配。" +
-                                            "以下模块在YooAsset的web模式下无法使用，web端使用以下模块推荐使用ResourcesLoad:\n" +
+                                            "以下模块在YooAsset的web模式下无法使用，web端使用以下模块推荐使用ResourcesLoad:" +
                                             "LocalizationImage, UITool, AudTool, SingletonDontDestroy", MessageType.Warning);
                 }
             }

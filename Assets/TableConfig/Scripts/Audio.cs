@@ -8,28 +8,29 @@
 //------------------------------------------------------------------------------
 
 using Luban;
+using SimpleJSON;
 
 
 namespace cfg
 {
 public sealed partial class Audio : Luban.BeanBase
 {
-    public Audio(ByteBuf _buf) 
+    public Audio(JSONNode _buf) 
     {
-        EnterBtn = _buf.ReadString();
-        ClickBtn = _buf.ReadString();
-        EnterTgl = _buf.ReadString();
-        ClickTgl = _buf.ReadString();
-        DragBarMusic = _buf.ReadString();
-        DragBarSfx = _buf.ReadString();
-        MainMenuBgm = _buf.ReadString();
-        GameBgm = _buf.ReadString();
-        PopOut = _buf.ReadString();
-        PopMove = _buf.ReadString();
-        PopHide = _buf.ReadString();
+        { if(!_buf["enter_btn"].IsString) { throw new SerializationException(); }  EnterBtn = _buf["enter_btn"]; }
+        { if(!_buf["click_btn"].IsString) { throw new SerializationException(); }  ClickBtn = _buf["click_btn"]; }
+        { if(!_buf["enter_tgl"].IsString) { throw new SerializationException(); }  EnterTgl = _buf["enter_tgl"]; }
+        { if(!_buf["click_tgl"].IsString) { throw new SerializationException(); }  ClickTgl = _buf["click_tgl"]; }
+        { if(!_buf["drag_bar_music"].IsString) { throw new SerializationException(); }  DragBarMusic = _buf["drag_bar_music"]; }
+        { if(!_buf["drag_bar_sfx"].IsString) { throw new SerializationException(); }  DragBarSfx = _buf["drag_bar_sfx"]; }
+        { if(!_buf["main_menu_bgm"].IsString) { throw new SerializationException(); }  MainMenuBgm = _buf["main_menu_bgm"]; }
+        { if(!_buf["game_bgm"].IsString) { throw new SerializationException(); }  GameBgm = _buf["game_bgm"]; }
+        { if(!_buf["pop_out"].IsString) { throw new SerializationException(); }  PopOut = _buf["pop_out"]; }
+        { if(!_buf["pop_move"].IsString) { throw new SerializationException(); }  PopMove = _buf["pop_move"]; }
+        { if(!_buf["pop_hide"].IsString) { throw new SerializationException(); }  PopHide = _buf["pop_hide"]; }
     }
 
-    public static Audio DeserializeAudio(ByteBuf _buf)
+    public static Audio DeserializeAudio(JSONNode _buf)
     {
         return new Audio(_buf);
     }
