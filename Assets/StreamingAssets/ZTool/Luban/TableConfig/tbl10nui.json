@@ -1,0 +1,97 @@
+[
+  {
+    "l10n_key": "game_title",
+    "cn": "有趣的游戏",
+    "en": "Funny Game"
+  },
+  {
+    "l10n_key": "common_yes",
+    "cn": "是",
+    "en": "Yes"
+  },
+  {
+    "l10n_key": "common_no",
+    "cn": "否",
+    "en": "No"
+  },
+  {
+    "l10n_key": "common_help",
+    "cn": "帮助",
+    "en": "Help"
+  },
+  {
+    "l10n_key": "main_play",
+    "cn": "开始游戏",
+    "en": "Play"
+  },
+  {
+    "l10n_key": "main_new_game",
+    "cn": "新游戏",
+    "en": "New Game"
+  },
+  {
+    "l10n_key": "main_continue",
+    "cn": "继续游戏",
+    "en": "Continue"
+  },
+  {
+    "l10n_key": "main_load",
+    "cn": "加载游戏",
+    "en": "Load"
+  },
+  {
+    "l10n_key": "main_settings",
+    "cn": "设置",
+    "en": "Settings"
+  },
+  {
+    "l10n_key": "main_exit",
+    "cn": "退出游戏",
+    "en": "Exit"
+  },
+  {
+    "l10n_key": "settings_display",
+    "cn": "显示",
+    "en": "Display"
+  },
+  {
+    "l10n_key": "settings_windowed",
+    "cn": "窗口化",
+    "en": "Windowed"
+  },
+  {
+    "l10n_key": "settings_full_screen",
+    "cn": "全屏",
+    "en": "Full Screen"
+  },
+  {
+    "l10n_key": "settings_language",
+    "cn": "语言",
+    "en": "Language"
+  },
+  {
+    "l10n_key": "settings_Chinese",
+    "cn": "中文",
+    "en": "中文"
+  },
+  {
+    "l10n_key": "settings_English",
+    "cn": "English",
+    "en": "English"
+  },
+  {
+    "l10n_key": "settings_sound",
+    "cn": "声音",
+    "en": "Sound"
+  },
+  {
+    "l10n_key": "settings_music_vol",
+    "cn": "音乐",
+    "en": "Music"
+  },
+  {
+    "l10n_key": "settings_sfx_vol",
+    "cn": "音效",
+    "en": "Sfx"
+  }
+]
