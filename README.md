@@ -9,4 +9,4 @@ This is my Unity game template for any Game Jam. It also serves as my game toolk
 4. [Luban_3.9.0](https://github.com/focus-creative-games/luban)  
 5. [YooAsset_2.1.2](https://github.com/tuyoogame/YooAsset)  
 6. [UnityCommandLineInterface](https://github.com/529324416/UnityCommandLineInterface)
-7. [HybridCLR_6.10.0]
+7. [HybridCLR_6.10.0](https://github.com/focus-creative-games/hybridclr)
