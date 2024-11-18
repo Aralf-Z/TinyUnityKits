@@ -21,8 +21,10 @@ namespace ZToolKit
     public static class ResTool
     {
         public const string ResCatalog = "ZTool/Resources/ResCatalog.json";
-        
+#if UNITY_EDITOR
         private static bool sInited;
+#endif
+        
         private static ResLoadHandlerBase sCurHandler;
 
         public static async UniTask Init()
@@ -35,8 +37,9 @@ namespace ZToolKit
             };
 
             await sCurHandler.InitHandler();
-            
+#if UNITY_EDITOR    
             sInited = true;
+#endif
         }
         
         public static T Load<T>(string resName) where T : Object
@@ -45,25 +48,37 @@ namespace ZToolKit
             return sCurHandler.LoadAsset<T>(resName);
         }
         
+#if UNITY_EDITOR      
         private static void CheckInit()
         {
             if (!sInited)
             {
                 try
                 {
-                    Init().GetAwaiter().GetResult();
+                    if (GameConfig.ResMode == ResMode.ResourcesLoad)
+                    {
+                        sCurHandler = new ResourcesHandler();
+                    }
+                    else if (GameConfig.ResMode == ResMode.YooAsset)
+                    {
+                        LogTool.ToolError("ResTool", "YooAsset Not Supported Lazy Load");
+                    }
+                    sCurHandler.LazyInitHandler();
                     LogTool.ToolInfo("ResTool", "Lazy Load");
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
                     LogTool.ToolError("ResTool", "Lazy Load Error");
                 }
             }
         }
-
+#endif
+        
         private abstract class ResLoadHandlerBase
         {
+#if UNITY_EDITOR
+            public virtual void LazyInitHandler(){}
+#endif
             public abstract UniTask InitHandler();
             public abstract T LoadAsset<T>(string resName) where T : Object;
         }
@@ -71,7 +86,21 @@ namespace ZToolKit
         private class ResourcesHandler: ResLoadHandlerBase
         {
             private static Dictionary<string, string> sNamePathDic;
-            
+#if UNITY_EDITOR
+            public override void LazyInitHandler()
+            {
+                try
+                { 
+                    string filePath = Path.Combine(Application.streamingAssetsPath, ResCatalog);
+                    sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(File.ReadAllText(filePath))?.namePathDic;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
+                    throw;
+                }
+            }
+#endif
             public override async UniTask InitHandler()
             {
                 string filePath = Path.Combine(Application.streamingAssetsPath, ResCatalog);
@@ -91,16 +120,6 @@ namespace ZToolKit
                     {
                         Debug.LogError(request.error);
                     }
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError(e);
-                    throw;
-                }
-#elif UNITY_EDITOR
-                try
-                { 
-                    sNamePathDic = JsonConvert.DeserializeObject<ResCatalog>(File.ReadAllText(filePath))?.namePathDic;
                 }
                 catch (Exception e)
                 {
