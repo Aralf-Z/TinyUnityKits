@@ -1,6 +1,6 @@
 # UnityGameTemplate
 ## Description
-This is my Unity game template for any Game Jam. It also serves as my game toolkit, offering various solutions for different modules. For example, it includes ResTool instead of YooAsset, which is a heavier solution for the resource module than ResTool.
+This is my Unity game template for any Game Jam. It also serves as my game toolkit, offering various solutions for different modules. For example, it includes ResTool instead of YooAsset, which is a heavier solution for the resource module than ResTool.And developed by [2021.3.42f1](unityhub://2021.3.42f1/f1197811e8ce)
 ---
 ## Plugins
 1. [Dotween_1.2.765](https://github.com/Demigiant/dotween)  
