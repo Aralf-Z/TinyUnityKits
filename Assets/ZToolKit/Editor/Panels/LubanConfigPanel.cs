@@ -302,19 +302,24 @@ namespace ZToolKit.Editor
             var schemaFilePath = Path.Combine(confRoot, "luban.conf");
             var definesPath = Path.Combine(confRoot, "Defines");
             var definesFilePath = Path.Combine(confRoot, "Defines/builtin.xml");
+            var definesDefaultPath = Path.Combine(mLubanPath, "Defines/builtin.xml");
             
             try
             {
                 File.WriteAllText(schemaFilePath, Schema);
                 EditorUtility.DisplayProgressBar("创建依赖", "luban.conf", .2f);
-                if (!Directory.Exists(definesPath))
+                
+                if (definesFilePath != definesDefaultPath)
                 {
-                    Directory.CreateDirectory(definesPath);
-                }
+                    if (!Directory.Exists(definesPath))
+                    {
+                        Directory.CreateDirectory(definesPath);
+                    }
 
-                var builtinXml = File.ReadAllText(Path.Combine(mLubanPath, "Defines/builtin.xml"));
-                File.WriteAllText(definesFilePath, builtinXml);
-                EditorUtility.DisplayProgressBar("创建依赖", "Defines/builtin.xml", .4f);
+                    var builtinXml = File.ReadAllText(Path.Combine(definesDefaultPath));
+                    File.WriteAllText(definesFilePath, builtinXml);
+                    EditorUtility.DisplayProgressBar("创建依赖", "Defines/builtin.xml", .4f);
+                }
                 
                 try
                 {
@@ -360,15 +365,18 @@ namespace ZToolKit.Editor
                     {
                         File.Delete(schemaFilePath);
                     }
-                    
-                    if (File.Exists(definesFilePath))
+
+                    if (definesFilePath != definesDefaultPath)
                     {
-                        File.Delete(definesFilePath);
-                    }
-                    
-                    if (Directory.Exists(definesPath))
-                    {
-                        Directory.Delete(definesPath);
+                        if (File.Exists(definesFilePath))
+                        {
+                            File.Delete(definesFilePath);
+                        }
+
+                        if (Directory.Exists(definesPath))
+                        {
+                            Directory.Delete(definesPath);
+                        }
                     }
                 }
                 catch (Exception e)
