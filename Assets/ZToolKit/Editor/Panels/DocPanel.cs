@@ -18,9 +18,9 @@ namespace ZToolKit.Editor
         {
             using (var h = new GUILayout.HorizontalScope())
             {
-                if (GUILayout.Button("2021.3 Doc", GUILayout.Width(100)))
+                if (GUILayout.Button("2022.3 Doc", GUILayout.Width(100)))
                 {
-                    Application.OpenURL("https://docs.unity.cn/2021.3/Documentation/ScriptReference/index.html");
+                    Application.OpenURL("https://docs.unity.cn/2022.3/Documentation/ScriptReference/index.html");
                 }
                 
                 GUILayout.Space(5);

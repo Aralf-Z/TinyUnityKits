@@ -14,7 +14,7 @@ namespace ZToolKit
 
             //资源加载模块初始化
             ProgramTimeCost.StartCount();
-            LogTool.ToolInfo("初始化", $"ResTool初始化开始-{GameConfig.ResMode}");
+            LogTool.ToolInfo("初始化", $"ResTool初始化开始");
             await ResTool.Init();
             Event_ResInited?.Invoke();
             LogTool.ToolInfo("初始化", $"ResTool初始化完成-cost: {ProgramTimeCost.EndCount():F4}s");
