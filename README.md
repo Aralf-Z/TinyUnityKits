@@ -1,6 +1,6 @@
 # UnityGameTemplate
 ## Description
-This is my tiny Unity development kits, developed by [2022.3.60f1](https://unity.com/releases/editor/archive)
+This is my tiny Unity development kits, developed by [6000.0.45f1](https://unity.com/releases/editor/archive)
 ---
 ## Plugins
 1. [Dotween_1.2.765](https://github.com/Demigiant/dotween)
