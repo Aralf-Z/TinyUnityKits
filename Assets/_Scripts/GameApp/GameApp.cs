@@ -20,7 +20,7 @@ public class GameApp : SingletonDontDestroy<GameApp>
 
     public void RunApp()
     {
-        if (GameConfig.isConsoleActive)
+        if (GameConfig.IsConsoleActive)
         {
             mUpdateAct += dt =>
             {

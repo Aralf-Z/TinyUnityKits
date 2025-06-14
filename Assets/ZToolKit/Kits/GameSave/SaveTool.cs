@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -48,7 +46,7 @@ namespace ZToolKit
         {
             this.name = name;
             saves = new List<string>();
-            maxCount = int.MaxValue;
+            maxCount = 25;
         }
     }
 

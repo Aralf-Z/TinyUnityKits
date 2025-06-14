@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ZToolKit
 {
@@ -12,7 +13,7 @@ namespace ZToolKit
 
         //todo 本地化设置：1字体，2是否自适应---通配设置
 
-        public int SaveCountInAnArchive = 5;
+        public int saveCountInAnArchive = 25;
         
         public SaveLocation saveLocation = SaveLocation.Assets;
 
@@ -21,7 +22,7 @@ namespace ZToolKit
     
     public static class GameConfig
     {
-        public static bool isConsoleActive { get; }
+        public static bool IsConsoleActive { get; }
         
         public static int SaveCountInAnArchive { get; }
         
@@ -33,8 +34,8 @@ namespace ZToolKit
         {
             var buildConfig = Resources.Load<BuildConfig>("Config/BuildConfig");
 
-            isConsoleActive = buildConfig.isConsoleActive;
-            SaveCountInAnArchive = buildConfig.SaveCountInAnArchive;
+            IsConsoleActive = buildConfig.isConsoleActive;
+            SaveCountInAnArchive = buildConfig.saveCountInAnArchive;
             SaveLocation = buildConfig.saveLocation;
             SaveType = buildConfig.saveType;
         }
@@ -65,7 +66,7 @@ namespace ZToolKit
             //SaveTool
             EditorGUILayout.Space(5);
             EditorGUILayout.LabelField("Save", titleFont);
-            var countProperty = serializedObject.FindProperty("SaveCountInAnArchive");
+            var countProperty = serializedObject.FindProperty("saveCountInAnArchive");
             EditorGUILayout.PropertyField(countProperty, false); 
             var locationProperty = serializedObject.FindProperty("saveLocation");
             EditorGUILayout.PropertyField(locationProperty, false);
