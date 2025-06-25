@@ -14,13 +14,13 @@ namespace ZToolKit
         private Action OnCallBack1;
         private Action OnCallBack2;
 
-        public void OnAniamtorPlayCallBack() => OnPlayCallBack?.Invoke();
+        public void OnAnimatorPlayCallBack() => OnPlayCallBack?.Invoke();
 
-        public void OnAniamtorEndCallBack() => OnEndCallBack?.Invoke();
+        public void OnAnimatorEndCallBack() => OnEndCallBack?.Invoke();
 
-        public void OnAniamtorCallBack1() => OnCallBack1?.Invoke();
+        public void OnAnimatorCallBack1() => OnCallBack1?.Invoke();
 
-        public void OnAniamtorCallBack2() => OnCallBack2?.Invoke();
+        public void OnAnimatorCallBack2() => OnCallBack2?.Invoke();
 
         public void SetOnPlayCallBack(Action onPlayCallBack) => OnPlayCallBack = onPlayCallBack;
 

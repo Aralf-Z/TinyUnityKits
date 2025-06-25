@@ -24,7 +24,7 @@ namespace ZToolKit
         public static TbL10nUI UiL10n => CfgTool.Tables.TbL10nUI;
         public static TbL10nGame GameL10n => CfgTool.Tables.TbL10nGame;
         
-        public static event Action Event_OnChangeLanguage;
+        public static event Action EvtOnChangeLanguage;
         
         private static Language sLanguage;
 
@@ -36,7 +36,7 @@ namespace ZToolKit
         private static void Set(Language language)
         {
             sLanguage = language;
-            Event_OnChangeLanguage?.Invoke();
+            EvtOnChangeLanguage?.Invoke();
         }
         
         public static string GetUIStr(Transform refTransform, string key)

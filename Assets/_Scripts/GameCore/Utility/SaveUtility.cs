@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using QFramework;
-using UnityEngine;
 using ZToolKit;
 
 [AutoRegister(typeof(GameCoreMgr))]
@@ -14,7 +12,7 @@ public class SaveUtility :
 {
     private SaveConfig mConfig;
     
-    private Dictionary<string, Archive> mArchives => mConfig.archives;
+    private Dictionary<string, Archive> Archives => mConfig.archives;
 
     private string CurArchive => mConfig.curArchive;
 
@@ -70,7 +68,7 @@ public class SaveUtility :
     /// </summary>
     public void SaveCurrent(string name)
     {
-        var arc = mArchives[curSave.archive];
+        var arc = Archives[curSave.archive];
         var saves = arc.saves;
 
         if (string.IsNullOrEmpty(name))
@@ -89,7 +87,7 @@ public class SaveUtility :
             {
                 saves.RemoveAt(0);
             }
-            this.SendEvent(new EvtArchivesChanged(mArchives, true));
+            this.SendEvent(new EvtArchivesChanged(Archives, true));
         }
     }
 
@@ -100,7 +98,7 @@ public class SaveUtility :
     /// <param name="saveName"></param>
     public void DeleteSave(string archiveName, string saveName)
     {
-        var arc = mArchives[archiveName];
+        var arc = Archives[archiveName];
         var saves = arc.saves;
 
         //移出存档列表，删除存档文件
@@ -119,7 +117,7 @@ public class SaveUtility :
             }
         }
 
-        this.SendEvent(new EvtArchivesChanged(mArchives, true));
+        this.SendEvent(new EvtArchivesChanged(Archives, true));
     }
 
     /// <summary>
@@ -139,7 +137,7 @@ public class SaveUtility :
         else
         {
             mConfig.archives.Add(name, new Archive(name));
-            this.SendEvent(new EvtArchivesChanged(mArchives, true));
+            this.SendEvent(new EvtArchivesChanged(Archives, true));
         }
     }
     
@@ -150,7 +148,7 @@ public class SaveUtility :
     public void DeleteArchive(string name)
     {
         mConfig.archives.Remove(name);
-        this.SendEvent(new EvtArchivesChanged(mArchives, true));
+        this.SendEvent(new EvtArchivesChanged(Archives, true));
     }
 
     public IArchitecture GetArchitecture()

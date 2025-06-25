@@ -16,23 +16,23 @@ namespace ZToolKit
         private void Awake()
         {
             OnLanguageChange();
-            L10nTool.Event_OnChangeLanguage += OnLanguageChange;
+            L10nTool.EvtOnChangeLanguage += OnLanguageChange;
         }
 
         private void OnEnable()
         {
             OnLanguageChange();
-            L10nTool.Event_OnChangeLanguage += OnLanguageChange;
+            L10nTool.EvtOnChangeLanguage += OnLanguageChange;
         }
 
         private void OnDisable()
         {
-            L10nTool.Event_OnChangeLanguage -= OnLanguageChange;
+            L10nTool.EvtOnChangeLanguage -= OnLanguageChange;
         }
 
         private void OnDestroy()
         {
-            L10nTool.Event_OnChangeLanguage -= OnLanguageChange;
+            L10nTool.EvtOnChangeLanguage -= OnLanguageChange;
         }
 
         protected abstract void OnLanguageChange();
